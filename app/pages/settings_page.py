@@ -68,12 +68,13 @@ class SettingsPage(QScrollArea):
         general.layout.addLayout(general_form)
 
         processing = Card()
-        processing.layout.addWidget(SectionTitle("Processing", "Used when no recognition engine is connected"))
+        processing.layout.addWidget(
+            SectionTitle("Processing", "OCR is available. This switch controls the review queue.")
+        )
         self.demo_mode = QCheckBox("Allow demonstration processing")
         processing.layout.addWidget(self.demo_mode)
         hint = QLabel(
-            "Turn this off to block the Process Image action until a real recognition service exists. "
-            "A confidence threshold is not used in this version."
+            "Turn this off to block Process Image. A clear single mark on a registered candidate can be counted. Unclear ballots stay in the review queue."
         )
         hint.setObjectName("hintLabel")
         hint.setWordWrap(True)

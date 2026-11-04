@@ -211,10 +211,27 @@ QLabel {
     letter-spacing: 0.5px;
 }
 
-#locationValue {
+#locationValue, #detectedNegeri, #detectedDun {
     color: #F1F5F9;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#detectedCandidate {
+    color: #22D3EE;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#detectionReason {
+    color: #FBBF24;
     font-size: 13px;
     font-weight: 600;
+}
+
+#detectionDiagnosis {
+    color: #94A3B8;
+    font-size: 12px;
 }
 
 #locationBar QComboBox#locationCombo,

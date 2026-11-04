@@ -3,6 +3,7 @@
 import os
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -146,6 +147,16 @@ def main() -> None:
         assert store.data["stats"]["pending_reviews"] == 43
         dialog2._open_review()
         assert dialog2._outcome == "review"
+        deadline = time.time() + 30
+        while time.time() < deadline:
+            app.processEvents()
+            busy = any(
+                dialog.ocr_worker is not None and dialog.ocr_worker.isRunning()
+                for dialog in (dialog, dialog2)
+            )
+            if not busy:
+                break
+            time.sleep(0.02)
 
     report = []
     for page_id in ("dashboard", "scan", "review", "results", "audit", "settings"):
