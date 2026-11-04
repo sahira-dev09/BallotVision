@@ -4,7 +4,8 @@
 #   .venv\Scripts\activate
 #   pip install -r requirements.txt
 #
-# Only the desktop UI toolkit is needed at this stage.
-# Camera, image, and AI packages will be added later when we build those features.
+# pytesseract is only the Python wrapper. It does not install the Tesseract OCR
+# program or the eng/msa language files. See docs/tesseract-windows.md.
 
 PySide6>=6.7.0,<6.10.0
+pytesseract>=0.3.13
