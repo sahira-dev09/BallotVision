@@ -563,7 +563,7 @@ class Store(QObject):
         self._data["audit"].insert(0, event)
         self.changed.emit()
 
-    def add_imported(self, paths: list[str]) -> None:
+    def add_imported(self, paths: list[str], *, notify: bool = True) -> None:
         session = self._session_for(self.current_location_key())
         existing = {item["path"] for item in session["imported"]}
         added = 0
@@ -589,7 +589,8 @@ class Store(QObject):
                 status="Completed",
                 detail=f"{added} image file(s) added. Images are for demonstration only.",
             )
-            self.message.emit(f"{added} ballot image(s) imported.", "success")
+            if notify:
+                self.message.emit(f"{added} ballot image(s) imported.", "success")
             self.changed.emit()
 
     def remove_imported(self, path: str) -> None:
@@ -603,7 +604,14 @@ class Store(QObject):
         self.message.emit("Image selection cleared.", "info")
         self.changed.emit()
 
-    def complete_import_processing(self, processed_count: int, cancelled: bool = False) -> None:
+    def complete_import_processing(
+        self,
+        processed_count: int,
+        cancelled: bool = False,
+        source_paths: list[str] | None = None,
+        *,
+        notify: bool = True,
+    ) -> None:
         location = self.current_location_key()
         election = self._data["election"]
         batch_id = f"IMP-{datetime.now().strftime('%H%M%S')}"
@@ -620,7 +628,8 @@ class Store(QObject):
                 status="Warning",
                 detail="Officer cancelled the demonstration processing workflow. No recognition was performed.",
             )
-            self.message.emit("Processing cancelled. No ballot was classified.", "warning")
+            if notify:
+                self.message.emit("Processing cancelled. No ballot was classified.", "warning")
             self._publish_session()
             self.changed.emit()
             return
@@ -642,10 +651,20 @@ class Store(QObject):
             },
         )
         imported = list(session["imported"])
+        if source_paths is None:
+            sources = [
+                imported[index]["name"] if index < len(imported) else "imported image"
+                for index in range(processed_count)
+            ]
+        else:
+            sources = [Path(path).name for path in source_paths]
+            if len(sources) < processed_count:
+                sources.extend(["imported image"] * (processed_count - len(sources)))
+            sources = sources[:processed_count]
         for index in range(processed_count):
             self._data["ballot_counter"] += 1
             ballot_id = f"BLT-{self._data['ballot_counter']}"
-            source = imported[index]["name"] if index < len(imported) else "imported image"
+            source = sources[index]
             session["flagged"].insert(
                 0,
                 {
@@ -679,10 +698,11 @@ class Store(QObject):
                 "Images were not classified as valid. No AI recognition was performed."
             ),
         )
-        self.message.emit(
-            "Prototype processing finished. Images were sent for officer verification — not classified as valid.",
-            "warning",
-        )
+        if notify:
+            self.message.emit(
+                "Prototype processing finished. Images were sent for officer verification — not classified as valid.",
+                "warning",
+            )
         self._publish_session()
         self.changed.emit()
 

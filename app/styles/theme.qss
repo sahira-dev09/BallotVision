@@ -396,7 +396,7 @@ QComboBox#locationCombo QLineEdit {
     font-size: 12px;
 }
 
-#hintLabel {
+#hintLabel, #batchSummary {
     color: #64748B;
     font-size: 11px;
 }
