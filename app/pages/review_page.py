@@ -3,6 +3,7 @@
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QButtonGroup,
+    QDialog,
     QFrame,
     QHBoxLayout,
     QHeaderView,
@@ -13,13 +14,20 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QTableWidget,
-    QTableWidgetItem,
     QVBoxLayout,
     QWidget,
 )
 
 from app.widgets.ballot_preview import SimulatedBallotView
-from app.widgets.components import Card, EmptyState, NoticeBar, SectionTitle, StatusBadge
+from app.widgets.components import (
+    Card,
+    EmptyState,
+    NoticeBar,
+    SectionTitle,
+    StatusBadge,
+    aligned_item,
+    style_data_table,
+)
 from app.widgets.location_bar import LocationBar
 
 DECISIONS = (
@@ -27,6 +35,42 @@ DECISIONS = (
     ("Mark as Rejected", "Reject ballot"),
     ("Send for Further Review", "Send for further review"),
 )
+
+
+class DecisionDialog(QDialog):
+    """Confirmation shell. Accept still means the officer confirmed the decision."""
+
+    def __init__(self, ballot_id: str, decision_label: str, parent=None) -> None:
+        super().__init__(parent)
+        self.setObjectName("confirmDialog")
+        self.setWindowTitle("Submit decision")
+        self.setModal(True)
+        self.setMinimumWidth(460)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(24, 22, 24, 20)
+        layout.setSpacing(14)
+        title = QLabel("Submit this decision?")
+        title.setObjectName("sectionTitle")
+        body = QLabel(
+            f"{ballot_id}\n{decision_label}\n\n"
+            "This records a demonstration officer decision and updates the review queue."
+        )
+        body.setObjectName("mutedLabel")
+        body.setWordWrap(True)
+        layout.addWidget(title)
+        layout.addWidget(body)
+        actions = QHBoxLayout()
+        actions.setSpacing(8)
+        actions.addStretch(1)
+        cancel = QPushButton("Cancel")
+        cancel.clicked.connect(self.reject)
+        confirm = QPushButton("Submit decision")
+        confirm.setObjectName("primaryButton")
+        confirm.setDefault(True)
+        confirm.clicked.connect(self.accept)
+        actions.addWidget(cancel)
+        actions.addWidget(confirm)
+        layout.addLayout(actions)
 
 
 class ReviewPage(QScrollArea):
@@ -115,12 +159,11 @@ class ReviewPage(QScrollArea):
 
         self.table = QTableWidget(0, 3)
         self.table.setHorizontalHeaderLabels(["Ballot ID", "Why it was flagged", "Status"])
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-        self.table.verticalHeader().setVisible(False)
-        self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
-        self.table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
-        self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
-        self.table.setAlternatingRowColors(True)
+        style_data_table(self.table)
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
         self.table.itemSelectionChanged.connect(self._on_select)
         card.layout.addWidget(self.table, 1)
         self.empty = QLabel("No ballots match this filter.")
@@ -218,9 +261,10 @@ class ReviewPage(QScrollArea):
         for index, ballot in enumerate(rows):
             values = [ballot["id"], ballot["reason"], ballot["status"]]
             for column, value in enumerate(values):
-                self.table.setItem(index, column, QTableWidgetItem(value))
+                self.table.setItem(index, column, aligned_item(value))
             if ballot["id"] == self.selected_id:
                 selected_row = index
+        self.table.resizeRowsToContents()
         if rows:
             self.table.selectRow(selected_row)
             self._apply_ballot(rows[selected_row])
@@ -287,12 +331,8 @@ class ReviewPage(QScrollArea):
             QMessageBox.warning(self, "Choose a decision", "Confirm mark, reject the ballot, or send it for further review.")
             return
         if self.store.settings().get("require_reviewer_confirmation", True):
-            answer = QMessageBox.question(
-                self,
-                "Submit decision?",
-                f"{self.selected_id}: {self.decision_buttons[decision].text()}\n\nThis is a demonstration officer decision.",
-            )
-            if answer != QMessageBox.StandardButton.Yes:
+            dialog = DecisionDialog(self.selected_id, self.decision_buttons[decision].text(), self)
+            if dialog.exec() != QDialog.DialogCode.Accepted:
                 return
         submitted = self.selected_id
         self.store.submit_review(submitted, decision, self.notes.toPlainText().strip())

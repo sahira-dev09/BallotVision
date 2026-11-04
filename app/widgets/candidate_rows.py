@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.core.utils import format_number, format_percent
+from app.widgets.charts import color_for_candidate
 from app.widgets.components import StatusBadge
 from app.widgets.portraits import PortraitLabel
 
@@ -92,6 +93,7 @@ class CandidateRow(QFrame):
         percent.setObjectName("hintLabel")
         bar = VoteShareBar()
         bar.setValue(int(share * 10))
+        _tint_share(bar, color_for_candidate(record).name())
         numbers.addWidget(count)
         numbers.addWidget(percent)
         numbers.addWidget(bar)
@@ -145,7 +147,17 @@ class CandidateRow(QFrame):
         root.addLayout(row)
         bar = VoteShareBar(dense=True)
         bar.setValue(int(share * 10))
+        _tint_share(bar, color_for_candidate(record).name())
         root.addWidget(bar)
+
+
+def _tint_share(bar: VoteShareBar, color: str) -> None:
+    name = bar.objectName()
+    radius = "3px" if name == "voteShareBarDense" else "4px"
+    bar.setStyleSheet(
+        f"#{name} {{ background: #1B2940; border: none; border-radius: {radius}; }}"
+        f"#{name}::chunk {{ background: {color}; border-radius: {radius}; }}"
+    )
 
 
 class CandidateList(QWidget):

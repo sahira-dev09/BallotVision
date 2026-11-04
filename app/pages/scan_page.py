@@ -177,11 +177,15 @@ class ScanPage(QWidget):
         self.location = LocationBar()
         self.location.location_changed.connect(self.store.set_demo_location)
         root.addWidget(self.location)
-        columns = QHBoxLayout()
-        columns.setSpacing(12)
-        columns.addWidget(self._build_import_card(), 3)
-        columns.addWidget(self._build_camera_card(), 2)
-        root.addLayout(columns, 1)
+        workspace = QHBoxLayout()
+        workspace.setSpacing(12)
+        workspace.setAlignment(Qt.AlignmentFlag.AlignTop)
+        import_card = self._build_import_card()
+        import_card.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Maximum)
+        workspace.addWidget(import_card, 2, Qt.AlignmentFlag.AlignTop)
+        workspace.addWidget(self._build_preview_card(), 3)
+        root.addLayout(workspace, 1)
+        root.addWidget(self._build_camera_card())
         self.store.changed.connect(self._refresh_location)
         self._refresh_location()
 
@@ -191,13 +195,11 @@ class ScanPage(QWidget):
     def _build_import_card(self) -> Card:
         card = Card()
         card.layout.addWidget(
-            SectionTitle("Import ballot image", "Use a PNG, JPG, or JPEG already captured on this computer.")
+            SectionTitle("Import ballot image", "PNG, JPG, or JPEG already saved on this computer.")
         )
         self.import_status = StatusBadge("No image selected", "neutral")
         card.layout.addWidget(self.import_status, 0, Qt.AlignmentFlag.AlignLeft)
-        hint = QLabel(
-            "The preview dialog opens after you choose a file. Processing starts only when you click Process Image."
-        )
+        hint = QLabel("Choose a file to open the import dialog. Nothing is processed until you click Process Image.")
         hint.setObjectName("mutedLabel")
         hint.setWordWrap(True)
         card.layout.addWidget(hint)
@@ -213,7 +215,29 @@ class ScanPage(QWidget):
         self.review_now.setVisible(False)
         self.review_now.clicked.connect(lambda: self.navigate.emit("review"))
         card.layout.addWidget(self.review_now, 0, Qt.AlignmentFlag.AlignLeft)
-        card.layout.addStretch()
+        return card
+
+    def _build_preview_card(self) -> Card:
+        card = Card()
+        card.layout.addWidget(
+            SectionTitle("Ballot preview", "The file you select is shown here before and after the import dialog.")
+        )
+        self.page_preview = QLabel("No image selected")
+        self.page_preview.setObjectName("previewFrame")
+        self.page_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.page_preview.setWordWrap(True)
+        self.page_preview.setMinimumHeight(220)
+        self.page_preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        card.layout.addWidget(self.page_preview, 1)
+        details_caption = QLabel("File details")
+        details_caption.setObjectName("fieldCaption")
+        card.layout.addWidget(details_caption)
+        self.preview_notes = QLabel(
+            "No file is open. Import Ballot Image opens a dialog where you can check the picture and start processing."
+        )
+        self.preview_notes.setObjectName("mutedLabel")
+        self.preview_notes.setWordWrap(True)
+        card.layout.addWidget(self.preview_notes)
         return card
 
     def _build_camera_card(self) -> Card:
@@ -221,25 +245,57 @@ class ScanPage(QWidget):
         card.layout.addWidget(
             SectionTitle("AI camera / live capture", "Not available in this prototype")
         )
+        body = QHBoxLayout()
+        body.setSpacing(12)
         self.camera_preview = QLabel("Camera not connected\n\nNo live footage is shown here.")
         self.camera_preview.setObjectName("cameraPreview")
         self.camera_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.camera_preview.setWordWrap(True)
-        self.camera_preview.setMinimumHeight(180)
-        self.camera_preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        card.layout.addWidget(self.camera_preview, 1)
+        self.camera_preview.setMinimumHeight(96)
+        self.camera_preview.setMaximumHeight(120)
+        self.camera_preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        body.addWidget(self.camera_preview, 2)
+        side = QVBoxLayout()
+        side.setSpacing(8)
         self.camera_badge = StatusBadge("Not connected", "neutral")
-        card.layout.addWidget(self.camera_badge, 0, Qt.AlignmentFlag.AlignLeft)
+        side.addWidget(self.camera_badge, 0, Qt.AlignmentFlag.AlignLeft)
         self.camera_message = QLabel(
             "This button only reports that no camera service is installed. It does not import files."
         )
         self.camera_message.setObjectName("hintLabel")
         self.camera_message.setWordWrap(True)
-        card.layout.addWidget(self.camera_message)
+        side.addWidget(self.camera_message)
         connect_btn = QPushButton("Check camera connection")
         connect_btn.clicked.connect(self._connect_camera)
-        card.layout.addWidget(connect_btn, 0, Qt.AlignmentFlag.AlignLeft)
+        side.addWidget(connect_btn, 0, Qt.AlignmentFlag.AlignLeft)
+        body.addLayout(side, 3)
+        card.layout.addLayout(body)
         return card
+
+    def _show_file_preview(self, path: str, outcome: str) -> None:
+        pixmap = QPixmap(path)
+        name = Path(path).name
+        if pixmap.isNull():
+            self.page_preview.setPixmap(QPixmap())
+            self.page_preview.setText("This file could not be opened as an image.")
+            dims = "Dimensions unavailable"
+        else:
+            self.page_preview.setText("")
+            scaled = pixmap.scaled(
+                QSize(640, 360),
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+            self.page_preview.setPixmap(scaled)
+            dims = f"{pixmap.width()} × {pixmap.height()} px"
+        outcome_text = {
+            "completed": "Queued for officer review. The ballot was not marked valid.",
+            "cancelled": "Import cancelled. No ballot was classified.",
+            "failed": "The file was not processed.",
+            "review": "Queued for officer review.",
+            "idle": "Dialog closed before processing.",
+        }.get(outcome, "File selected.")
+        self.preview_notes.setText(f"{name}\n{dims}\n\n{outcome_text}")
 
     def _choose_file(self) -> None:
         path, _filter = QFileDialog.getOpenFileName(self, "Import ballot image", "", IMAGE_FILTER)
@@ -253,6 +309,7 @@ class ScanPage(QWidget):
         dialog = ImportBallotDialog(self.store, path, self)
         result = dialog.exec()
         self.last_import.setText(f"Last file: {Path(path).name}")
+        self._show_file_preview(path, dialog._outcome)
         if dialog._outcome == "completed":
             self.import_status.set_kind("warning", "Queued for review")
             self.review_now.setVisible(True)

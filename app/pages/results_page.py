@@ -1,6 +1,6 @@
 """Constituency-scoped unofficial candidate results."""
 
-from PySide6.QtCore import Signal
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QFileDialog,
     QGridLayout,
@@ -72,24 +72,15 @@ class ResultsPage(QWidget):
             stats.addWidget(card, 0, column)
         content.addWidget(self.stats_wrap)
 
-        actions = QHBoxLayout()
+        self.review_row = QWidget()
+        actions = QHBoxLayout(self.review_row)
         actions.setContentsMargins(0, 0, 0, 0)
         actions.setSpacing(8)
         self.review_action = QPushButton("Review remaining flags")
         self.review_action.clicked.connect(lambda: self.navigate.emit("review"))
-        export_csv = QPushButton("Export CSV")
-        export_csv.setObjectName("primaryButton")
-        export_csv.clicked.connect(self._export_csv)
-        export_summary = QPushButton("Export summary")
-        export_summary.clicked.connect(self._export_summary)
-        actions.addWidget(self.review_action)
-        actions.addWidget(export_csv)
-        actions.addWidget(export_summary)
-        actions.addStretch()
-        note = QLabel("Exports stay unofficial. No official winner is declared.")
-        note.setObjectName("mutedLabel")
-        actions.addWidget(note)
-        content.addLayout(actions)
+        actions.addWidget(self.review_action, 0)
+        actions.addStretch(1)
+        content.addWidget(self.review_row)
 
         split = QHBoxLayout()
         split.setSpacing(8)
@@ -112,6 +103,22 @@ class ResultsPage(QWidget):
         self.bar_card.layout.addLayout(self.bar_holder, 1)
         split.addWidget(self.bar_card, 2)
         content.addLayout(split, 1)
+
+        export_row = QHBoxLayout()
+        export_row.setContentsMargins(0, 4, 0, 0)
+        export_row.setSpacing(8)
+        note = QLabel("Exports stay unofficial. No official winner is declared.")
+        note.setObjectName("mutedLabel")
+        note.setWordWrap(True)
+        export_summary = QPushButton("Export summary")
+        export_summary.clicked.connect(self._export_summary)
+        export_csv = QPushButton("Export CSV")
+        export_csv.setObjectName("primaryButton")
+        export_csv.clicked.connect(self._export_csv)
+        export_row.addWidget(note, 1)
+        export_row.addWidget(export_summary, 0, Qt.AlignmentFlag.AlignVCenter)
+        export_row.addWidget(export_csv, 0, Qt.AlignmentFlag.AlignVCenter)
+        content.addLayout(export_row)
         self.root.addWidget(self.content, 1)
 
         self.store.changed.connect(self.refresh)
@@ -142,7 +149,7 @@ class ResultsPage(QWidget):
         self.valid.set_value(format_number(valid))
         self.rejected.set_value(format_number(stats["rejected"]))
         self.candidate_count.set_value(str(len(records)))
-        self.review_action.setVisible(pending > 0)
+        self.review_row.setVisible(pending > 0)
         self.review_action.setText(f"Review {pending} flagged ballot(s)")
         leader = leading_record(records) if pending == 0 else None
         if leader:

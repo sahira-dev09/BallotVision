@@ -1,13 +1,16 @@
 """Officer overview: constituency, workload, and the next required action."""
 
 from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QFrame,
     QGridLayout,
     QHBoxLayout,
+    QHeaderView,
     QLabel,
     QPushButton,
     QSizePolicy,
+    QTableWidget,
     QVBoxLayout,
     QWidget,
 )
@@ -15,33 +18,8 @@ from PySide6.QtWidgets import (
 from app.core.utils import format_number, format_percent
 from app.widgets.candidate_rows import CandidateList
 from app.widgets.charts import activity_chart
-from app.widgets.components import Card, EmptyState, SectionTitle, StatCard, StatusBadge
+from app.widgets.components import Card, EmptyState, SectionTitle, StatCard, aligned_item, style_data_table
 from app.widgets.location_bar import LocationBar
-
-
-class EventRow(QFrame):
-    def __init__(self, event: dict, parent=None) -> None:
-        super().__init__(parent)
-        self.setObjectName("eventRow")
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(8, 6, 8, 6)
-        layout.setSpacing(10)
-        time = QLabel(event["time"])
-        time.setObjectName("eventTime")
-        time.setFixedWidth(48)
-        text = QVBoxLayout()
-        text.setSpacing(1)
-        description = QLabel(event["description"])
-        description.setWordWrap(True)
-        batch = QLabel(event.get("batch") or "—")
-        batch.setObjectName("hintLabel")
-        text.addWidget(description)
-        text.addWidget(batch)
-        status = event.get("status", "Completed")
-        kind = {"Completed": "success", "In Progress": "info", "Needs Review": "warning"}.get(status, "neutral")
-        layout.addWidget(time, 0, Qt.AlignmentFlag.AlignTop)
-        layout.addLayout(text, 1)
-        layout.addWidget(StatusBadge(status, kind), 0, Qt.AlignmentFlag.AlignTop)
 
 
 class DashboardPage(QWidget):
@@ -133,10 +111,24 @@ class DashboardPage(QWidget):
         self.activity_holder = QVBoxLayout()
         self.activity_card.layout.addLayout(self.activity_holder, 1)
         self.events_card = Card()
-        self.events_card.layout.addWidget(SectionTitle("Latest events", "Most recent work at this location"))
-        self.events_host = QVBoxLayout()
-        self.events_host.setSpacing(4)
-        self.events_card.layout.addLayout(self.events_host, 1)
+        self.events_card.layout.addWidget(
+            SectionTitle("Recent Activity", "Recorded work at this location")
+        )
+        self.events_table = QTableWidget(0, 3)
+        self.events_table.setHorizontalHeaderLabels(["Event / Activity", "Officer", "Time"])
+        self.events_table.setObjectName("activityTable")
+        style_data_table(self.events_table)
+        header = self.events_table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Fixed)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Fixed)
+        self.events_table.setColumnWidth(1, 120)
+        self.events_table.setColumnWidth(2, 84)
+        self.events_table.setSelectionMode(QTableWidget.SelectionMode.NoSelection)
+        self.events_empty = QLabel("No events for this constituency yet.")
+        self.events_empty.setObjectName("mutedLabel")
+        self.events_card.layout.addWidget(self.events_table, 1)
+        self.events_card.layout.addWidget(self.events_empty)
         charts.addWidget(self.activity_card, 3)
         charts.addWidget(self.events_card, 2)
         return charts
@@ -198,17 +190,19 @@ class DashboardPage(QWidget):
         records = self.store.data["candidates"]
         self.candidate_list.set_records(records, stats["valid"], limit=3, compact=True)
         self._replace_chart(self.activity_holder, activity_chart(self.store.data["activity"]))
-        while self.events_host.count():
-            item = self.events_host.takeAt(0)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-        events = self.store.data.get("processing_events", [])[:4]
-        if not events:
-            empty = QLabel("No events for this constituency yet.")
-            empty.setObjectName("mutedLabel")
-            self.events_host.addWidget(empty)
-        else:
-            for event in events:
-                self.events_host.addWidget(EventRow(event))
-        self.events_host.addStretch()
+        events = self.store.data.get("processing_events", [])[:6]
+        self.events_table.setVisible(bool(events))
+        self.events_empty.setVisible(not events)
+        self.events_table.setRowCount(len(events))
+        for index, event in enumerate(events):
+            activity = aligned_item(event.get("description") or "—")
+            officer_name = event.get("officer") or event.get("user") or ""
+            officer = aligned_item(officer_name or "Unavailable")
+            if not officer_name:
+                officer.setForeground(QColor("#64748B"))
+                officer.setToolTip("Officer name is not recorded for this event.")
+            when = aligned_item(event.get("time") or "—")
+            self.events_table.setItem(index, 0, activity)
+            self.events_table.setItem(index, 1, officer)
+            self.events_table.setItem(index, 2, when)
+        self.events_table.resizeRowsToContents()

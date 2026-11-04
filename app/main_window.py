@@ -63,9 +63,10 @@ class ProfileButton(QFrame):
 class InfoDialog(QDialog):
     def __init__(self, title: str, body: str, parent=None, show_photo: bool = False) -> None:
         super().__init__(parent)
+        self.setObjectName("appDialog")
         self.setWindowTitle(title)
         self.setModal(True)
-        self.setMinimumWidth(420)
+        self.setMinimumWidth(440)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(20, 18, 20, 18)
         layout.setSpacing(12)
@@ -185,8 +186,10 @@ class MainWindow(QMainWindow):
 
         self.demo_chip = QLabel("DEMO MODE")
         self.demo_chip.setObjectName("demoChip")
+        self.demo_chip.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.demo_chip.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.demo_chip.setMinimumHeight(36)
+        self.demo_chip.setFixedHeight(36)
+        self.demo_chip.setMinimumWidth(118)
         indicator_row.addWidget(self.demo_chip, 0, Qt.AlignmentFlag.AlignVCenter)
 
         self.info_button = QToolButton()
@@ -295,6 +298,7 @@ class MainWindow(QMainWindow):
         self.toast.setText(text)
         self.toast.setStyleSheet(
             f"color: {color}; background: {background}; border: 1px solid {color};"
+            "border-radius: 12px; padding: 8px 14px;"
         )
         self.toast.setVisible(True)
         self._toast_timer.start(4200)
