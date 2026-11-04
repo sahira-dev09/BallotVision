@@ -1,6 +1,9 @@
-"""Officer review of flagged ballots — decide, submit, next ballot."""
+"""Officer review of queued ballots — decide, submit, next ballot."""
 
-from PySide6.QtCore import Qt, Signal
+from pathlib import Path
+
+from PySide6.QtCore import QSize, Qt, Signal
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (
     QButtonGroup,
     QDialog,
@@ -36,6 +39,16 @@ DECISIONS = (
     ("Send for Further Review", "Send for further review"),
 )
 
+_CONFIDENCE_BADGE = {
+    "High confidence": ("success", "High Confidence"),
+    "Low confidence": ("warning", "Low Confidence"),
+    "Not detected": ("neutral", "Not Detected"),
+}
+
+
+def _confidence_kind(status: str) -> tuple[str, str]:
+    return _CONFIDENCE_BADGE.get(status, ("neutral", "Not Detected"))
+
 
 class DecisionDialog(QDialog):
     """Confirmation shell. Accept still means the officer confirmed the decision."""
@@ -53,7 +66,8 @@ class DecisionDialog(QDialog):
         title.setObjectName("sectionTitle")
         body = QLabel(
             f"{ballot_id}\n{decision_label}\n\n"
-            "This records a demonstration officer decision and updates the review queue."
+            "This stores the decision in the current session, with the ballot, image reference, "
+            "review reason, officer, and time. It is not written to an election database."
         )
         body.setObjectName("mutedLabel")
         body.setWordWrap(True)
@@ -95,8 +109,9 @@ class ReviewPage(QScrollArea):
 
         root.addWidget(
             NoticeBar(
-                "Marks, scores, and decisions here are demonstration data unless an image was imported without scoring.",
-                "warning",
+                "This queue is for ballots that were not counted automatically. "
+                "A submitted decision is kept for this session only.",
+                "info",
             )
         )
         self.location = LocationBar()
@@ -158,7 +173,7 @@ class ReviewPage(QScrollArea):
         card.layout.addLayout(filters)
 
         self.table = QTableWidget(0, 3)
-        self.table.setHorizontalHeaderLabels(["Ballot ID", "Why it was flagged", "Status"])
+        self.table.setHorizontalHeaderLabels(["Ballot ID", "Review reason", "Review status"])
         style_data_table(self.table)
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
@@ -176,24 +191,66 @@ class ReviewPage(QScrollArea):
         card.layout.addWidget(
             SectionTitle("Inspect and decide", "Confirm, reject, or send on. Submit records the decision.")
         )
+        self.imported_preview = QLabel("No ballot selected")
+        self.imported_preview.setObjectName("previewFrame")
+        self.imported_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.imported_preview.setWordWrap(True)
+        self.imported_preview.setMinimumHeight(220)
+        self.imported_preview.setVisible(False)
+        card.layout.addWidget(self.imported_preview, 1)
         self.preview = SimulatedBallotView()
         card.layout.addWidget(self.preview, 1)
 
         self.meta_id = QLabel("No ballot selected")
-        self.meta_id.setObjectName("sectionTitle")
+        self.meta_id.setObjectName("reviewBallotId")
+        card.layout.addWidget(QLabel("Ballot ID"))
+        card.layout.addWidget(self.meta_id)
+
+        negeri_caption = QLabel("Negeri")
+        negeri_caption.setObjectName("fieldCaption")
+        self.review_negeri = QLabel("Not recorded")
+        self.review_negeri.setObjectName("reviewNegeri")
+        self.review_negeri.setWordWrap(True)
+        dun_caption = QLabel("DUN")
+        dun_caption.setObjectName("fieldCaption")
+        self.review_dun = QLabel("Not recorded")
+        self.review_dun.setObjectName("reviewDun")
+        self.review_dun.setWordWrap(True)
+        card.layout.addWidget(negeri_caption)
+        card.layout.addWidget(self.review_negeri)
+        card.layout.addWidget(dun_caption)
+        card.layout.addWidget(self.review_dun)
+
+        confidence_caption = QLabel("OCR confidence")
+        confidence_caption.setObjectName("fieldCaption")
+        self.confidence = StatusBadge("Not recorded", "neutral")
+        self.confidence.setObjectName("reviewConfidence")
+        mark_caption = QLabel("Candidate mark confidence")
+        mark_caption.setObjectName("fieldCaption")
+        self.mark_confidence = StatusBadge("Not recorded", "neutral")
+        self.mark_confidence.setObjectName("reviewMarkConfidence")
+        status_caption = QLabel("Review status")
+        status_caption.setObjectName("fieldCaption")
+        self.status_badge = StatusBadge("No selection", "neutral")
+        self.status_badge.setObjectName("reviewStatus")
+        card.layout.addWidget(confidence_caption)
+        card.layout.addWidget(self.confidence, 0, Qt.AlignmentFlag.AlignLeft)
+        card.layout.addWidget(mark_caption)
+        card.layout.addWidget(self.mark_confidence, 0, Qt.AlignmentFlag.AlignLeft)
+        card.layout.addWidget(status_caption)
+        card.layout.addWidget(self.status_badge, 0, Qt.AlignmentFlag.AlignLeft)
+
+        reason_caption = QLabel("Review reason")
+        reason_caption.setObjectName("fieldCaption")
         self.meta_reason = QLabel("")
         self.meta_reason.setWordWrap(True)
-        self.meta_reason.setObjectName("mutedLabel")
-        card.layout.addWidget(self.meta_id)
+        self.meta_reason.setObjectName("reviewReason")
+        card.layout.addWidget(reason_caption)
         card.layout.addWidget(self.meta_reason)
-
-        score_row = QHBoxLayout()
-        self.confidence = StatusBadge("Not scored", "neutral")
-        self.status_badge = StatusBadge("No selection", "neutral")
-        score_row.addWidget(self.confidence)
-        score_row.addWidget(self.status_badge)
-        score_row.addStretch()
-        card.layout.addLayout(score_row)
+        self.candidate_check = QLabel("")
+        self.candidate_check.setObjectName("candidateCheck")
+        self.candidate_check.setWordWrap(True)
+        card.layout.addWidget(self.candidate_check)
 
         decision_caption = QLabel("Decision")
         decision_caption.setObjectName("fieldCaption")
@@ -280,21 +337,41 @@ class ReviewPage(QScrollArea):
             self._apply_ballot(rows[row])
 
     def _apply_ballot(self, ballot: dict | None) -> None:
-        self.preview.set_ballot(ballot)
+        self._show_ballot_image(ballot)
         if not ballot:
             self.meta_id.setText("No ballot selected")
+            self.review_negeri.setText("Not recorded")
+            self.review_dun.setText("Not recorded")
             self.meta_reason.setText("Choose a row in the queue.")
-            self.confidence.set_kind("neutral", "Not scored")
+            self.candidate_check.setText("")
+            self.confidence.set_kind("neutral", "Not recorded")
+            self.mark_confidence.set_kind("neutral", "Not recorded")
             self.status_badge.set_kind("neutral", "No selection")
             self.notes.clear()
             return
-        detected = ballot.get("detected") or "none recorded"
         self.meta_id.setText(ballot["id"])
-        self.meta_reason.setText(f"{ballot['reason']}  ·  Suggested mark: {detected}")
-        if ballot.get("confidence") is None:
-            self.confidence.set_kind("neutral", "Not scored — engine not connected")
+        negeri = (ballot.get("suggested_negeri") or "").strip()
+        dun = f"{ballot.get('suggested_dun_code') or ''} {ballot.get('suggested_dun_name') or ''}".strip()
+        has_reading = bool(ballot.get("ocr_status") or ballot.get("source_path"))
+        if has_reading:
+            self.review_negeri.setText(negeri or "Location Not Detected")
+            self.review_dun.setText(dun or "Location Not Detected")
+            self.confidence.set_kind(*_confidence_kind(ballot.get("match_status") or ""))
+            self.mark_confidence.set_kind(*_confidence_kind(ballot.get("mark_confidence") or ""))
         else:
-            self.confidence.set_kind("warning", f"Demo score {ballot['confidence']}%")
+            self.review_negeri.setText("Not recorded")
+            self.review_dun.setText("Not recorded")
+            self.confidence.set_kind("neutral", "Not recorded")
+            self.mark_confidence.set_kind("neutral", "Not recorded")
+        self.meta_reason.setText(ballot.get("reason") or "")
+        if ballot.get("candidate_mismatch"):
+            self.candidate_check.setText(ballot.get("mismatch_reason") or "")
+        elif ballot.get("detected"):
+            self.candidate_check.setText(f"Candidate: {ballot['detected']}")
+        elif ballot.get("source_path") or ballot.get("ocr_status"):
+            self.candidate_check.setText("Candidate: Not Detected")
+        else:
+            self.candidate_check.setText("")
         kind = "success" if ballot["status"] == "Reviewed" else "warning"
         self.status_badge.set_kind(kind, ballot["status"])
         self.notes.setPlainText(ballot.get("notes", ""))
@@ -303,6 +380,32 @@ class ReviewPage(QScrollArea):
         if ballot.get("decision") in self.decision_buttons:
             self.decision_buttons[ballot["decision"]].setChecked(True)
         self._sync_decision_styles()
+
+    def _show_ballot_image(self, ballot: dict | None) -> None:
+        path = str((ballot or {}).get("source_path") or "")
+        if not path:
+            self.imported_preview.setVisible(False)
+            self.imported_preview.setPixmap(QPixmap())
+            self.imported_preview.setToolTip("")
+            self.preview.setVisible(True)
+            self.preview.set_ballot(ballot)
+            return
+        self.preview.setVisible(False)
+        self.imported_preview.setVisible(True)
+        self.imported_preview.setToolTip(path)
+        file_path = Path(path)
+        pixmap = QPixmap(str(file_path)) if file_path.is_file() else QPixmap()
+        if pixmap.isNull():
+            self.imported_preview.setPixmap(QPixmap())
+            self.imported_preview.setText("The original ballot image could not be opened.")
+            return
+        self.imported_preview.setText("")
+        scaled = pixmap.scaled(
+            QSize(640, 420),
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        self.imported_preview.setPixmap(scaled)
 
     def _sync_decision_styles(self) -> None:
         for button in self.decision_buttons.values():

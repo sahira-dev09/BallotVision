@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QWidgetAction,
 )
 
+from app.services.thread_cleanup import shutdown_background_workers
 from app.core.constants import (
     APP_BRAND_TAG,
     APP_NAME,
@@ -354,6 +355,7 @@ class MainWindow(QMainWindow):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
         if answer == QMessageBox.StandardButton.Yes:
+            shutdown_background_workers()
             event.accept()
         else:
             event.ignore()

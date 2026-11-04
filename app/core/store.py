@@ -21,6 +21,17 @@ from app.core.constants import (
     DEFAULT_SETTINGS,
     DEMO_BATCH_ID,
     DEMO_ELECTION_NAME,
+    USER_NAME,
+)
+from app.services.candidate_match import MISMATCH_REASON, compare_candidates
+from app.services.location_match import HIGH
+from app.services.mark_recognition import (
+    NOT_DETECTED as MARK_NOT_DETECTED,
+)
+from app.services.mark_recognition import (
+    STATUS_UNAVAILABLE,
+    MarkResult,
+    adjudicate,
 )
 from app.core.utils import settings_path
 
@@ -364,6 +375,52 @@ def build_sample_data() -> dict:
     }
 
 
+BALLOT_READING_FIELDS = (
+    "ocr_text",
+    "ocr_status",
+    "ocr_error",
+    "suggested_negeri",
+    "suggested_dun_code",
+    "suggested_dun_name",
+    "match_status",
+    "match_reason",
+    "confirmed_negeri",
+    "confirmed_dun_code",
+    "confirmed_dun_name",
+    "mark_status",
+    "mark_confidence",
+    "mark_reason",
+    "mark_row_text",
+    "mark_diagnosis",
+)
+
+
+def _blank_reading() -> dict:
+    return {field: "" for field in BALLOT_READING_FIELDS}
+
+
+def _copy_reading(ballot: dict, fields: dict) -> None:
+    for field in BALLOT_READING_FIELDS:
+        if field in fields:
+            ballot[field] = "" if fields[field] is None else str(fields[field])
+
+
+REASON_AWAITING = "Imported image awaiting officer verification."
+REASON_LOCATION = "Location could not be verified."
+REASON_OCR_FAILED = "OCR processing failed."
+
+
+def reason_for_reading(reading: dict | None) -> str:
+    """Why an imported image is in the officer queue. This is not a mark finding."""
+    if not reading:
+        return REASON_LOCATION
+    if reading.get("ocr_status") == "Failed":
+        return REASON_OCR_FAILED
+    if reading.get("suggested_negeri") and reading.get("match_status") == HIGH:
+        return REASON_AWAITING
+    return REASON_LOCATION
+
+
 class Store(QObject):
     changed = Signal()
     message = Signal(str, str)  # text, level: success | warning | error | info
@@ -611,6 +668,7 @@ class Store(QObject):
         source_paths: list[str] | None = None,
         *,
         notify: bool = True,
+        reading: dict | None = None,
     ) -> None:
         location = self.current_location_key()
         election = self._data["election"]
@@ -632,24 +690,11 @@ class Store(QObject):
                 self.message.emit("Processing cancelled. No ballot was classified.", "warning")
             self._publish_session()
             self.changed.emit()
-            return
+            return "cancelled"
 
-        stats = session["stats"]
-        stats["total_processed"] += processed_count
-        stats["flagged"] += processed_count
-        stats["pending_reviews"] += processed_count
-        session["classification"]["needs_review"] = stats["flagged"]
-        session["batches"].insert(
-            0,
-            {
-                "id": batch_id,
-                "time": datetime.now().strftime("%d %b %Y, %H:%M"),
-                "images": processed_count,
-                "valid": 0,
-                "flagged": processed_count,
-                "status": "Needs Review",
-            },
-        )
+        counted = 0
+        reviewed = 0
+        duplicates = 0
         imported = list(session["imported"])
         if source_paths is None:
             sources = [
@@ -665,46 +710,206 @@ class Store(QObject):
             self._data["ballot_counter"] += 1
             ballot_id = f"BLT-{self._data['ballot_counter']}"
             source = sources[index]
-            session["flagged"].insert(
-                0,
-                {
-                    "id": ballot_id,
-                    "batch": batch_id,
-                    "reason": "Imported image queued for officer verification. No recognition engine was used.",
-                    "confidence": None,
-                    "status": "Pending Review",
-                    "detected": "",
-                    "notes": "",
-                    "simulated": True,
-                    "location_key": location,
-                    "data_kind": "imported_session",
-                    "source_file": source,
-                },
-            )
+            source_path = ""
+            if source_paths is not None and index < len(source_paths):
+                source_path = str(source_paths[index])
+            if source_path and self._counted_ballot_id(source_path):
+                duplicates += 1
+                self.add_audit(
+                    user="System",
+                    action="Ignored duplicate ballot",
+                    related=self._counted_ballot_id(source_path),
+                    event_type="Vote Record",
+                    status="Warning",
+                    detail=f"Image already counted: {source_path}. No additional vote was recorded.",
+                )
+                continue
+            outcome = self._adjudicate_reading(reading)
+            ballot = {
+                "id": ballot_id,
+                "batch": batch_id,
+                "reason": outcome.reason,
+                "confidence": None,
+                "status": "Counted" if outcome.counted else "Pending Review",
+                "detected": outcome.candidate_name if outcome.counted else "",
+                "notes": "",
+                "simulated": False,
+                "counted": outcome.counted,
+                "location_key": location,
+                "data_kind": "imported_session",
+                "source_file": source,
+                "source_path": source_path,
+                "candidate_id": outcome.candidate_id if outcome.counted else "",
+                "location_confidence": outcome.location_confidence,
+                "mark_confidence": outcome.mark_confidence,
+            }
+            ballot.update(_blank_reading())
+            if reading and (not source_path or reading.get("source_path", source_path) in {"", source_path}):
+                _copy_reading(ballot, reading)
+            if outcome.counted:
+                self._record_provisional_vote(ballot, outcome, reading or {})
+            if ballot.get("counted"):
+                counted += 1
+            else:
+                ballot["status"] = "Pending Review"
+                ballot["counted"] = False
+                target_session = self._session_for(location)
+                target_session["flagged"].insert(0, ballot)
+                stats = target_session["stats"]
+                stats["total_processed"] += 1
+                stats["flagged"] += 1
+                stats["pending_reviews"] += 1
+                target_session["classification"]["needs_review"] = stats["flagged"]
+                reviewed += 1
+        current = self._session_for(location)
+        current["batches"].insert(
+            0,
+            {
+                "id": batch_id,
+                "time": datetime.now().strftime("%d %b %Y, %H:%M"),
+                "images": processed_count,
+                "valid": counted,
+                "flagged": reviewed,
+                "status": "Counted" if counted and not reviewed else "Needs Review",
+            },
+        )
         self.add_processing_event(
-            f"Imported image set queued for verification ({processed_count} file(s))",
+            f"Imported images processed ({counted} counted, {reviewed} for review)",
             batch_id,
-            "Needs Review",
+            "Completed" if counted and not reviewed else "Needs Review",
         )
         self.add_audit(
             user="System",
-            action="Prototype processing finished",
+            action="Ballot images processed",
             related=batch_id,
-            event_type="Processing Simulation",
+            event_type="Ballot Processing",
             status="Completed",
             detail=(
-                f"Demonstration workflow finished for {processed_count} image(s) at "
-                f"{election.get('negeri')} {election.get('dun')}. "
-                "Images were not classified as valid. No AI recognition was performed."
+                f"{counted} provisional vote(s), {reviewed} sent for review, {duplicates} duplicate(s) ignored. "
+                f"The selected constituency stayed {election.get('negeri')} {election.get('dun')}."
             ),
         )
         if notify:
-            self.message.emit(
-                "Prototype processing finished. Images were sent for officer verification — not classified as valid.",
-                "warning",
-            )
+            if counted and not reviewed:
+                self.message.emit("Provisional vote recorded. The ballot was not sent for review.", "success")
+            elif reviewed:
+                self.message.emit("Image added to the officer review queue. No vote was counted.", "warning")
         self._publish_session()
         self.changed.emit()
+        if duplicates and not counted and not reviewed:
+            return "duplicate"
+        if counted and not reviewed:
+            return "counted"
+        return "review"
+
+    def _adjudicate_reading(self, reading: dict | None):
+        payload = reading or {}
+        mark = MarkResult(
+            status=payload.get("mark_status") or STATUS_UNAVAILABLE,
+            confidence=payload.get("mark_confidence") or MARK_NOT_DETECTED,
+            row_text=payload.get("mark_row_text") or "",
+            box_count=0,
+            marked_boxes=1 if payload.get("mark_status") == "single" else 0,
+            reason=payload.get("mark_reason") or "",
+        )
+        negeri = payload.get("suggested_negeri") or ""
+        dun_code = payload.get("suggested_dun_code") or ""
+        state = find_state(negeri) if negeri else None
+        official = []
+        if negeri and dun_code:
+            official = build_candidate_records(
+                state_code=state["code"] if state else "—",
+                dun_code=dun_code,
+            )
+        return adjudicate(
+            ocr_ok=bool(payload) and payload.get("ocr_status") not in {"", "Failed"},
+            location_status=payload.get("match_status") or "",
+            negeri=negeri,
+            dun_code=dun_code,
+            dun_applicable_seat=bool(negeri) and dun_applicable(negeri),
+            mark=mark,
+            official=official,
+        )
+
+    def _counted_ballot_id(self, source_path: str) -> str:
+        for session in self._data.get("location_sessions", {}).values():
+            found = session.get("counted_paths", {}).get(source_path)
+            if found:
+                return found
+        return ""
+
+    def _record_provisional_vote(self, ballot: dict, outcome, reading: dict) -> None:
+        """Add one provisional vote for a new ballot. A stored vote is not replaced."""
+        negeri = reading.get("suggested_negeri") or ""
+        dun_code = reading.get("suggested_dun_code") or ""
+        dun_name = reading.get("suggested_dun_name") or ""
+        key = location_key(negeri, dun_code)
+        session = self._session_for(key)
+        if session["kind"] in {"none", "not_applicable"}:
+            session["kind"] = "imported_session"
+        counted_ids = session.setdefault("counted_ballot_ids", [])
+        if ballot["id"] in counted_ids:
+            return
+        state = find_state(negeri)
+        state_code = state["code"] if state else "—"
+        if not session.get("candidates"):
+            session["candidates"] = build_candidate_records(state_code=state_code, dun_code=dun_code)
+        updated = False
+        for candidate in session["candidates"]:
+            candidate["state_code"] = state_code
+            candidate["dun_code"] = dun_code
+            names = {candidate.get("candidate_id"), candidate.get("candidate_name"), candidate.get("name")}
+            if outcome.candidate_id in names or outcome.candidate_name in names:
+                candidate["vote_count"] = int(candidate.get("vote_count", 0)) + 1
+                candidate["votes"] = candidate["vote_count"]
+                updated = True
+                break
+        if not updated:
+            ballot["counted"] = False
+            ballot["status"] = "Pending Review"
+            ballot["detected"] = ""
+            ballot["reason"] = "The marked candidate is not on the official list for this DUN."
+            return
+        stats = session["stats"]
+        stats["total_processed"] += 1
+        stats["valid"] += 1
+        session["classification"]["valid"] = stats["valid"]
+        record = {
+            "ballot_id": ballot["id"],
+            "image_ref": ballot.get("source_path") or "",
+            "negeri": negeri,
+            "dun_code": dun_code,
+            "dun_name": dun_name,
+            "candidate_id": outcome.candidate_id,
+            "candidate_name": outcome.candidate_name,
+            "location_confidence": outcome.location_confidence,
+            "mark_confidence": outcome.mark_confidence,
+            "status": "Counted",
+            "timestamp": datetime.now().isoformat(timespec="seconds"),
+        }
+        ballot["vote_record"] = record
+        session.setdefault("vote_records", []).insert(0, record)
+        session.setdefault("counted", []).insert(0, ballot)
+        counted_ids.append(ballot["id"])
+        if ballot.get("source_path"):
+            session.setdefault("counted_paths", {})[str(ballot["source_path"])] = ballot["id"]
+
+    def update_ballot_reading(self, source_file: str, fields: dict, *, source_path: str = "") -> bool:
+        """Attach OCR or an officer location confirmation to one queued image.
+
+        Does not change the active election, the candidate mark, or the review decision.
+        """
+        for ballot in self._data.get("flagged", []):
+            if ballot.get("source_file") != source_file:
+                continue
+            if source_path and ballot.get("source_path") not in ("", source_path):
+                continue
+            _copy_reading(ballot, fields)
+            if source_path:
+                ballot["source_path"] = source_path
+            self.changed.emit()
+            return True
+        return False
 
     def submit_review(self, ballot_id: str, decision: str, notes: str) -> None:
         target = None
@@ -720,6 +925,47 @@ class Store(QObject):
         target["status"] = "Reviewed"
         target["decision"] = decision
         target["notes"] = notes
+        image_ref = target.get("source_path") or ""
+        officer = USER_NAME
+        timestamp = datetime.now().isoformat(timespec="seconds")
+        target["officer"] = officer
+        target["decided_at"] = timestamp
+        target["image_ref"] = image_ref
+        target["review_record"] = {
+            "ballot_id": target["id"],
+            "image_ref": image_ref,
+            "decision": decision,
+            "review_reason": target.get("reason") or "",
+            "officer": officer,
+            "timestamp": timestamp,
+        }
+        self._flag_unknown_mark(target)
+        if target.get("counted"):
+            target.setdefault("corrections", []).append(
+                {
+                    "ballot_id": target["id"],
+                    "decision": decision,
+                    "review_reason": target.get("reason") or "",
+                    "officer": officer,
+                    "timestamp": timestamp,
+                    "notes": notes,
+                }
+            )
+            self.add_audit(
+                user=officer,
+                action="Recorded officer correction",
+                related=ballot_id,
+                event_type="Vote Correction",
+                status="Completed",
+                detail=(
+                    f"Correction for counted ballot {ballot_id}. Decision: {decision}. "
+                    "The provisional vote was not changed."
+                ),
+            )
+            self._publish_session()
+            self.message.emit(f"Correction recorded for {ballot_id}. The counted vote was left unchanged.", "info")
+            self.changed.emit()
+            return
         if was_pending:
             self._data["stats"]["pending_reviews"] = max(0, self._data["stats"]["pending_reviews"] - 1)
             if decision == "Mark as Rejected":
@@ -732,25 +978,90 @@ class Store(QObject):
                 self._data["classification"]["valid"] += 1
                 self._data["stats"]["flagged"] = max(0, self._data["stats"]["flagged"] - 1)
                 self._data["classification"]["needs_review"] = self._data["stats"]["flagged"]
-                detected = target.get("detected", "")
-                for candidate in self._data["candidates"]:
-                    names = {candidate.get("candidate_name"), candidate.get("name")}
-                    if detected in names:
-                        candidate["vote_count"] = int(candidate.get("vote_count", 0)) + 1
-                        candidate["votes"] = candidate["vote_count"]
-                        break
+                self._count_confirmed_mark(target)
         self._publish_session()
 
         self.add_audit(
-            user="Sahira",
+            user=officer,
             action=decision,
             related=ballot_id,
             event_type="Review Decision",
             status="Completed",
-            detail=f"Simulated review recorded. Notes: {notes or 'None'}",
+            detail=(
+                f"Session decision for {ballot_id}. Image: {image_ref or 'none'}. "
+                f"Reason: {target.get('reason') or 'None'}. Officer: {officer}. "
+                f"Time: {timestamp}. Notes: {notes or 'None'}. "
+                "Stored in memory for this session only."
+            ),
         )
-        self.message.emit(f"Review submitted for {ballot_id}. This is a simulated decision.", "success")
+        self.message.emit(f"Review submitted for {ballot_id}. This decision is kept for the current session.", "success")
         self.changed.emit()
+
+    def record_observed_candidates(self, ballot_id: str, observed_names: list[str]) -> bool:
+        """Record an exact candidate-list check. Does not count a vote or rename anyone."""
+        target = next((ballot for ballot in self._data["flagged"] if ballot["id"] == ballot_id), None)
+        if target is None:
+            return False
+        official = [
+            candidate.get("candidate_name") or candidate.get("name") or ""
+            for candidate in self._data["candidates"]
+        ]
+        comparison = compare_candidates(observed_names, official)
+        votes_before = [int(candidate.get("vote_count", 0)) for candidate in self._data["candidates"]]
+        target["candidate_check"] = comparison.status
+        target["matched_candidates"] = list(comparison.matched)
+        target["unknown_candidates"] = list(comparison.unknown)
+        target["candidate_mismatch"] = comparison.mismatched
+        target["mismatch_reason"] = MISMATCH_REASON if comparison.mismatched else ""
+        if comparison.mismatched:
+            target["detected"] = ""
+        votes_after = [int(candidate.get("vote_count", 0)) for candidate in self._data["candidates"]]
+        if votes_after != votes_before:
+            raise RuntimeError("A candidate-list check must not change vote totals.")
+        self.changed.emit()
+        return True
+
+    def _flag_unknown_mark(self, target: dict) -> None:
+        """Flag a stored name that is not on the official list. Do not rename it."""
+        if target.get("candidate_mismatch"):
+            return
+        detected = (target.get("detected") or "").strip()
+        if not detected:
+            return
+        official = [
+            candidate.get("candidate_name") or candidate.get("name") or ""
+            for candidate in self._data["candidates"]
+        ]
+        comparison = compare_candidates([detected], official)
+        if not comparison.mismatched:
+            return
+        target["candidate_mismatch"] = True
+        target["candidate_check"] = comparison.status
+        target["unknown_candidates"] = list(comparison.unknown)
+        target["matched_candidates"] = []
+        target["mismatch_reason"] = MISMATCH_REASON
+
+    def _count_confirmed_mark(self, target: dict) -> None:
+        """Add one vote only when the stored mark is exactly one official name."""
+        if target.get("counted") or target.get("candidate_mismatch"):
+            return
+        detected = (target.get("detected") or "").strip()
+        if not detected:
+            return
+        official = [
+            candidate.get("candidate_name") or candidate.get("name") or ""
+            for candidate in self._data["candidates"]
+        ]
+        comparison = compare_candidates([detected], official)
+        if len(comparison.matched) != 1 or comparison.mismatched:
+            return
+        official_name = comparison.matched[0]
+        for candidate in self._data["candidates"]:
+            names = {candidate.get("candidate_name"), candidate.get("name")}
+            if official_name in names:
+                candidate["vote_count"] = int(candidate.get("vote_count", 0)) + 1
+                candidate["votes"] = candidate["vote_count"]
+                return
 
     def record_export(self, kind: str, path: str) -> None:
         self.add_audit(

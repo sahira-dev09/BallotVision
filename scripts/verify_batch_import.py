@@ -3,6 +3,7 @@
 import os
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -32,10 +33,12 @@ def _save_jpg(folder: Path, name: str) -> Path:
 
 
 def _drain(app: QApplication, page: ScanPage) -> None:
-    for _ in range(500):
+    deadline = time.time() + 90
+    while time.time() < deadline:
         app.processEvents()
         if not page._batch_running and not page._batch_timer.isActive():
             return
+        time.sleep(0.02)
     raise AssertionError("batch did not finish")
 
 

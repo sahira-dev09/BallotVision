@@ -1,8 +1,10 @@
 """Scan Ballots: import dialog plus independent camera placeholder."""
 
+import threading
+import time
 from pathlib import Path
 
-from PySide6.QtCore import QSize, QTimer, Qt, Signal
+from PySide6.QtCore import QSize, QThread, QTimer, Qt, Signal
 from PySide6.QtGui import QColor, QPixmap
 from PySide6.QtWidgets import (
     QDialog,
@@ -19,12 +21,70 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from app.services.mark_recognition import (
+    NOT_DETECTED,
+    REASON_UNAVAILABLE,
+    STATUS_UNAVAILABLE,
+    MarkResult,
+    recognize_marks,
+)
+from app.services.ocr_service import (
+    INSPECTION_LIMIT_SECONDS,
+    OCR_TIMEOUT_MESSAGE,
+    install_ocr_process_tracking,
+    read_ballot_image,
+)
+from app.services.thread_cleanup import (
+    is_shutting_down,
+    register_shutdown_hook,
+    retain_until_finished,
+    unregister_shutdown_hook,
+)
 from app.widgets.components import Card, NoticeBar, SectionTitle, StatusBadge, aligned_item, style_data_table
-from app.widgets.location_bar import LocationBar
+from app.widgets.ocr_panel import OcrDetailPanel, fields_from_inspection
 
 IMAGE_FILTER = "Ballot images (*.png *.jpg *.jpeg);;All files (*.*)"
 ALLOWED = {".png", ".jpg", ".jpeg"}
-QUEUED_RESULT = "Queued for officer review. The ballot was not marked valid and no vote was recognised."
+QUEUED_RESULT = "Added to the officer review queue. No vote was counted."
+COUNTED_RESULT = "Provisional vote recorded for one clear mark. This ballot was counted once."
+# QPainter is not safe on two threads at once. Inspections already run one at a time
+# in a batch; this also covers a dialog worker overlapping that batch.
+_INSPECT_LOCK = threading.Lock()
+
+
+class InspectWorker(QThread):
+    """OCR, location matching, and mark recognition for one image."""
+
+    completed = Signal(object)
+
+    def __init__(self, image_path: str, parent=None) -> None:
+        super().__init__(parent)
+        self.image_path = image_path
+
+    def run(self) -> None:  # noqa: N802
+        install_ocr_process_tracking()
+        deadline = time.monotonic() + INSPECTION_LIMIT_SECONDS
+        with _INSPECT_LOCK:
+            if self.isInterruptionRequested():
+                return
+            reading = read_ballot_image(self.image_path, deadline=deadline)
+            if self.isInterruptionRequested():
+                return
+            if reading.ocr.error == OCR_TIMEOUT_MESSAGE or time.monotonic() >= deadline:
+                marks = MarkResult(
+                    STATUS_UNAVAILABLE,
+                    NOT_DETECTED,
+                    "",
+                    0,
+                    0,
+                    REASON_UNAVAILABLE,
+                    OCR_TIMEOUT_MESSAGE,
+                )
+            else:
+                marks = recognize_marks(self.image_path, deadline=deadline)
+            if self.isInterruptionRequested():
+                return
+            self.completed.emit((reading, marks))
 
 
 def files_in_folder(directory: str) -> list[str]:
@@ -35,19 +95,77 @@ STATUS_COLOR = {
     "Processing": "#22D3EE",
     "Completed": "#34D399",
     "Failed": "#FB7185",
+    "Reading": "#22D3EE",
+    "Read": "#34D399",
+    "No text": "#FBBF24",
 }
+OCR_ROW_FIELDS = (
+    "ocr_text",
+    "ocr_status",
+    "ocr_error",
+    "suggested_negeri",
+    "suggested_dun_code",
+    "suggested_dun_name",
+    "match_status",
+    "match_reason",
+    "confirmed_negeri",
+    "confirmed_dun_code",
+    "confirmed_dun_name",
+    "mark_status",
+    "mark_confidence",
+    "mark_reason",
+    "mark_row_text",
+    "mark_diagnosis",
+)
+
+
+def _store_late_reading(store, path: str, payload) -> None:
+    """Keep a finished reading after the import dialog has closed. Do not clear a confirmation."""
+    reading, marks = payload
+    fields = fields_from_inspection(reading, marks, source_path=path)
+    for key in ("confirmed_negeri", "confirmed_dun_code", "confirmed_dun_name"):
+        fields.pop(key, None)
+    store.update_ballot_reading(Path(path).name, fields, source_path=path)
+
+
+def _thread_running(worker: QThread | None) -> bool:
+    if worker is None:
+        return False
+    try:
+        return worker.isRunning()
+    except RuntimeError:
+        return False
+
+
+def _blank_row(path: str) -> dict:
+    row = {
+        "path": str(Path(path)),
+        "name": Path(path).name,
+        "status": "Pending",
+        "detail": "Waiting to process.",
+    }
+    row.update({field: "" for field in OCR_ROW_FIELDS})
+    return row
 
 
 class ImportBallotDialog(QDialog):
+    inspection_ready = Signal(object)
+
     def __init__(self, store, image_path: str, parent=None) -> None:
         super().__init__(parent)
         self.store = store
         self.image_path = image_path
         self._progress = 0
         self._outcome = "idle"
+        self._closed = False
+        self.ocr_worker = None
+        self.inspection_fields = None
+        self._shutdown_hook = self._pause_for_shutdown
+        register_shutdown_hook(self._shutdown_hook)
+        self.destroyed.connect(self._drop_shutdown_hook)
         self.setWindowTitle("Imported Ballot Image")
         self.setModal(True)
-        self.setMinimumSize(720, 560)
+        self.setMinimumSize(760, 680)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self._tick)
 
@@ -57,17 +175,20 @@ class ImportBallotDialog(QDialog):
         layout.addWidget(
             SectionTitle(
                 "Imported Ballot Image",
-                "Check the file, then click Process Image. Selecting a file does not start recognition.",
+                "Location and candidate marks are read from this image. A vote is recorded only when both checks pass.",
             )
         )
         layout.addWidget(
-            NoticeBar("Demonstration processing — recognition engine not connected", "warning")
+            NoticeBar(
+                "A provisional vote is recorded only for one clear mark on a candidate registered for the detected DUN. Unclear ballots go to the review queue.",
+                "info",
+            )
         )
 
         self.preview = QLabel()
         self.preview.setObjectName("previewFrame")
         self.preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.preview.setMinimumHeight(280)
+        self.preview.setMinimumHeight(160)
         self.preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout.addWidget(self.preview, 1)
 
@@ -89,6 +210,10 @@ class ImportBallotDialog(QDialog):
         self.meta = QLabel(f"{name}\n{dims}")
         self.meta.setObjectName("mutedLabel")
         layout.addWidget(self.meta)
+        self.ocr_panel = OcrDetailPanel()
+        layout.addWidget(self.ocr_panel)
+        if self._readable:
+            self._start_ocr()
 
         self.status = QLabel("Ready. Nothing has been processed yet.")
         self.status.setObjectName("mutedLabel")
@@ -107,7 +232,7 @@ class ImportBallotDialog(QDialog):
         self.process_btn.setObjectName("primaryButton")
         self.process_btn.setEnabled(self._readable)
         self.process_btn.clicked.connect(self._start)
-        self.review_btn = QPushButton("Review flagged ballot")
+        self.review_btn = QPushButton("Open in review queue")
         self.review_btn.setObjectName("primaryButton")
         self.review_btn.setVisible(False)
         self.review_btn.clicked.connect(self._open_review)
@@ -122,7 +247,7 @@ class ImportBallotDialog(QDialog):
             return
         if not self.store.settings().get("demo_processing_mode", True):
             self.status.setText(
-                "Cannot process. Demo Processing Mode is off, and no recognition engine is connected."
+                "Cannot process. Demo Processing Mode is off, so this image was not added to the review queue."
             )
             self._outcome = "failed"
             self.process_btn.setEnabled(False)
@@ -131,7 +256,7 @@ class ImportBallotDialog(QDialog):
         self._progress = 0
         self.progress.setValue(0)
         self.process_btn.setEnabled(False)
-        self.status.setText("Demonstration processing started. This is not AI recognition.")
+        self.status.setText("Adding this image to the officer review queue.")
         self.timer.start(70)
 
     def _tick(self) -> None:
@@ -152,9 +277,19 @@ class ImportBallotDialog(QDialog):
             self.timer.stop()
             self._outcome = "completed"
             self.status.setText(
-                "Queued for officer review. The ballot was not marked valid and no vote was recognised."
+                "Added to the officer review queue. No vote was counted."
             )
-            self.store.complete_import_processing(1)
+            result = self.store.complete_import_processing(
+                1,
+                source_paths=[self.image_path],
+                reading=self.ocr_panel.snapshot(),
+            )
+            if result == "counted":
+                self.status.setText(COUNTED_RESULT)
+            elif result == "duplicate":
+                self.status.setText("This image was already counted. No additional vote was recorded.")
+            else:
+                self.status.setText(QUEUED_RESULT)
             self.process_btn.setVisible(False)
             self.review_btn.setVisible(True)
             self.cancel_btn.setText("Close")
@@ -171,6 +306,45 @@ class ImportBallotDialog(QDialog):
         self._outcome = "review"
         self.accept()
 
+    def _pause_for_shutdown(self) -> None:
+        self._closed = True
+        if self.timer.isActive():
+            self.timer.stop()
+
+    def _drop_shutdown_hook(self, *_args) -> None:
+        unregister_shutdown_hook(self._shutdown_hook)
+
+    def _start_ocr(self) -> None:
+        self.ocr_panel.load(self.image_path, {"ocr_status": "Reading", "match_reason": "Reading text…"})
+        self.ocr_worker = InspectWorker(self.image_path, None)
+        retain_until_finished(self.ocr_worker)
+        self.ocr_worker.completed.connect(self._on_ocr, Qt.ConnectionType.QueuedConnection)
+        self.ocr_worker.start()
+
+    def _on_ocr(self, payload) -> None:
+        if is_shutting_down():
+            return
+        reading, marks = payload
+        fields = fields_from_inspection(reading, marks, source_path=self.image_path)
+        self.inspection_fields = fields
+        if not self._closed:
+            self.ocr_panel.load(self.image_path, fields)
+            if self._outcome == "completed":
+                self.store.update_ballot_reading(
+                    Path(self.image_path).name,
+                    fields,
+                    source_path=self.image_path,
+                )
+        elif self._outcome == "completed":
+            _store_late_reading(self.store, self.image_path, payload)
+        self.inspection_ready.emit(fields)
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        self._closed = True
+        if self.timer.isActive():
+            self.timer.stop()
+        super().closeEvent(event)
+
 
 class ScanPage(QWidget):
     navigate = Signal(str)
@@ -181,22 +355,25 @@ class ScanPage(QWidget):
         self._batch_rows: list[dict] = []
         self._batch_index = 0
         self._batch_running = False
+        self._batch_token = 0
         self._batch_timer = QTimer(self)
         self._batch_timer.setSingleShot(True)
         self._batch_timer.timeout.connect(self._process_next_batch_row)
+        self._shutdown_hook = self._pause_for_shutdown
+        register_shutdown_hook(self._shutdown_hook)
+        self.destroyed.connect(self._drop_shutdown_hook)
+        self._held_dialog = None
+        self._awaiting_inspection_path = None
         self.setObjectName("pageBody")
         root = QVBoxLayout(self)
         root.setContentsMargins(24, 12, 24, 16)
         root.setSpacing(10)
         root.addWidget(
             NoticeBar(
-                "Imported images are assigned to the constituency selected below. Camera capture is a separate, future workflow.",
+                "Negeri and DUN are detected from each image. A vote is counted only when that location is reliable and exactly one clear mark matches the official candidate for that DUN.",
                 "info",
             )
         )
-        self.location = LocationBar()
-        self.location.location_changed.connect(self.store.set_demo_location)
-        root.addWidget(self.location)
         workspace = QHBoxLayout()
         workspace.setSpacing(12)
         workspace.setAlignment(Qt.AlignmentFlag.AlignTop)
@@ -206,18 +383,13 @@ class ScanPage(QWidget):
         workspace.addWidget(self._build_preview_card(), 3)
         root.addLayout(workspace, 1)
         root.addWidget(self._build_camera_card())
-        self.store.changed.connect(self._refresh_location)
-        self._refresh_location()
-
-    def _refresh_location(self) -> None:
-        self.location.apply_election(self.store.data["election"])
 
     def _build_import_card(self) -> Card:
         card = Card()
         card.layout.addWidget(
             SectionTitle(
                 "Import ballot images",
-                "One image opens the preview dialog. Several images, or a folder, are processed one file at a time.",
+                "Upload Image accepts one or more files. Upload Folder imports the images in a folder.",
             )
         )
         self.import_status = StatusBadge("No image selected", "neutral")
@@ -228,16 +400,18 @@ class ScanPage(QWidget):
         hint.setObjectName("mutedLabel")
         hint.setWordWrap(True)
         card.layout.addWidget(hint)
-        import_btn = QPushButton("Import Ballot Image")
-        import_btn.setObjectName("primaryButton")
-        import_btn.clicked.connect(self._choose_file)
-        self.import_many_btn = QPushButton("Import images")
-        self.import_many_btn.clicked.connect(self._choose_files)
-        self.import_folder_btn = QPushButton("Import folder")
-        self.import_folder_btn.clicked.connect(self._choose_folder)
-        self._import_buttons = (import_btn, self.import_many_btn, self.import_folder_btn)
-        for button in self._import_buttons:
-            card.layout.addWidget(button, 0, Qt.AlignmentFlag.AlignLeft)
+        upload_row = QHBoxLayout()
+        upload_row.setSpacing(8)
+        upload_image = QPushButton("Upload Image")
+        upload_image.setObjectName("primaryButton")
+        upload_image.clicked.connect(self._choose_files)
+        upload_folder = QPushButton("Upload Folder")
+        upload_folder.clicked.connect(self._choose_folder)
+        upload_row.addWidget(upload_image)
+        upload_row.addWidget(upload_folder)
+        upload_row.addStretch(1)
+        self._import_buttons = (upload_image, upload_folder)
+        card.layout.addLayout(upload_row)
         self.batch_summary = QLabel("No batch yet")
         self.batch_summary.setObjectName("batchSummary")
         self.batch_summary.setWordWrap(True)
@@ -265,14 +439,15 @@ class ScanPage(QWidget):
         card.layout.addWidget(
             SectionTitle("Ballot preview", "Select a row to see that file. Each image is processed on its own.")
         )
-        self.batch_table = QTableWidget(0, 3)
+        self.batch_table = QTableWidget(0, 4)
         self.batch_table.setObjectName("batchTable")
-        self.batch_table.setHorizontalHeaderLabels(["Filename", "Status", "Result"])
+        self.batch_table.setHorizontalHeaderLabels(["Filename", "Status", "OCR", "Result"])
         style_data_table(self.batch_table)
         header = self.batch_table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
-        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
         self.batch_table.setMinimumHeight(132)
         self.batch_table.setMaximumHeight(220)
         self.batch_table.itemSelectionChanged.connect(self._on_batch_select)
@@ -282,19 +457,20 @@ class ScanPage(QWidget):
         self.page_preview.setObjectName("previewFrame")
         self.page_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.page_preview.setWordWrap(True)
-        self.page_preview.setMinimumHeight(220)
+        self.page_preview.setMinimumHeight(120)
         self.page_preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         card.layout.addWidget(self.page_preview, 1)
         details_caption = QLabel("File details")
         details_caption.setObjectName("fieldCaption")
         card.layout.addWidget(details_caption)
         self.preview_notes = QLabel(
-            "No file is open. Import Ballot Image opens a dialog for one file. "
-            "Import images or Import folder lists every file and processes each one separately."
+            "No file is open. Use Upload Image for one or more files, or Upload Folder for a directory."
         )
         self.preview_notes.setObjectName("mutedLabel")
         self.preview_notes.setWordWrap(True)
         card.layout.addWidget(self.preview_notes)
+        self.ocr_panel = OcrDetailPanel()
+        card.layout.addWidget(self.ocr_panel)
         return card
 
     def _build_camera_card(self) -> Card:
@@ -346,7 +522,7 @@ class ScanPage(QWidget):
             self.page_preview.setPixmap(scaled)
             dims = f"{pixmap.width()} × {pixmap.height()} px"
         outcome_text = {
-            "completed": "Queued for officer review. The ballot was not marked valid.",
+            "completed": "Added to the officer review queue. No vote was counted.",
             "cancelled": "Import cancelled. No ballot was classified.",
             "failed": "The file was not processed.",
             "review": "Queued for officer review.",
@@ -354,21 +530,36 @@ class ScanPage(QWidget):
         }.get(outcome, "File selected.")
         self.preview_notes.setText(f"{name}\n{dims}\n\n{outcome_text}")
 
-    def _choose_file(self) -> None:
+    def _choose_files(self) -> None:
         if self._batch_running:
             return
-        path, _filter = QFileDialog.getOpenFileName(self, "Import ballot image", "", IMAGE_FILTER)
-        if not path:
+        paths, _filter = QFileDialog.getOpenFileNames(self, "Import ballot images", "", IMAGE_FILTER)
+        if not paths:
             return
+        if len(paths) == 1:
+            self._open_single(paths[0])
+            return
+        self.start_batch(paths)
+
+    def _open_single(self, path: str) -> None:
         if Path(path).suffix.lower() not in ALLOWED:
             QMessageBox.warning(self, "Unsupported file", "Use PNG, JPG, or JPEG.")
             return
         if self.store.data.get("imported"):
             self.store.clear_imported()
         dialog = ImportBallotDialog(self.store, path, self)
+        self._awaiting_inspection_path = path
+        dialog.inspection_ready.connect(self._show_finished_inspection)
         result = dialog.exec()
         self.last_import.setText(f"Last file: {Path(path).name}")
         self._show_file_preview(path, dialog._outcome)
+        if dialog.inspection_fields is not None:
+            self.ocr_panel.load(path, dialog.inspection_fields)
+            self._held_dialog = None
+        elif _thread_running(dialog.ocr_worker):
+            self._held_dialog = dialog
+        else:
+            self._held_dialog = None
         if dialog._outcome == "completed":
             self.import_status.set_kind("warning", "Queued for review")
             self.review_now.setVisible(True)
@@ -385,13 +576,14 @@ class ScanPage(QWidget):
         elif result:
             self.import_status.set_kind("info", "Closed")
 
-    def _choose_files(self) -> None:
-        if self._batch_running:
+    def _show_finished_inspection(self, fields: dict) -> None:
+        path = str(fields.get("source_path") or "")
+        if self._awaiting_inspection_path not in {None, path}:
             return
-        paths, _filter = QFileDialog.getOpenFileNames(self, "Import ballot images", "", IMAGE_FILTER)
-        if not paths:
-            return
-        self.start_batch(paths)
+        if path:
+            self.ocr_panel.load(path, fields)
+            self._awaiting_inspection_path = None
+            self._held_dialog = None
 
     def _choose_folder(self) -> None:
         if self._batch_running:
@@ -422,11 +614,9 @@ class ScanPage(QWidget):
                 return
             if self.store.data.get("imported"):
                 self.store.clear_imported()
-            self._batch_rows = [
-                {"path": path, "name": Path(path).name, "status": "Pending", "detail": "Waiting to process."}
-                for path in unique
-            ]
+            self._batch_rows = [_blank_row(path) for path in unique]
         self._batch_index = 0
+        self._batch_token += 1
         self._batch_running = True
         self._render_batch()
         self._set_batch_controls(True)
@@ -442,17 +632,81 @@ class ScanPage(QWidget):
             self._finish_batch()
             return
         row = self._batch_rows[self._batch_index]
+        problem = self._image_problem(row["path"])
+        if problem is not None:
+            row["status"] = "Failed"
+            row["detail"] = problem
+            row["ocr_status"] = "Failed" if "image" in problem.casefold() or "format" in problem.casefold() else ""
+            self._batch_index += 1
+            self._render_batch(select=self._batch_index - 1)
+            self._batch_timer.start(0)
+            return
         row["status"] = "Processing"
-        row["detail"] = "Running the existing import workflow."
+        row["ocr_status"] = "Reading"
+        row["detail"] = "Reading text, then queueing this image."
         self._render_batch(select=self._batch_index)
-        status, detail = self._process_image(row["path"])
+        token = self._batch_token
+        worker = InspectWorker(row["path"], None)
+        retain_until_finished(worker)
+        worker.completed.connect(
+            lambda payload, path=row["path"], token=token: self._finish_row_ocr(
+                path, token, payload
+            ),
+            Qt.ConnectionType.QueuedConnection,
+        )
+        worker.start()
+
+    def _pause_for_shutdown(self) -> None:
+        self._batch_token += 1
+        self._batch_running = False
+        self._batch_timer.stop()
+
+    def _drop_shutdown_hook(self, *_args) -> None:
+        unregister_shutdown_hook(self._shutdown_hook)
+
+    def _finish_row_ocr(self, path: str, token: int, payload) -> None:
+        if is_shutting_down() or token != self._batch_token or not self._batch_running:
+            return
+        reading, marks = payload
+        row = next((item for item in self._batch_rows if item["path"] == path and item["status"] == "Processing"), None)
+        if row is None:
+            return
+        fields = self.ocr_panel.apply_inspection(path, reading, marks) if self.ocr_panel.path == path else None
+        stored = fields_from_inspection(reading, marks, source_path=path)
+        confirmed = {
+            "confirmed_negeri": row.get("confirmed_negeri", ""),
+            "confirmed_dun_code": row.get("confirmed_dun_code", ""),
+            "confirmed_dun_name": row.get("confirmed_dun_name", ""),
+        }
+        if fields is not None and fields.get("confirmed_negeri"):
+            confirmed = {
+                "confirmed_negeri": fields.get("confirmed_negeri", ""),
+                "confirmed_dun_code": fields.get("confirmed_dun_code", ""),
+                "confirmed_dun_name": fields.get("confirmed_dun_name", ""),
+            }
+        stored.update(confirmed)
+        row.update(stored)
+        status, detail = self._process_image(path, stored)
         row["status"] = status
         row["detail"] = detail
         self._batch_index += 1
-        self._render_batch(select=min(self._batch_index, len(self._batch_rows) - 1))
-        self._batch_timer.start(0)
+        self._render_batch(select=self.batch_table.currentRow() if self.batch_table.currentRow() >= 0 else self._batch_index - 1)
+        if self._batch_running:
+            self._batch_timer.start(0)
 
-    def _process_image(self, path: str) -> tuple[str, str]:
+    def _image_problem(self, path: str) -> str | None:
+        file_path = Path(path)
+        if file_path.suffix.lower() not in ALLOWED:
+            return "Unsupported format. Use PNG, JPG, or JPEG."
+        if not file_path.is_file():
+            return "File could not be found."
+        if QPixmap(str(file_path)).isNull():
+            return "This file could not be opened as an image."
+        if not self.store.settings().get("demo_processing_mode", True):
+            return "Cannot process. Demo Processing Mode is off, so this image was not added to the review queue."
+        return None
+
+    def _process_image(self, path: str, reading_fields: dict | None = None) -> tuple[str, str]:
         file_path = Path(path)
         if file_path.suffix.lower() not in ALLOWED:
             return "Failed", "Unsupported format. Use PNG, JPG, or JPEG."
@@ -464,15 +718,24 @@ class ScanPage(QWidget):
         if not self.store.settings().get("demo_processing_mode", True):
             return (
                 "Failed",
-                "Cannot process. Demo Processing Mode is off, and no recognition engine is connected.",
+                "Cannot process. Demo Processing Mode is off, so this image was not added to the review queue.",
             )
         before = int(self.store.data["stats"].get("pending_reviews", 0))
         try:
             self.store.add_imported([str(file_path)], notify=False)
-            self.store.complete_import_processing(1, source_paths=[str(file_path)], notify=False)
+            result = self.store.complete_import_processing(
+                1,
+                source_paths=[str(file_path)],
+                notify=False,
+                reading=reading_fields,
+            )
         except Exception as exc:
             return "Failed", f"Processing error: {exc}"
         after = int(self.store.data["stats"].get("pending_reviews", 0))
+        if result == "counted":
+            return "Completed", COUNTED_RESULT
+        if result == "duplicate":
+            return "Completed", "This image was already counted. No additional vote was recorded."
         if after != before + 1:
             return "Failed", "The import workflow did not queue this image."
         return "Completed", QUEUED_RESULT
@@ -514,13 +777,21 @@ class ScanPage(QWidget):
             if row["status"] == "Failed":
                 row["status"] = "Pending"
                 row["detail"] = "Waiting to retry."
+                for field in OCR_ROW_FIELDS:
+                    row[field] = ""
         self.start_batch([], retry=True)
 
     def _cancel_batch(self) -> None:
         if not self._batch_running:
             return
+        self._batch_token += 1
         self._batch_running = False
         self._batch_timer.stop()
+        for row in self._batch_rows:
+            if row["status"] == "Processing":
+                row["status"] = "Pending"
+                row["ocr_status"] = ""
+                row["detail"] = "Waiting to process."
         self._set_batch_controls(False)
         counts = self._batch_counts()
         self.import_status.set_kind("neutral", "Cancelled")
@@ -574,11 +845,15 @@ class ScanPage(QWidget):
             name_item.setToolTip(row["path"])
             status_item = aligned_item(row["status"])
             status_item.setForeground(QColor(STATUS_COLOR.get(row["status"], "#F1F5F9")))
+            ocr_item = aligned_item(row.get("ocr_status") or "—")
+            ocr_item.setForeground(QColor(STATUS_COLOR.get(row.get("ocr_status", ""), "#94A3B8")))
+            ocr_item.setToolTip(row.get("ocr_error") or row.get("match_reason") or "")
             detail_item = aligned_item(row["detail"])
             detail_item.setToolTip(row["detail"])
             self.batch_table.setItem(index, 0, name_item)
             self.batch_table.setItem(index, 1, status_item)
-            self.batch_table.setItem(index, 2, detail_item)
+            self.batch_table.setItem(index, 2, ocr_item)
+            self.batch_table.setItem(index, 3, detail_item)
         self.batch_table.resizeRowsToContents()
         self.batch_table.blockSignals(False)
         if select is not None and self._batch_rows:
@@ -592,6 +867,8 @@ class ScanPage(QWidget):
             return
         row = self._batch_rows[row_index]
         self._show_batch_preview(row["path"], row["detail"])
+        if self.ocr_panel.path != row["path"]:
+            self.ocr_panel.load(row["path"], row)
 
     def _show_batch_preview(self, path: str, detail: str) -> None:
         file_path = Path(path)
@@ -625,4 +902,4 @@ class ScanPage(QWidget):
             status="Warning",
             detail="Camera integration is pending. No device was opened.",
         )
-        self.store.message.emit("Camera is not connected. Use Import Ballot Image instead.", "warning")
+        self.store.message.emit("Camera is not connected. Use Upload Image or Upload Folder instead.", "warning")
