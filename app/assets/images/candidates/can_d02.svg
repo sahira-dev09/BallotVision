@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Fictional demo portrait CAN-D02">
+  <rect width="128" height="128" rx="64" fill="#14532D"/>
+  <rect x="42" y="28" width="44" height="44" rx="10" fill="#6EE7B7"/>
+  <path d="M24 118 C30 84 46 78 64 78 C82 78 98 84 104 118 Z" fill="#166534"/>
+  <rect x="40" y="8" width="48" height="14" rx="7" fill="#34D399"/>
+  <text x="64" y="19" text-anchor="middle" font-size="9" font-family="Segoe UI, sans-serif" fill="#052E16" font-weight="700">DEMO</text>
+  <text x="64" y="56" text-anchor="middle" font-size="16" font-family="Segoe UI, sans-serif" fill="#052E16" font-weight="700">RP</text>
+</svg>

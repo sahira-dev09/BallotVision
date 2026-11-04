@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BallotVision logo">
+  <rect width="64" height="64" rx="14" fill="#0F172A"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#22D3EE" stroke-width="2.4" opacity="0.9"/>
+  <circle cx="32" cy="32" r="22.5" fill="none" stroke="#2DD4BF" stroke-width="1.2" opacity="0.45"/>
+  <rect x="18" y="12" width="28" height="40" rx="3.5" fill="#F8FAFC"/>
+  <rect x="18" y="12" width="28" height="8" rx="3.5" fill="#155E75"/>
+  <rect x="18" y="16" width="28" height="4" fill="#155E75"/>
+  <rect x="22" y="14.2" width="12" height="2.2" rx="1" fill="#A5F3FC"/>
+  <rect x="22" y="24" width="7" height="7" rx="1.2" fill="none" stroke="#0F172A" stroke-width="1.6"/>
+  <path d="M23.6 27.4 L24.9 28.8 L27.7 25.4" fill="none" stroke="#0E7490" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="32" y="25.6" width="10" height="2.2" rx="1" fill="#94A3B8"/>
+  <rect x="22" y="35" width="7" height="7" rx="1.2" fill="none" stroke="#0F172A" stroke-width="1.6"/>
+  <rect x="32" y="36.6" width="10" height="2.2" rx="1" fill="#94A3B8"/>
+  <rect x="22" y="45.5" width="7" height="3.2" rx="1" fill="#CBD5E1"/>
+  <circle cx="44" cy="46" r="7.5" fill="#0F172A" stroke="#22D3EE" stroke-width="2"/>
+  <circle cx="44" cy="46" r="3.2" fill="none" stroke="#2DD4BF" stroke-width="1.5"/>
+  <circle cx="44" cy="46" r="1.2" fill="#22D3EE"/>
+</svg>

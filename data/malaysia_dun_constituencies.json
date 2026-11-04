@@ -1,0 +1,4355 @@
+{
+  "dataset": "Malaysian State Legislative Assembly (DUN/DN) constituencies",
+  "effective_from": "2018-05-09",
+  "effective_description": "Post-2016 redelineation used for PRU-14 (2018) and PRU-15 (2022). Peninsular state elections 2023, Sabah 2020, and Sarawak 2021 used this DUN structure.",
+  "as_of": "2022-11-19",
+  "sources": [
+    {
+      "name": "Department of Statistics Malaysia (DOSM) open geodata — state_parlimen_dun.csv",
+      "url": "https://github.com/dosm-malaysia/data-open/blob/main/datasets/geodata/state_parlimen_dun.csv",
+      "note": "Official Malaysian government open data joining SPR electoral boundaries."
+    },
+    {
+      "name": "Suruhanjaya Pilihan Raya Malaysia (SPR) — Senarai Bahagian Pilihan Raya (Dewan Undangan Negeri) bagi PRU ke-14",
+      "url": "https://archive.data.gov.my/data/ms_MY/group/spr?tags=pilihanraya",
+      "note": "Official SPR dataset published on data.gov.my / SPR open data holdings."
+    },
+    {
+      "name": "SPR Open Data Portal",
+      "url": "https://opendata.spr.gov.my/",
+      "note": "Constituency and election open data portal. This application does not live-query SPR."
+    }
+  ],
+  "notes": [
+    "Federal Territories (W.P. Kuala Lumpur, W.P. Putrajaya, W.P. Labuan) have parliamentary seats only and no State Legislative Assembly (DUN).",
+    "Constituency names and codes are copied from the DOSM/SPR boundary table. They are not election results.",
+    "A later redelineation, if gazetted after this dataset date, is not reflected here."
+  ],
+  "states": [
+    {
+      "name": "Perlis",
+      "code": "PLS",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Titi Tinggi",
+          "label": "N.01 Titi Tinggi",
+          "parliament_code": "P.001",
+          "parliament_name": "P.001 Padang Besar"
+        },
+        {
+          "code": "N.02",
+          "name": "Beseri",
+          "label": "N.02 Beseri",
+          "parliament_code": "P.001",
+          "parliament_name": "P.001 Padang Besar"
+        },
+        {
+          "code": "N.03",
+          "name": "Chuping",
+          "label": "N.03 Chuping",
+          "parliament_code": "P.001",
+          "parliament_name": "P.001 Padang Besar"
+        },
+        {
+          "code": "N.04",
+          "name": "Mata Ayer",
+          "label": "N.04 Mata Ayer",
+          "parliament_code": "P.001",
+          "parliament_name": "P.001 Padang Besar"
+        },
+        {
+          "code": "N.05",
+          "name": "Santan",
+          "label": "N.05 Santan",
+          "parliament_code": "P.001",
+          "parliament_name": "P.001 Padang Besar"
+        },
+        {
+          "code": "N.06",
+          "name": "Bintong",
+          "label": "N.06 Bintong",
+          "parliament_code": "P.002",
+          "parliament_name": "P.002 Kangar"
+        },
+        {
+          "code": "N.07",
+          "name": "Sena",
+          "label": "N.07 Sena",
+          "parliament_code": "P.002",
+          "parliament_name": "P.002 Kangar"
+        },
+        {
+          "code": "N.08",
+          "name": "Indera Kayangan",
+          "label": "N.08 Indera Kayangan",
+          "parliament_code": "P.002",
+          "parliament_name": "P.002 Kangar"
+        },
+        {
+          "code": "N.09",
+          "name": "Kuala Perlis",
+          "label": "N.09 Kuala Perlis",
+          "parliament_code": "P.002",
+          "parliament_name": "P.002 Kangar"
+        },
+        {
+          "code": "N.10",
+          "name": "Kayang",
+          "label": "N.10 Kayang",
+          "parliament_code": "P.002",
+          "parliament_name": "P.002 Kangar"
+        },
+        {
+          "code": "N.11",
+          "name": "Pauh",
+          "label": "N.11 Pauh",
+          "parliament_code": "P.003",
+          "parliament_name": "P.003 Arau"
+        },
+        {
+          "code": "N.12",
+          "name": "Tambun Tulang",
+          "label": "N.12 Tambun Tulang",
+          "parliament_code": "P.003",
+          "parliament_name": "P.003 Arau"
+        },
+        {
+          "code": "N.13",
+          "name": "Guar Sanji",
+          "label": "N.13 Guar Sanji",
+          "parliament_code": "P.003",
+          "parliament_name": "P.003 Arau"
+        },
+        {
+          "code": "N.14",
+          "name": "Simpang Empat",
+          "label": "N.14 Simpang Empat",
+          "parliament_code": "P.003",
+          "parliament_name": "P.003 Arau"
+        },
+        {
+          "code": "N.15",
+          "name": "Sanglang",
+          "label": "N.15 Sanglang",
+          "parliament_code": "P.003",
+          "parliament_name": "P.003 Arau"
+        }
+      ],
+      "dun_count": 15
+    },
+    {
+      "name": "Kedah",
+      "code": "KDH",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Ayer Hangat",
+          "label": "N.01 Ayer Hangat",
+          "parliament_code": "P.004",
+          "parliament_name": "P.004 Langkawi"
+        },
+        {
+          "code": "N.02",
+          "name": "Kuah",
+          "label": "N.02 Kuah",
+          "parliament_code": "P.004",
+          "parliament_name": "P.004 Langkawi"
+        },
+        {
+          "code": "N.03",
+          "name": "Kota Siputeh",
+          "label": "N.03 Kota Siputeh",
+          "parliament_code": "P.005",
+          "parliament_name": "P.005 Jerlun"
+        },
+        {
+          "code": "N.04",
+          "name": "Ayer Hitam",
+          "label": "N.04 Ayer Hitam",
+          "parliament_code": "P.005",
+          "parliament_name": "P.005 Jerlun"
+        },
+        {
+          "code": "N.05",
+          "name": "Bukit Kayu Hitam",
+          "label": "N.05 Bukit Kayu Hitam",
+          "parliament_code": "P.006",
+          "parliament_name": "P.006 Kubang Pasu"
+        },
+        {
+          "code": "N.06",
+          "name": "Jitra",
+          "label": "N.06 Jitra",
+          "parliament_code": "P.006",
+          "parliament_name": "P.006 Kubang Pasu"
+        },
+        {
+          "code": "N.07",
+          "name": "Kuala Nerang",
+          "label": "N.07 Kuala Nerang",
+          "parliament_code": "P.007",
+          "parliament_name": "P.007 Padang Terap"
+        },
+        {
+          "code": "N.08",
+          "name": "Pedu",
+          "label": "N.08 Pedu",
+          "parliament_code": "P.007",
+          "parliament_name": "P.007 Padang Terap"
+        },
+        {
+          "code": "N.09",
+          "name": "Bukit Lada",
+          "label": "N.09 Bukit Lada",
+          "parliament_code": "P.008",
+          "parliament_name": "P.008 Pokok Sena"
+        },
+        {
+          "code": "N.10",
+          "name": "Bukit Pinang",
+          "label": "N.10 Bukit Pinang",
+          "parliament_code": "P.008",
+          "parliament_name": "P.008 Pokok Sena"
+        },
+        {
+          "code": "N.11",
+          "name": "Derga",
+          "label": "N.11 Derga",
+          "parliament_code": "P.008",
+          "parliament_name": "P.008 Pokok Sena"
+        },
+        {
+          "code": "N.12",
+          "name": "Suka Menanti",
+          "label": "N.12 Suka Menanti",
+          "parliament_code": "P.009",
+          "parliament_name": "P.009 Alor Setar"
+        },
+        {
+          "code": "N.13",
+          "name": "Kota Darul Aman",
+          "label": "N.13 Kota Darul Aman",
+          "parliament_code": "P.009",
+          "parliament_name": "P.009 Alor Setar"
+        },
+        {
+          "code": "N.14",
+          "name": "Alor Mengkudu",
+          "label": "N.14 Alor Mengkudu",
+          "parliament_code": "P.009",
+          "parliament_name": "P.009 Alor Setar"
+        },
+        {
+          "code": "N.15",
+          "name": "Anak Bukit",
+          "label": "N.15 Anak Bukit",
+          "parliament_code": "P.010",
+          "parliament_name": "P.010 Kuala Kedah"
+        },
+        {
+          "code": "N.16",
+          "name": "Kubang Rotan",
+          "label": "N.16 Kubang Rotan",
+          "parliament_code": "P.010",
+          "parliament_name": "P.010 Kuala Kedah"
+        },
+        {
+          "code": "N.17",
+          "name": "Pengkalan Kundor",
+          "label": "N.17 Pengkalan Kundor",
+          "parliament_code": "P.010",
+          "parliament_name": "P.010 Kuala Kedah"
+        },
+        {
+          "code": "N.18",
+          "name": "Tokai",
+          "label": "N.18 Tokai",
+          "parliament_code": "P.011",
+          "parliament_name": "P.011 Pendang"
+        },
+        {
+          "code": "N.19",
+          "name": "Sungai Tiang",
+          "label": "N.19 Sungai Tiang",
+          "parliament_code": "P.011",
+          "parliament_name": "P.011 Pendang"
+        },
+        {
+          "code": "N.20",
+          "name": "Sungai Limau",
+          "label": "N.20 Sungai Limau",
+          "parliament_code": "P.012",
+          "parliament_name": "P.012 Jerai"
+        },
+        {
+          "code": "N.21",
+          "name": "Guar Chempedak",
+          "label": "N.21 Guar Chempedak",
+          "parliament_code": "P.012",
+          "parliament_name": "P.012 Jerai"
+        },
+        {
+          "code": "N.22",
+          "name": "Gurun",
+          "label": "N.22 Gurun",
+          "parliament_code": "P.012",
+          "parliament_name": "P.012 Jerai"
+        },
+        {
+          "code": "N.23",
+          "name": "Belantek",
+          "label": "N.23 Belantek",
+          "parliament_code": "P.013",
+          "parliament_name": "P.013 Sik"
+        },
+        {
+          "code": "N.24",
+          "name": "Jeneri",
+          "label": "N.24 Jeneri",
+          "parliament_code": "P.013",
+          "parliament_name": "P.013 Sik"
+        },
+        {
+          "code": "N.25",
+          "name": "Bukit Selambau",
+          "label": "N.25 Bukit Selambau",
+          "parliament_code": "P.014",
+          "parliament_name": "P.014 Merbok"
+        },
+        {
+          "code": "N.26",
+          "name": "Tanjong Dawai",
+          "label": "N.26 Tanjong Dawai",
+          "parliament_code": "P.014",
+          "parliament_name": "P.014 Merbok"
+        },
+        {
+          "code": "N.27",
+          "name": "Pantai Merdeka",
+          "label": "N.27 Pantai Merdeka",
+          "parliament_code": "P.015",
+          "parliament_name": "P.015 Sungai Petani"
+        },
+        {
+          "code": "N.28",
+          "name": "Bakar Arang",
+          "label": "N.28 Bakar Arang",
+          "parliament_code": "P.015",
+          "parliament_name": "P.015 Sungai Petani"
+        },
+        {
+          "code": "N.29",
+          "name": "Sidam",
+          "label": "N.29 Sidam",
+          "parliament_code": "P.015",
+          "parliament_name": "P.015 Sungai Petani"
+        },
+        {
+          "code": "N.30",
+          "name": "Bayu",
+          "label": "N.30 Bayu",
+          "parliament_code": "P.016",
+          "parliament_name": "P.016 Baling"
+        },
+        {
+          "code": "N.31",
+          "name": "Kupang",
+          "label": "N.31 Kupang",
+          "parliament_code": "P.016",
+          "parliament_name": "P.016 Baling"
+        },
+        {
+          "code": "N.32",
+          "name": "Kuala Ketil",
+          "label": "N.32 Kuala Ketil",
+          "parliament_code": "P.016",
+          "parliament_name": "P.016 Baling"
+        },
+        {
+          "code": "N.33",
+          "name": "Merbau Pulas",
+          "label": "N.33 Merbau Pulas",
+          "parliament_code": "P.017",
+          "parliament_name": "P.017 Padang Serai"
+        },
+        {
+          "code": "N.34",
+          "name": "Lunas",
+          "label": "N.34 Lunas",
+          "parliament_code": "P.017",
+          "parliament_name": "P.017 Padang Serai"
+        },
+        {
+          "code": "N.35",
+          "name": "Kulim",
+          "label": "N.35 Kulim",
+          "parliament_code": "P.018",
+          "parliament_name": "P.018 Kulim-Bandar Baharu"
+        },
+        {
+          "code": "N.36",
+          "name": "Bandar Baharu",
+          "label": "N.36 Bandar Baharu",
+          "parliament_code": "P.018",
+          "parliament_name": "P.018 Kulim-Bandar Baharu"
+        }
+      ],
+      "dun_count": 36
+    },
+    {
+      "name": "Kelantan",
+      "code": "KTN",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Pengkalan Kubor",
+          "label": "N.01 Pengkalan Kubor",
+          "parliament_code": "P.019",
+          "parliament_name": "P.019 Tumpat"
+        },
+        {
+          "code": "N.02",
+          "name": "Kelaboran",
+          "label": "N.02 Kelaboran",
+          "parliament_code": "P.019",
+          "parliament_name": "P.019 Tumpat"
+        },
+        {
+          "code": "N.03",
+          "name": "Pasir Pekan",
+          "label": "N.03 Pasir Pekan",
+          "parliament_code": "P.019",
+          "parliament_name": "P.019 Tumpat"
+        },
+        {
+          "code": "N.04",
+          "name": "Wakaf Bharu",
+          "label": "N.04 Wakaf Bharu",
+          "parliament_code": "P.019",
+          "parliament_name": "P.019 Tumpat"
+        },
+        {
+          "code": "N.05",
+          "name": "Kijang",
+          "label": "N.05 Kijang",
+          "parliament_code": "P.020",
+          "parliament_name": "P.020 Pengkalan Chepa"
+        },
+        {
+          "code": "N.06",
+          "name": "Chempaka",
+          "label": "N.06 Chempaka",
+          "parliament_code": "P.020",
+          "parliament_name": "P.020 Pengkalan Chepa"
+        },
+        {
+          "code": "N.07",
+          "name": "Panchor",
+          "label": "N.07 Panchor",
+          "parliament_code": "P.020",
+          "parliament_name": "P.020 Pengkalan Chepa"
+        },
+        {
+          "code": "N.08",
+          "name": "Tanjong Mas",
+          "label": "N.08 Tanjong Mas",
+          "parliament_code": "P.021",
+          "parliament_name": "P.021 Kota Bharu"
+        },
+        {
+          "code": "N.09",
+          "name": "Kota Lama",
+          "label": "N.09 Kota Lama",
+          "parliament_code": "P.021",
+          "parliament_name": "P.021 Kota Bharu"
+        },
+        {
+          "code": "N.10",
+          "name": "Bunut Payong",
+          "label": "N.10 Bunut Payong",
+          "parliament_code": "P.021",
+          "parliament_name": "P.021 Kota Bharu"
+        },
+        {
+          "code": "N.11",
+          "name": "Tendong",
+          "label": "N.11 Tendong",
+          "parliament_code": "P.022",
+          "parliament_name": "P.022 Pasir Mas"
+        },
+        {
+          "code": "N.12",
+          "name": "Pengkalan Pasir",
+          "label": "N.12 Pengkalan Pasir",
+          "parliament_code": "P.022",
+          "parliament_name": "P.022 Pasir Mas"
+        },
+        {
+          "code": "N.13",
+          "name": "Meranti",
+          "label": "N.13 Meranti",
+          "parliament_code": "P.022",
+          "parliament_name": "P.022 Pasir Mas"
+        },
+        {
+          "code": "N.14",
+          "name": "Chetok",
+          "label": "N.14 Chetok",
+          "parliament_code": "P.023",
+          "parliament_name": "P.023 Rantau Panjang"
+        },
+        {
+          "code": "N.15",
+          "name": "Gual Periok",
+          "label": "N.15 Gual Periok",
+          "parliament_code": "P.023",
+          "parliament_name": "P.023 Rantau Panjang"
+        },
+        {
+          "code": "N.16",
+          "name": "Apam Putra",
+          "label": "N.16 Apam Putra",
+          "parliament_code": "P.023",
+          "parliament_name": "P.023 Rantau Panjang"
+        },
+        {
+          "code": "N.17",
+          "name": "Salor",
+          "label": "N.17 Salor",
+          "parliament_code": "P.024",
+          "parliament_name": "P.024 Kubang Kerian"
+        },
+        {
+          "code": "N.18",
+          "name": "Pasir Tumboh",
+          "label": "N.18 Pasir Tumboh",
+          "parliament_code": "P.024",
+          "parliament_name": "P.024 Kubang Kerian"
+        },
+        {
+          "code": "N.19",
+          "name": "Demit",
+          "label": "N.19 Demit",
+          "parliament_code": "P.024",
+          "parliament_name": "P.024 Kubang Kerian"
+        },
+        {
+          "code": "N.20",
+          "name": "Tawang",
+          "label": "N.20 Tawang",
+          "parliament_code": "P.025",
+          "parliament_name": "P.025 Bachok"
+        },
+        {
+          "code": "N.21",
+          "name": "Pantai Irama",
+          "label": "N.21 Pantai Irama",
+          "parliament_code": "P.025",
+          "parliament_name": "P.025 Bachok"
+        },
+        {
+          "code": "N.22",
+          "name": "Jelawat",
+          "label": "N.22 Jelawat",
+          "parliament_code": "P.025",
+          "parliament_name": "P.025 Bachok"
+        },
+        {
+          "code": "N.23",
+          "name": "Melor",
+          "label": "N.23 Melor",
+          "parliament_code": "P.026",
+          "parliament_name": "P.026 Ketereh"
+        },
+        {
+          "code": "N.24",
+          "name": "Kadok",
+          "label": "N.24 Kadok",
+          "parliament_code": "P.026",
+          "parliament_name": "P.026 Ketereh"
+        },
+        {
+          "code": "N.25",
+          "name": "Kok Lanas",
+          "label": "N.25 Kok Lanas",
+          "parliament_code": "P.026",
+          "parliament_name": "P.026 Ketereh"
+        },
+        {
+          "code": "N.26",
+          "name": "Bukit Panau",
+          "label": "N.26 Bukit Panau",
+          "parliament_code": "P.027",
+          "parliament_name": "P.027 Tanah Merah"
+        },
+        {
+          "code": "N.27",
+          "name": "Gual Ipoh",
+          "label": "N.27 Gual Ipoh",
+          "parliament_code": "P.027",
+          "parliament_name": "P.027 Tanah Merah"
+        },
+        {
+          "code": "N.28",
+          "name": "Kemahang",
+          "label": "N.28 Kemahang",
+          "parliament_code": "P.027",
+          "parliament_name": "P.027 Tanah Merah"
+        },
+        {
+          "code": "N.29",
+          "name": "Selising",
+          "label": "N.29 Selising",
+          "parliament_code": "P.028",
+          "parliament_name": "P.028 Pasir Puteh"
+        },
+        {
+          "code": "N.30",
+          "name": "Limbongan",
+          "label": "N.30 Limbongan",
+          "parliament_code": "P.028",
+          "parliament_name": "P.028 Pasir Puteh"
+        },
+        {
+          "code": "N.31",
+          "name": "Semerak",
+          "label": "N.31 Semerak",
+          "parliament_code": "P.028",
+          "parliament_name": "P.028 Pasir Puteh"
+        },
+        {
+          "code": "N.32",
+          "name": "Gaal",
+          "label": "N.32 Gaal",
+          "parliament_code": "P.028",
+          "parliament_name": "P.028 Pasir Puteh"
+        },
+        {
+          "code": "N.33",
+          "name": "Pulai Chondong",
+          "label": "N.33 Pulai Chondong",
+          "parliament_code": "P.029",
+          "parliament_name": "P.029 Machang"
+        },
+        {
+          "code": "N.34",
+          "name": "Temangan",
+          "label": "N.34 Temangan",
+          "parliament_code": "P.029",
+          "parliament_name": "P.029 Machang"
+        },
+        {
+          "code": "N.35",
+          "name": "Kemuning",
+          "label": "N.35 Kemuning",
+          "parliament_code": "P.029",
+          "parliament_name": "P.029 Machang"
+        },
+        {
+          "code": "N.36",
+          "name": "Bukit Bunga",
+          "label": "N.36 Bukit Bunga",
+          "parliament_code": "P.030",
+          "parliament_name": "P.030 Jeli"
+        },
+        {
+          "code": "N.37",
+          "name": "Air Lanas",
+          "label": "N.37 Air Lanas",
+          "parliament_code": "P.030",
+          "parliament_name": "P.030 Jeli"
+        },
+        {
+          "code": "N.38",
+          "name": "Kuala Balah",
+          "label": "N.38 Kuala Balah",
+          "parliament_code": "P.030",
+          "parliament_name": "P.030 Jeli"
+        },
+        {
+          "code": "N.39",
+          "name": "Mengkebang",
+          "label": "N.39 Mengkebang",
+          "parliament_code": "P.031",
+          "parliament_name": "P.031 Kuala Krai"
+        },
+        {
+          "code": "N.40",
+          "name": "Guchil",
+          "label": "N.40 Guchil",
+          "parliament_code": "P.031",
+          "parliament_name": "P.031 Kuala Krai"
+        },
+        {
+          "code": "N.41",
+          "name": "Manek Urai",
+          "label": "N.41 Manek Urai",
+          "parliament_code": "P.031",
+          "parliament_name": "P.031 Kuala Krai"
+        },
+        {
+          "code": "N.42",
+          "name": "Dabong",
+          "label": "N.42 Dabong",
+          "parliament_code": "P.031",
+          "parliament_name": "P.031 Kuala Krai"
+        },
+        {
+          "code": "N.43",
+          "name": "Nenggiri",
+          "label": "N.43 Nenggiri",
+          "parliament_code": "P.032",
+          "parliament_name": "P.032 Gua Musang"
+        },
+        {
+          "code": "N.44",
+          "name": "Paloh",
+          "label": "N.44 Paloh",
+          "parliament_code": "P.032",
+          "parliament_name": "P.032 Gua Musang"
+        },
+        {
+          "code": "N.45",
+          "name": "Galas",
+          "label": "N.45 Galas",
+          "parliament_code": "P.032",
+          "parliament_name": "P.032 Gua Musang"
+        }
+      ],
+      "dun_count": 45
+    },
+    {
+      "name": "Terengganu",
+      "code": "TRG",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Kuala Besut",
+          "label": "N.01 Kuala Besut",
+          "parliament_code": "P.033",
+          "parliament_name": "P.033 Besut"
+        },
+        {
+          "code": "N.02",
+          "name": "Kota Putera",
+          "label": "N.02 Kota Putera",
+          "parliament_code": "P.033",
+          "parliament_name": "P.033 Besut"
+        },
+        {
+          "code": "N.03",
+          "name": "Jertih",
+          "label": "N.03 Jertih",
+          "parliament_code": "P.033",
+          "parliament_name": "P.033 Besut"
+        },
+        {
+          "code": "N.04",
+          "name": "Hulu Besut",
+          "label": "N.04 Hulu Besut",
+          "parliament_code": "P.033",
+          "parliament_name": "P.033 Besut"
+        },
+        {
+          "code": "N.05",
+          "name": "Jabi",
+          "label": "N.05 Jabi",
+          "parliament_code": "P.034",
+          "parliament_name": "P.034 Setiu"
+        },
+        {
+          "code": "N.06",
+          "name": "Permaisuri",
+          "label": "N.06 Permaisuri",
+          "parliament_code": "P.034",
+          "parliament_name": "P.034 Setiu"
+        },
+        {
+          "code": "N.07",
+          "name": "Langkap",
+          "label": "N.07 Langkap",
+          "parliament_code": "P.034",
+          "parliament_name": "P.034 Setiu"
+        },
+        {
+          "code": "N.08",
+          "name": "Batu Rakit",
+          "label": "N.08 Batu Rakit",
+          "parliament_code": "P.034",
+          "parliament_name": "P.034 Setiu"
+        },
+        {
+          "code": "N.09",
+          "name": "Tepuh",
+          "label": "N.09 Tepuh",
+          "parliament_code": "P.035",
+          "parliament_name": "P.035 Kuala Nerus"
+        },
+        {
+          "code": "N.10",
+          "name": "Buluh Gading",
+          "label": "N.10 Buluh Gading",
+          "parliament_code": "P.035",
+          "parliament_name": "P.035 Kuala Nerus"
+        },
+        {
+          "code": "N.11",
+          "name": "Seberang Takir",
+          "label": "N.11 Seberang Takir",
+          "parliament_code": "P.035",
+          "parliament_name": "P.035 Kuala Nerus"
+        },
+        {
+          "code": "N.12",
+          "name": "Bukit Tunggal",
+          "label": "N.12 Bukit Tunggal",
+          "parliament_code": "P.035",
+          "parliament_name": "P.035 Kuala Nerus"
+        },
+        {
+          "code": "N.13",
+          "name": "Wakaf Mempelam",
+          "label": "N.13 Wakaf Mempelam",
+          "parliament_code": "P.036",
+          "parliament_name": "P.036 Kuala Terengganu"
+        },
+        {
+          "code": "N.14",
+          "name": "Bandar",
+          "label": "N.14 Bandar",
+          "parliament_code": "P.036",
+          "parliament_name": "P.036 Kuala Terengganu"
+        },
+        {
+          "code": "N.15",
+          "name": "Ladang",
+          "label": "N.15 Ladang",
+          "parliament_code": "P.036",
+          "parliament_name": "P.036 Kuala Terengganu"
+        },
+        {
+          "code": "N.16",
+          "name": "Batu Buruk",
+          "label": "N.16 Batu Buruk",
+          "parliament_code": "P.036",
+          "parliament_name": "P.036 Kuala Terengganu"
+        },
+        {
+          "code": "N.17",
+          "name": "Alur Limbat",
+          "label": "N.17 Alur Limbat",
+          "parliament_code": "P.037",
+          "parliament_name": "P.037 Marang"
+        },
+        {
+          "code": "N.18",
+          "name": "Bukit Payung",
+          "label": "N.18 Bukit Payung",
+          "parliament_code": "P.037",
+          "parliament_name": "P.037 Marang"
+        },
+        {
+          "code": "N.19",
+          "name": "Ru Rendang",
+          "label": "N.19 Ru Rendang",
+          "parliament_code": "P.037",
+          "parliament_name": "P.037 Marang"
+        },
+        {
+          "code": "N.20",
+          "name": "Pengkalan Berangan",
+          "label": "N.20 Pengkalan Berangan",
+          "parliament_code": "P.037",
+          "parliament_name": "P.037 Marang"
+        },
+        {
+          "code": "N.21",
+          "name": "Telemung",
+          "label": "N.21 Telemung",
+          "parliament_code": "P.038",
+          "parliament_name": "P.038 Hulu Terengganu"
+        },
+        {
+          "code": "N.22",
+          "name": "Manir",
+          "label": "N.22 Manir",
+          "parliament_code": "P.038",
+          "parliament_name": "P.038 Hulu Terengganu"
+        },
+        {
+          "code": "N.23",
+          "name": "Kuala Berang",
+          "label": "N.23 Kuala Berang",
+          "parliament_code": "P.038",
+          "parliament_name": "P.038 Hulu Terengganu"
+        },
+        {
+          "code": "N.24",
+          "name": "Ajil",
+          "label": "N.24 Ajil",
+          "parliament_code": "P.038",
+          "parliament_name": "P.038 Hulu Terengganu"
+        },
+        {
+          "code": "N.25",
+          "name": "Bukit Besi",
+          "label": "N.25 Bukit Besi",
+          "parliament_code": "P.039",
+          "parliament_name": "P.039 Dungun"
+        },
+        {
+          "code": "N.26",
+          "name": "Rantau Abang",
+          "label": "N.26 Rantau Abang",
+          "parliament_code": "P.039",
+          "parliament_name": "P.039 Dungun"
+        },
+        {
+          "code": "N.27",
+          "name": "Sura",
+          "label": "N.27 Sura",
+          "parliament_code": "P.039",
+          "parliament_name": "P.039 Dungun"
+        },
+        {
+          "code": "N.28",
+          "name": "Paka",
+          "label": "N.28 Paka",
+          "parliament_code": "P.039",
+          "parliament_name": "P.039 Dungun"
+        },
+        {
+          "code": "N.29",
+          "name": "Kemasik",
+          "label": "N.29 Kemasik",
+          "parliament_code": "P.040",
+          "parliament_name": "P.040 Kemaman"
+        },
+        {
+          "code": "N.30",
+          "name": "Kijal",
+          "label": "N.30 Kijal",
+          "parliament_code": "P.040",
+          "parliament_name": "P.040 Kemaman"
+        },
+        {
+          "code": "N.31",
+          "name": "Cukai",
+          "label": "N.31 Cukai",
+          "parliament_code": "P.040",
+          "parliament_name": "P.040 Kemaman"
+        },
+        {
+          "code": "N.32",
+          "name": "Air Putih",
+          "label": "N.32 Air Putih",
+          "parliament_code": "P.040",
+          "parliament_name": "P.040 Kemaman"
+        }
+      ],
+      "dun_count": 32
+    },
+    {
+      "name": "Pulau Pinang",
+      "code": "PNG",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Penaga",
+          "label": "N.01 Penaga",
+          "parliament_code": "P.041",
+          "parliament_name": "P.041 Kepala Batas"
+        },
+        {
+          "code": "N.02",
+          "name": "Bertam",
+          "label": "N.02 Bertam",
+          "parliament_code": "P.041",
+          "parliament_name": "P.041 Kepala Batas"
+        },
+        {
+          "code": "N.03",
+          "name": "Pinang Tunggal",
+          "label": "N.03 Pinang Tunggal",
+          "parliament_code": "P.041",
+          "parliament_name": "P.041 Kepala Batas"
+        },
+        {
+          "code": "N.04",
+          "name": "Permatang Berangan",
+          "label": "N.04 Permatang Berangan",
+          "parliament_code": "P.042",
+          "parliament_name": "P.042 Tasek Gelugor"
+        },
+        {
+          "code": "N.05",
+          "name": "Sungai Dua",
+          "label": "N.05 Sungai Dua",
+          "parliament_code": "P.042",
+          "parliament_name": "P.042 Tasek Gelugor"
+        },
+        {
+          "code": "N.06",
+          "name": "Telok Ayer Tawar",
+          "label": "N.06 Telok Ayer Tawar",
+          "parliament_code": "P.042",
+          "parliament_name": "P.042 Tasek Gelugor"
+        },
+        {
+          "code": "N.07",
+          "name": "Sungai Puyu",
+          "label": "N.07 Sungai Puyu",
+          "parliament_code": "P.043",
+          "parliament_name": "P.043 Bagan"
+        },
+        {
+          "code": "N.08",
+          "name": "Bagan Jermal",
+          "label": "N.08 Bagan Jermal",
+          "parliament_code": "P.043",
+          "parliament_name": "P.043 Bagan"
+        },
+        {
+          "code": "N.09",
+          "name": "Bagan Dalam",
+          "label": "N.09 Bagan Dalam",
+          "parliament_code": "P.043",
+          "parliament_name": "P.043 Bagan"
+        },
+        {
+          "code": "N.10",
+          "name": "Seberang Jaya",
+          "label": "N.10 Seberang Jaya",
+          "parliament_code": "P.044",
+          "parliament_name": "P.044 Permatang Pauh"
+        },
+        {
+          "code": "N.11",
+          "name": "Permatang Pasir",
+          "label": "N.11 Permatang Pasir",
+          "parliament_code": "P.044",
+          "parliament_name": "P.044 Permatang Pauh"
+        },
+        {
+          "code": "N.12",
+          "name": "Penanti",
+          "label": "N.12 Penanti",
+          "parliament_code": "P.044",
+          "parliament_name": "P.044 Permatang Pauh"
+        },
+        {
+          "code": "N.13",
+          "name": "Berapit",
+          "label": "N.13 Berapit",
+          "parliament_code": "P.045",
+          "parliament_name": "P.045 Bukit Mertajam"
+        },
+        {
+          "code": "N.14",
+          "name": "Machang Bubuk",
+          "label": "N.14 Machang Bubuk",
+          "parliament_code": "P.045",
+          "parliament_name": "P.045 Bukit Mertajam"
+        },
+        {
+          "code": "N.15",
+          "name": "Padang Lalang",
+          "label": "N.15 Padang Lalang",
+          "parliament_code": "P.045",
+          "parliament_name": "P.045 Bukit Mertajam"
+        },
+        {
+          "code": "N.16",
+          "name": "Perai",
+          "label": "N.16 Perai",
+          "parliament_code": "P.046",
+          "parliament_name": "P.046 Batu Kawan"
+        },
+        {
+          "code": "N.17",
+          "name": "Bukit Tengah",
+          "label": "N.17 Bukit Tengah",
+          "parliament_code": "P.046",
+          "parliament_name": "P.046 Batu Kawan"
+        },
+        {
+          "code": "N.18",
+          "name": "Bukit Tambun",
+          "label": "N.18 Bukit Tambun",
+          "parliament_code": "P.046",
+          "parliament_name": "P.046 Batu Kawan"
+        },
+        {
+          "code": "N.19",
+          "name": "Jawi",
+          "label": "N.19 Jawi",
+          "parliament_code": "P.047",
+          "parliament_name": "P.047 Nibong Tebal"
+        },
+        {
+          "code": "N.20",
+          "name": "Sungai Bakap",
+          "label": "N.20 Sungai Bakap",
+          "parliament_code": "P.047",
+          "parliament_name": "P.047 Nibong Tebal"
+        },
+        {
+          "code": "N.21",
+          "name": "Sungai Acheh",
+          "label": "N.21 Sungai Acheh",
+          "parliament_code": "P.047",
+          "parliament_name": "P.047 Nibong Tebal"
+        },
+        {
+          "code": "N.22",
+          "name": "Tanjong Bunga",
+          "label": "N.22 Tanjong Bunga",
+          "parliament_code": "P.048",
+          "parliament_name": "P.048 Bukit Bendera"
+        },
+        {
+          "code": "N.23",
+          "name": "Air Putih",
+          "label": "N.23 Air Putih",
+          "parliament_code": "P.048",
+          "parliament_name": "P.048 Bukit Bendera"
+        },
+        {
+          "code": "N.24",
+          "name": "Kebun Bunga",
+          "label": "N.24 Kebun Bunga",
+          "parliament_code": "P.048",
+          "parliament_name": "P.048 Bukit Bendera"
+        },
+        {
+          "code": "N.25",
+          "name": "Pulau Tikus",
+          "label": "N.25 Pulau Tikus",
+          "parliament_code": "P.048",
+          "parliament_name": "P.048 Bukit Bendera"
+        },
+        {
+          "code": "N.26",
+          "name": "Padang Kota",
+          "label": "N.26 Padang Kota",
+          "parliament_code": "P.049",
+          "parliament_name": "P.049 Tanjong"
+        },
+        {
+          "code": "N.27",
+          "name": "Pengkalan Kota",
+          "label": "N.27 Pengkalan Kota",
+          "parliament_code": "P.049",
+          "parliament_name": "P.049 Tanjong"
+        },
+        {
+          "code": "N.28",
+          "name": "Komtar",
+          "label": "N.28 Komtar",
+          "parliament_code": "P.049",
+          "parliament_name": "P.049 Tanjong"
+        },
+        {
+          "code": "N.29",
+          "name": "Datok Keramat",
+          "label": "N.29 Datok Keramat",
+          "parliament_code": "P.050",
+          "parliament_name": "P.050 Jelutong"
+        },
+        {
+          "code": "N.30",
+          "name": "Sungai Pinang",
+          "label": "N.30 Sungai Pinang",
+          "parliament_code": "P.050",
+          "parliament_name": "P.050 Jelutong"
+        },
+        {
+          "code": "N.31",
+          "name": "Batu Lancang",
+          "label": "N.31 Batu Lancang",
+          "parliament_code": "P.050",
+          "parliament_name": "P.050 Jelutong"
+        },
+        {
+          "code": "N.32",
+          "name": "Seri Delima",
+          "label": "N.32 Seri Delima",
+          "parliament_code": "P.051",
+          "parliament_name": "P.051 Bukit Gelugor"
+        },
+        {
+          "code": "N.33",
+          "name": "Air Itam",
+          "label": "N.33 Air Itam",
+          "parliament_code": "P.051",
+          "parliament_name": "P.051 Bukit Gelugor"
+        },
+        {
+          "code": "N.34",
+          "name": "Paya Terubong",
+          "label": "N.34 Paya Terubong",
+          "parliament_code": "P.051",
+          "parliament_name": "P.051 Bukit Gelugor"
+        },
+        {
+          "code": "N.35",
+          "name": "Batu Uban",
+          "label": "N.35 Batu Uban",
+          "parliament_code": "P.052",
+          "parliament_name": "P.052 Bayan Baru"
+        },
+        {
+          "code": "N.36",
+          "name": "Pantai Jerejak",
+          "label": "N.36 Pantai Jerejak",
+          "parliament_code": "P.052",
+          "parliament_name": "P.052 Bayan Baru"
+        },
+        {
+          "code": "N.37",
+          "name": "Batu Maung",
+          "label": "N.37 Batu Maung",
+          "parliament_code": "P.052",
+          "parliament_name": "P.052 Bayan Baru"
+        },
+        {
+          "code": "N.38",
+          "name": "Bayan Lepas",
+          "label": "N.38 Bayan Lepas",
+          "parliament_code": "P.053",
+          "parliament_name": "P.053 Balik Pulau"
+        },
+        {
+          "code": "N.39",
+          "name": "Pulau Betong",
+          "label": "N.39 Pulau Betong",
+          "parliament_code": "P.053",
+          "parliament_name": "P.053 Balik Pulau"
+        },
+        {
+          "code": "N.40",
+          "name": "Telok Bahang",
+          "label": "N.40 Telok Bahang",
+          "parliament_code": "P.053",
+          "parliament_name": "P.053 Balik Pulau"
+        }
+      ],
+      "dun_count": 40
+    },
+    {
+      "name": "Perak",
+      "code": "PRK",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Pengkalan Hulu",
+          "label": "N.01 Pengkalan Hulu",
+          "parliament_code": "P.054",
+          "parliament_name": "P.054 Gerik"
+        },
+        {
+          "code": "N.02",
+          "name": "Temengor",
+          "label": "N.02 Temengor",
+          "parliament_code": "P.054",
+          "parliament_name": "P.054 Gerik"
+        },
+        {
+          "code": "N.03",
+          "name": "Kenering",
+          "label": "N.03 Kenering",
+          "parliament_code": "P.055",
+          "parliament_name": "P.055 Lenggong"
+        },
+        {
+          "code": "N.04",
+          "name": "Kota Tampan",
+          "label": "N.04 Kota Tampan",
+          "parliament_code": "P.055",
+          "parliament_name": "P.055 Lenggong"
+        },
+        {
+          "code": "N.05",
+          "name": "Selama",
+          "label": "N.05 Selama",
+          "parliament_code": "P.056",
+          "parliament_name": "P.056 Larut"
+        },
+        {
+          "code": "N.06",
+          "name": "Kubu Gajah",
+          "label": "N.06 Kubu Gajah",
+          "parliament_code": "P.056",
+          "parliament_name": "P.056 Larut"
+        },
+        {
+          "code": "N.07",
+          "name": "Batu Kurau",
+          "label": "N.07 Batu Kurau",
+          "parliament_code": "P.056",
+          "parliament_name": "P.056 Larut"
+        },
+        {
+          "code": "N.08",
+          "name": "Titi Serong",
+          "label": "N.08 Titi Serong",
+          "parliament_code": "P.057",
+          "parliament_name": "P.057 Parit Buntar"
+        },
+        {
+          "code": "N.09",
+          "name": "Kuala Kurau",
+          "label": "N.09 Kuala Kurau",
+          "parliament_code": "P.057",
+          "parliament_name": "P.057 Parit Buntar"
+        },
+        {
+          "code": "N.10",
+          "name": "Alor Pongsu",
+          "label": "N.10 Alor Pongsu",
+          "parliament_code": "P.058",
+          "parliament_name": "P.058 Bagan Serai"
+        },
+        {
+          "code": "N.11",
+          "name": "Gunong Semanggol",
+          "label": "N.11 Gunong Semanggol",
+          "parliament_code": "P.058",
+          "parliament_name": "P.058 Bagan Serai"
+        },
+        {
+          "code": "N.12",
+          "name": "Selinsing",
+          "label": "N.12 Selinsing",
+          "parliament_code": "P.058",
+          "parliament_name": "P.058 Bagan Serai"
+        },
+        {
+          "code": "N.13",
+          "name": "Kuala Sepetang",
+          "label": "N.13 Kuala Sepetang",
+          "parliament_code": "P.059",
+          "parliament_name": "P.059 Bukit Gantang"
+        },
+        {
+          "code": "N.14",
+          "name": "Changkat Jering",
+          "label": "N.14 Changkat Jering",
+          "parliament_code": "P.059",
+          "parliament_name": "P.059 Bukit Gantang"
+        },
+        {
+          "code": "N.15",
+          "name": "Trong",
+          "label": "N.15 Trong",
+          "parliament_code": "P.059",
+          "parliament_name": "P.059 Bukit Gantang"
+        },
+        {
+          "code": "N.16",
+          "name": "Kamunting",
+          "label": "N.16 Kamunting",
+          "parliament_code": "P.060",
+          "parliament_name": "P.060 Taiping"
+        },
+        {
+          "code": "N.17",
+          "name": "Pokok Assam",
+          "label": "N.17 Pokok Assam",
+          "parliament_code": "P.060",
+          "parliament_name": "P.060 Taiping"
+        },
+        {
+          "code": "N.18",
+          "name": "Aulong",
+          "label": "N.18 Aulong",
+          "parliament_code": "P.060",
+          "parliament_name": "P.060 Taiping"
+        },
+        {
+          "code": "N.19",
+          "name": "Chenderoh",
+          "label": "N.19 Chenderoh",
+          "parliament_code": "P.061",
+          "parliament_name": "P.061 Padang Rengas"
+        },
+        {
+          "code": "N.20",
+          "name": "Lubok Merbau",
+          "label": "N.20 Lubok Merbau",
+          "parliament_code": "P.061",
+          "parliament_name": "P.061 Padang Rengas"
+        },
+        {
+          "code": "N.21",
+          "name": "Lintang",
+          "label": "N.21 Lintang",
+          "parliament_code": "P.062",
+          "parliament_name": "P.062 Sungai Siput"
+        },
+        {
+          "code": "N.22",
+          "name": "Jalong",
+          "label": "N.22 Jalong",
+          "parliament_code": "P.062",
+          "parliament_name": "P.062 Sungai Siput"
+        },
+        {
+          "code": "N.23",
+          "name": "Manjoi",
+          "label": "N.23 Manjoi",
+          "parliament_code": "P.063",
+          "parliament_name": "P.063 Tambun"
+        },
+        {
+          "code": "N.24",
+          "name": "Hulu Kinta",
+          "label": "N.24 Hulu Kinta",
+          "parliament_code": "P.063",
+          "parliament_name": "P.063 Tambun"
+        },
+        {
+          "code": "N.25",
+          "name": "Canning",
+          "label": "N.25 Canning",
+          "parliament_code": "P.064",
+          "parliament_name": "P.064 Ipoh Timor"
+        },
+        {
+          "code": "N.26",
+          "name": "Tebing Tinggi",
+          "label": "N.26 Tebing Tinggi",
+          "parliament_code": "P.064",
+          "parliament_name": "P.064 Ipoh Timor"
+        },
+        {
+          "code": "N.27",
+          "name": "Pasir Pinji",
+          "label": "N.27 Pasir Pinji",
+          "parliament_code": "P.064",
+          "parliament_name": "P.064 Ipoh Timor"
+        },
+        {
+          "code": "N.28",
+          "name": "Bercham",
+          "label": "N.28 Bercham",
+          "parliament_code": "P.065",
+          "parliament_name": "P.065 Ipoh Barat"
+        },
+        {
+          "code": "N.29",
+          "name": "Kepayang",
+          "label": "N.29 Kepayang",
+          "parliament_code": "P.065",
+          "parliament_name": "P.065 Ipoh Barat"
+        },
+        {
+          "code": "N.30",
+          "name": "Buntong",
+          "label": "N.30 Buntong",
+          "parliament_code": "P.065",
+          "parliament_name": "P.065 Ipoh Barat"
+        },
+        {
+          "code": "N.31",
+          "name": "Jelapang",
+          "label": "N.31 Jelapang",
+          "parliament_code": "P.066",
+          "parliament_name": "P.066 Batu Gajah"
+        },
+        {
+          "code": "N.32",
+          "name": "Menglembu",
+          "label": "N.32 Menglembu",
+          "parliament_code": "P.066",
+          "parliament_name": "P.066 Batu Gajah"
+        },
+        {
+          "code": "N.33",
+          "name": "Tronoh",
+          "label": "N.33 Tronoh",
+          "parliament_code": "P.066",
+          "parliament_name": "P.066 Batu Gajah"
+        },
+        {
+          "code": "N.34",
+          "name": "Bukit Chandan",
+          "label": "N.34 Bukit Chandan",
+          "parliament_code": "P.067",
+          "parliament_name": "P.067 Kuala Kangsar"
+        },
+        {
+          "code": "N.35",
+          "name": "Manong",
+          "label": "N.35 Manong",
+          "parliament_code": "P.067",
+          "parliament_name": "P.067 Kuala Kangsar"
+        },
+        {
+          "code": "N.36",
+          "name": "Pengkalan Baharu",
+          "label": "N.36 Pengkalan Baharu",
+          "parliament_code": "P.068",
+          "parliament_name": "P.068 Beruas"
+        },
+        {
+          "code": "N.37",
+          "name": "Pantai Remis",
+          "label": "N.37 Pantai Remis",
+          "parliament_code": "P.068",
+          "parliament_name": "P.068 Beruas"
+        },
+        {
+          "code": "N.38",
+          "name": "Astaka",
+          "label": "N.38 Astaka",
+          "parliament_code": "P.068",
+          "parliament_name": "P.068 Beruas"
+        },
+        {
+          "code": "N.39",
+          "name": "Belanja",
+          "label": "N.39 Belanja",
+          "parliament_code": "P.069",
+          "parliament_name": "P.069 Parit"
+        },
+        {
+          "code": "N.40",
+          "name": "Bota",
+          "label": "N.40 Bota",
+          "parliament_code": "P.069",
+          "parliament_name": "P.069 Parit"
+        },
+        {
+          "code": "N.41",
+          "name": "Malim Nawar",
+          "label": "N.41 Malim Nawar",
+          "parliament_code": "P.070",
+          "parliament_name": "P.070 Kampar"
+        },
+        {
+          "code": "N.42",
+          "name": "Keranji",
+          "label": "N.42 Keranji",
+          "parliament_code": "P.070",
+          "parliament_name": "P.070 Kampar"
+        },
+        {
+          "code": "N.43",
+          "name": "Tualang Sekah",
+          "label": "N.43 Tualang Sekah",
+          "parliament_code": "P.070",
+          "parliament_name": "P.070 Kampar"
+        },
+        {
+          "code": "N.44",
+          "name": "Sungai Rapat",
+          "label": "N.44 Sungai Rapat",
+          "parliament_code": "P.071",
+          "parliament_name": "P.071 Gopeng"
+        },
+        {
+          "code": "N.45",
+          "name": "Simpang Pulai",
+          "label": "N.45 Simpang Pulai",
+          "parliament_code": "P.071",
+          "parliament_name": "P.071 Gopeng"
+        },
+        {
+          "code": "N.46",
+          "name": "Teja",
+          "label": "N.46 Teja",
+          "parliament_code": "P.071",
+          "parliament_name": "P.071 Gopeng"
+        },
+        {
+          "code": "N.47",
+          "name": "Chenderiang",
+          "label": "N.47 Chenderiang",
+          "parliament_code": "P.072",
+          "parliament_name": "P.072 Tapah"
+        },
+        {
+          "code": "N.48",
+          "name": "Ayer Kuning",
+          "label": "N.48 Ayer Kuning",
+          "parliament_code": "P.072",
+          "parliament_name": "P.072 Tapah"
+        },
+        {
+          "code": "N.49",
+          "name": "Sungai Manik",
+          "label": "N.49 Sungai Manik",
+          "parliament_code": "P.073",
+          "parliament_name": "P.073 Pasir Salak"
+        },
+        {
+          "code": "N.50",
+          "name": "Kampong Gajah",
+          "label": "N.50 Kampong Gajah",
+          "parliament_code": "P.073",
+          "parliament_name": "P.073 Pasir Salak"
+        },
+        {
+          "code": "N.51",
+          "name": "Pasir Panjang",
+          "label": "N.51 Pasir Panjang",
+          "parliament_code": "P.074",
+          "parliament_name": "P.074 Lumut"
+        },
+        {
+          "code": "N.52",
+          "name": "Pangkor",
+          "label": "N.52 Pangkor",
+          "parliament_code": "P.074",
+          "parliament_name": "P.074 Lumut"
+        },
+        {
+          "code": "N.53",
+          "name": "Rungkup",
+          "label": "N.53 Rungkup",
+          "parliament_code": "P.075",
+          "parliament_name": "P.075 Bagan Datuk"
+        },
+        {
+          "code": "N.54",
+          "name": "Hutan Melintang",
+          "label": "N.54 Hutan Melintang",
+          "parliament_code": "P.075",
+          "parliament_name": "P.075 Bagan Datuk"
+        },
+        {
+          "code": "N.55",
+          "name": "Pasir Bedamar",
+          "label": "N.55 Pasir Bedamar",
+          "parliament_code": "P.076",
+          "parliament_name": "P.076 Teluk Intan"
+        },
+        {
+          "code": "N.56",
+          "name": "Changkat Jong",
+          "label": "N.56 Changkat Jong",
+          "parliament_code": "P.076",
+          "parliament_name": "P.076 Teluk Intan"
+        },
+        {
+          "code": "N.57",
+          "name": "Sungkai",
+          "label": "N.57 Sungkai",
+          "parliament_code": "P.077",
+          "parliament_name": "P.077 Tanjong Malim"
+        },
+        {
+          "code": "N.58",
+          "name": "Slim",
+          "label": "N.58 Slim",
+          "parliament_code": "P.077",
+          "parliament_name": "P.077 Tanjong Malim"
+        },
+        {
+          "code": "N.59",
+          "name": "Behrang",
+          "label": "N.59 Behrang",
+          "parliament_code": "P.077",
+          "parliament_name": "P.077 Tanjong Malim"
+        }
+      ],
+      "dun_count": 59
+    },
+    {
+      "name": "Pahang",
+      "code": "PHG",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Tanah Rata",
+          "label": "N.01 Tanah Rata",
+          "parliament_code": "P.078",
+          "parliament_name": "P.078 Cameron Highlands"
+        },
+        {
+          "code": "N.02",
+          "name": "Jelai",
+          "label": "N.02 Jelai",
+          "parliament_code": "P.078",
+          "parliament_name": "P.078 Cameron Highlands"
+        },
+        {
+          "code": "N.03",
+          "name": "Padang Tengku",
+          "label": "N.03 Padang Tengku",
+          "parliament_code": "P.079",
+          "parliament_name": "P.079 Lipis"
+        },
+        {
+          "code": "N.04",
+          "name": "Cheka",
+          "label": "N.04 Cheka",
+          "parliament_code": "P.079",
+          "parliament_name": "P.079 Lipis"
+        },
+        {
+          "code": "N.05",
+          "name": "Benta",
+          "label": "N.05 Benta",
+          "parliament_code": "P.079",
+          "parliament_name": "P.079 Lipis"
+        },
+        {
+          "code": "N.06",
+          "name": "Batu Talam",
+          "label": "N.06 Batu Talam",
+          "parliament_code": "P.080",
+          "parliament_name": "P.080 Raub"
+        },
+        {
+          "code": "N.07",
+          "name": "Tras",
+          "label": "N.07 Tras",
+          "parliament_code": "P.080",
+          "parliament_name": "P.080 Raub"
+        },
+        {
+          "code": "N.08",
+          "name": "Dong",
+          "label": "N.08 Dong",
+          "parliament_code": "P.080",
+          "parliament_name": "P.080 Raub"
+        },
+        {
+          "code": "N.09",
+          "name": "Tahan",
+          "label": "N.09 Tahan",
+          "parliament_code": "P.081",
+          "parliament_name": "P.081 Jerantut"
+        },
+        {
+          "code": "N.10",
+          "name": "Damak",
+          "label": "N.10 Damak",
+          "parliament_code": "P.081",
+          "parliament_name": "P.081 Jerantut"
+        },
+        {
+          "code": "N.11",
+          "name": "Pulau Tawar",
+          "label": "N.11 Pulau Tawar",
+          "parliament_code": "P.081",
+          "parliament_name": "P.081 Jerantut"
+        },
+        {
+          "code": "N.12",
+          "name": "Beserah",
+          "label": "N.12 Beserah",
+          "parliament_code": "P.082",
+          "parliament_name": "P.082 Indera Mahkota"
+        },
+        {
+          "code": "N.13",
+          "name": "Semambu",
+          "label": "N.13 Semambu",
+          "parliament_code": "P.082",
+          "parliament_name": "P.082 Indera Mahkota"
+        },
+        {
+          "code": "N.14",
+          "name": "Teruntum",
+          "label": "N.14 Teruntum",
+          "parliament_code": "P.083",
+          "parliament_name": "P.083 Kuantan"
+        },
+        {
+          "code": "N.15",
+          "name": "Tanjung Lumpur",
+          "label": "N.15 Tanjung Lumpur",
+          "parliament_code": "P.083",
+          "parliament_name": "P.083 Kuantan"
+        },
+        {
+          "code": "N.16",
+          "name": "Inderapura",
+          "label": "N.16 Inderapura",
+          "parliament_code": "P.083",
+          "parliament_name": "P.083 Kuantan"
+        },
+        {
+          "code": "N.17",
+          "name": "Sungai Lembing",
+          "label": "N.17 Sungai Lembing",
+          "parliament_code": "P.084",
+          "parliament_name": "P.084 Paya Besar"
+        },
+        {
+          "code": "N.18",
+          "name": "Lepar",
+          "label": "N.18 Lepar",
+          "parliament_code": "P.084",
+          "parliament_name": "P.084 Paya Besar"
+        },
+        {
+          "code": "N.19",
+          "name": "Panching",
+          "label": "N.19 Panching",
+          "parliament_code": "P.084",
+          "parliament_name": "P.084 Paya Besar"
+        },
+        {
+          "code": "N.20",
+          "name": "Pulau Manis",
+          "label": "N.20 Pulau Manis",
+          "parliament_code": "P.085",
+          "parliament_name": "P.085 Pekan"
+        },
+        {
+          "code": "N.21",
+          "name": "Peramu Jaya",
+          "label": "N.21 Peramu Jaya",
+          "parliament_code": "P.085",
+          "parliament_name": "P.085 Pekan"
+        },
+        {
+          "code": "N.22",
+          "name": "Bebar",
+          "label": "N.22 Bebar",
+          "parliament_code": "P.085",
+          "parliament_name": "P.085 Pekan"
+        },
+        {
+          "code": "N.23",
+          "name": "Chini",
+          "label": "N.23 Chini",
+          "parliament_code": "P.085",
+          "parliament_name": "P.085 Pekan"
+        },
+        {
+          "code": "N.24",
+          "name": "Luit",
+          "label": "N.24 Luit",
+          "parliament_code": "P.086",
+          "parliament_name": "P.086 Maran"
+        },
+        {
+          "code": "N.25",
+          "name": "Kuala Sentul",
+          "label": "N.25 Kuala Sentul",
+          "parliament_code": "P.086",
+          "parliament_name": "P.086 Maran"
+        },
+        {
+          "code": "N.26",
+          "name": "Chenor",
+          "label": "N.26 Chenor",
+          "parliament_code": "P.086",
+          "parliament_name": "P.086 Maran"
+        },
+        {
+          "code": "N.27",
+          "name": "Jenderak",
+          "label": "N.27 Jenderak",
+          "parliament_code": "P.087",
+          "parliament_name": "P.087 Kuala Krau"
+        },
+        {
+          "code": "N.28",
+          "name": "Kerdau",
+          "label": "N.28 Kerdau",
+          "parliament_code": "P.087",
+          "parliament_name": "P.087 Kuala Krau"
+        },
+        {
+          "code": "N.29",
+          "name": "Jengka",
+          "label": "N.29 Jengka",
+          "parliament_code": "P.087",
+          "parliament_name": "P.087 Kuala Krau"
+        },
+        {
+          "code": "N.30",
+          "name": "Mentakab",
+          "label": "N.30 Mentakab",
+          "parliament_code": "P.088",
+          "parliament_name": "P.088 Temerloh"
+        },
+        {
+          "code": "N.31",
+          "name": "Lanchang",
+          "label": "N.31 Lanchang",
+          "parliament_code": "P.088",
+          "parliament_name": "P.088 Temerloh"
+        },
+        {
+          "code": "N.32",
+          "name": "Kuala Semantan",
+          "label": "N.32 Kuala Semantan",
+          "parliament_code": "P.088",
+          "parliament_name": "P.088 Temerloh"
+        },
+        {
+          "code": "N.33",
+          "name": "Bilut",
+          "label": "N.33 Bilut",
+          "parliament_code": "P.089",
+          "parliament_name": "P.089 Bentong"
+        },
+        {
+          "code": "N.34",
+          "name": "Ketari",
+          "label": "N.34 Ketari",
+          "parliament_code": "P.089",
+          "parliament_name": "P.089 Bentong"
+        },
+        {
+          "code": "N.35",
+          "name": "Sabai",
+          "label": "N.35 Sabai",
+          "parliament_code": "P.089",
+          "parliament_name": "P.089 Bentong"
+        },
+        {
+          "code": "N.36",
+          "name": "Pelangai",
+          "label": "N.36 Pelangai",
+          "parliament_code": "P.089",
+          "parliament_name": "P.089 Bentong"
+        },
+        {
+          "code": "N.37",
+          "name": "Guai",
+          "label": "N.37 Guai",
+          "parliament_code": "P.090",
+          "parliament_name": "P.090 Bera"
+        },
+        {
+          "code": "N.38",
+          "name": "Triang",
+          "label": "N.38 Triang",
+          "parliament_code": "P.090",
+          "parliament_name": "P.090 Bera"
+        },
+        {
+          "code": "N.39",
+          "name": "Kemayan",
+          "label": "N.39 Kemayan",
+          "parliament_code": "P.090",
+          "parliament_name": "P.090 Bera"
+        },
+        {
+          "code": "N.40",
+          "name": "Bukit Ibam",
+          "label": "N.40 Bukit Ibam",
+          "parliament_code": "P.091",
+          "parliament_name": "P.091 Rompin"
+        },
+        {
+          "code": "N.41",
+          "name": "Muadzam Shah",
+          "label": "N.41 Muadzam Shah",
+          "parliament_code": "P.091",
+          "parliament_name": "P.091 Rompin"
+        },
+        {
+          "code": "N.42",
+          "name": "Tioman",
+          "label": "N.42 Tioman",
+          "parliament_code": "P.091",
+          "parliament_name": "P.091 Rompin"
+        }
+      ],
+      "dun_count": 42
+    },
+    {
+      "name": "Selangor",
+      "code": "SGR",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Sungai Air Tawar",
+          "label": "N.01 Sungai Air Tawar",
+          "parliament_code": "P.092",
+          "parliament_name": "P.092 Sabak Bernam"
+        },
+        {
+          "code": "N.02",
+          "name": "Sabak",
+          "label": "N.02 Sabak",
+          "parliament_code": "P.092",
+          "parliament_name": "P.092 Sabak Bernam"
+        },
+        {
+          "code": "N.03",
+          "name": "Sungai Panjang",
+          "label": "N.03 Sungai Panjang",
+          "parliament_code": "P.093",
+          "parliament_name": "P.093 Sungai Besar"
+        },
+        {
+          "code": "N.04",
+          "name": "Sekinchan",
+          "label": "N.04 Sekinchan",
+          "parliament_code": "P.093",
+          "parliament_name": "P.093 Sungai Besar"
+        },
+        {
+          "code": "N.05",
+          "name": "Hulu Bernam",
+          "label": "N.05 Hulu Bernam",
+          "parliament_code": "P.094",
+          "parliament_name": "P.094 Hulu Selangor"
+        },
+        {
+          "code": "N.06",
+          "name": "Kuala Kubu Baharu",
+          "label": "N.06 Kuala Kubu Baharu",
+          "parliament_code": "P.094",
+          "parliament_name": "P.094 Hulu Selangor"
+        },
+        {
+          "code": "N.07",
+          "name": "Batang Kali",
+          "label": "N.07 Batang Kali",
+          "parliament_code": "P.094",
+          "parliament_name": "P.094 Hulu Selangor"
+        },
+        {
+          "code": "N.08",
+          "name": "Sungai Burong",
+          "label": "N.08 Sungai Burong",
+          "parliament_code": "P.095",
+          "parliament_name": "P.095 Tanjong Karang"
+        },
+        {
+          "code": "N.09",
+          "name": "Permatang",
+          "label": "N.09 Permatang",
+          "parliament_code": "P.095",
+          "parliament_name": "P.095 Tanjong Karang"
+        },
+        {
+          "code": "N.10",
+          "name": "Bukit Melawati",
+          "label": "N.10 Bukit Melawati",
+          "parliament_code": "P.096",
+          "parliament_name": "P.096 Kuala Selangor"
+        },
+        {
+          "code": "N.11",
+          "name": "Ijok",
+          "label": "N.11 Ijok",
+          "parliament_code": "P.096",
+          "parliament_name": "P.096 Kuala Selangor"
+        },
+        {
+          "code": "N.12",
+          "name": "Jeram",
+          "label": "N.12 Jeram",
+          "parliament_code": "P.096",
+          "parliament_name": "P.096 Kuala Selangor"
+        },
+        {
+          "code": "N.13",
+          "name": "Kuang",
+          "label": "N.13 Kuang",
+          "parliament_code": "P.097",
+          "parliament_name": "P.097 Selayang"
+        },
+        {
+          "code": "N.14",
+          "name": "Rawang",
+          "label": "N.14 Rawang",
+          "parliament_code": "P.097",
+          "parliament_name": "P.097 Selayang"
+        },
+        {
+          "code": "N.15",
+          "name": "Taman Templer",
+          "label": "N.15 Taman Templer",
+          "parliament_code": "P.097",
+          "parliament_name": "P.097 Selayang"
+        },
+        {
+          "code": "N.16",
+          "name": "Sungai Tua",
+          "label": "N.16 Sungai Tua",
+          "parliament_code": "P.098",
+          "parliament_name": "P.098 Gombak"
+        },
+        {
+          "code": "N.17",
+          "name": "Gombak Setia",
+          "label": "N.17 Gombak Setia",
+          "parliament_code": "P.098",
+          "parliament_name": "P.098 Gombak"
+        },
+        {
+          "code": "N.18",
+          "name": "Hulu Kelang",
+          "label": "N.18 Hulu Kelang",
+          "parliament_code": "P.098",
+          "parliament_name": "P.098 Gombak"
+        },
+        {
+          "code": "N.19",
+          "name": "Bukit Antarabangsa",
+          "label": "N.19 Bukit Antarabangsa",
+          "parliament_code": "P.099",
+          "parliament_name": "P.099 Ampang"
+        },
+        {
+          "code": "N.20",
+          "name": "Lembah Jaya",
+          "label": "N.20 Lembah Jaya",
+          "parliament_code": "P.099",
+          "parliament_name": "P.099 Ampang"
+        },
+        {
+          "code": "N.21",
+          "name": "Pandan Indah",
+          "label": "N.21 Pandan Indah",
+          "parliament_code": "P.100",
+          "parliament_name": "P.100 Pandan"
+        },
+        {
+          "code": "N.22",
+          "name": "Teratai",
+          "label": "N.22 Teratai",
+          "parliament_code": "P.100",
+          "parliament_name": "P.100 Pandan"
+        },
+        {
+          "code": "N.23",
+          "name": "Dusun Tua",
+          "label": "N.23 Dusun Tua",
+          "parliament_code": "P.101",
+          "parliament_name": "P.101 Hulu Langat"
+        },
+        {
+          "code": "N.24",
+          "name": "Semenyih",
+          "label": "N.24 Semenyih",
+          "parliament_code": "P.101",
+          "parliament_name": "P.101 Hulu Langat"
+        },
+        {
+          "code": "N.25",
+          "name": "Kajang",
+          "label": "N.25 Kajang",
+          "parliament_code": "P.102",
+          "parliament_name": "P.102 Bangi"
+        },
+        {
+          "code": "N.26",
+          "name": "Sungai Ramal",
+          "label": "N.26 Sungai Ramal",
+          "parliament_code": "P.102",
+          "parliament_name": "P.102 Bangi"
+        },
+        {
+          "code": "N.27",
+          "name": "Balakong",
+          "label": "N.27 Balakong",
+          "parliament_code": "P.102",
+          "parliament_name": "P.102 Bangi"
+        },
+        {
+          "code": "N.28",
+          "name": "Seri Kembangan",
+          "label": "N.28 Seri Kembangan",
+          "parliament_code": "P.103",
+          "parliament_name": "P.103 Puchong"
+        },
+        {
+          "code": "N.29",
+          "name": "Seri Serdang",
+          "label": "N.29 Seri Serdang",
+          "parliament_code": "P.103",
+          "parliament_name": "P.103 Puchong"
+        },
+        {
+          "code": "N.30",
+          "name": "Kinrara",
+          "label": "N.30 Kinrara",
+          "parliament_code": "P.104",
+          "parliament_name": "P.104 Subang"
+        },
+        {
+          "code": "N.31",
+          "name": "Subang Jaya",
+          "label": "N.31 Subang Jaya",
+          "parliament_code": "P.104",
+          "parliament_name": "P.104 Subang"
+        },
+        {
+          "code": "N.32",
+          "name": "Seri Setia",
+          "label": "N.32 Seri Setia",
+          "parliament_code": "P.105",
+          "parliament_name": "P.105 Petaling Jaya"
+        },
+        {
+          "code": "N.33",
+          "name": "Taman Medan",
+          "label": "N.33 Taman Medan",
+          "parliament_code": "P.105",
+          "parliament_name": "P.105 Petaling Jaya"
+        },
+        {
+          "code": "N.34",
+          "name": "Bukit Gasing",
+          "label": "N.34 Bukit Gasing",
+          "parliament_code": "P.105",
+          "parliament_name": "P.105 Petaling Jaya"
+        },
+        {
+          "code": "N.35",
+          "name": "Kampung Tunku",
+          "label": "N.35 Kampung Tunku",
+          "parliament_code": "P.106",
+          "parliament_name": "P.106 Damansara"
+        },
+        {
+          "code": "N.36",
+          "name": "Bandar Utama",
+          "label": "N.36 Bandar Utama",
+          "parliament_code": "P.106",
+          "parliament_name": "P.106 Damansara"
+        },
+        {
+          "code": "N.37",
+          "name": "Bukit Lanjan",
+          "label": "N.37 Bukit Lanjan",
+          "parliament_code": "P.106",
+          "parliament_name": "P.106 Damansara"
+        },
+        {
+          "code": "N.38",
+          "name": "Paya Jaras",
+          "label": "N.38 Paya Jaras",
+          "parliament_code": "P.107",
+          "parliament_name": "P.107 Sungai Buloh"
+        },
+        {
+          "code": "N.39",
+          "name": "Kota Damansara",
+          "label": "N.39 Kota Damansara",
+          "parliament_code": "P.107",
+          "parliament_name": "P.107 Sungai Buloh"
+        },
+        {
+          "code": "N.40",
+          "name": "Kota Anggerik",
+          "label": "N.40 Kota Anggerik",
+          "parliament_code": "P.108",
+          "parliament_name": "P.108 Shah Alam"
+        },
+        {
+          "code": "N.41",
+          "name": "Batu Tiga",
+          "label": "N.41 Batu Tiga",
+          "parliament_code": "P.108",
+          "parliament_name": "P.108 Shah Alam"
+        },
+        {
+          "code": "N.42",
+          "name": "Meru",
+          "label": "N.42 Meru",
+          "parliament_code": "P.109",
+          "parliament_name": "P.109 Kapar"
+        },
+        {
+          "code": "N.43",
+          "name": "Sementa",
+          "label": "N.43 Sementa",
+          "parliament_code": "P.109",
+          "parliament_name": "P.109 Kapar"
+        },
+        {
+          "code": "N.44",
+          "name": "Selat Klang",
+          "label": "N.44 Selat Klang",
+          "parliament_code": "P.109",
+          "parliament_name": "P.109 Kapar"
+        },
+        {
+          "code": "N.45",
+          "name": "Bandar Baru Klang",
+          "label": "N.45 Bandar Baru Klang",
+          "parliament_code": "P.110",
+          "parliament_name": "P.110 Klang"
+        },
+        {
+          "code": "N.46",
+          "name": "Pelabuhan Klang",
+          "label": "N.46 Pelabuhan Klang",
+          "parliament_code": "P.110",
+          "parliament_name": "P.110 Klang"
+        },
+        {
+          "code": "N.47",
+          "name": "Pandamaran",
+          "label": "N.47 Pandamaran",
+          "parliament_code": "P.110",
+          "parliament_name": "P.110 Klang"
+        },
+        {
+          "code": "N.48",
+          "name": "Sentosa",
+          "label": "N.48 Sentosa",
+          "parliament_code": "P.111",
+          "parliament_name": "P.111 Kota Raja"
+        },
+        {
+          "code": "N.49",
+          "name": "Sungai Kandis",
+          "label": "N.49 Sungai Kandis",
+          "parliament_code": "P.111",
+          "parliament_name": "P.111 Kota Raja"
+        },
+        {
+          "code": "N.50",
+          "name": "Kota Kemuning",
+          "label": "N.50 Kota Kemuning",
+          "parliament_code": "P.111",
+          "parliament_name": "P.111 Kota Raja"
+        },
+        {
+          "code": "N.51",
+          "name": "Sijangkang",
+          "label": "N.51 Sijangkang",
+          "parliament_code": "P.112",
+          "parliament_name": "P.112 Kuala Langat"
+        },
+        {
+          "code": "N.52",
+          "name": "Banting",
+          "label": "N.52 Banting",
+          "parliament_code": "P.112",
+          "parliament_name": "P.112 Kuala Langat"
+        },
+        {
+          "code": "N.53",
+          "name": "Morib",
+          "label": "N.53 Morib",
+          "parliament_code": "P.112",
+          "parliament_name": "P.112 Kuala Langat"
+        },
+        {
+          "code": "N.54",
+          "name": "Tanjong Sepat",
+          "label": "N.54 Tanjong Sepat",
+          "parliament_code": "P.113",
+          "parliament_name": "P.113 Sepang"
+        },
+        {
+          "code": "N.55",
+          "name": "Dengkil",
+          "label": "N.55 Dengkil",
+          "parliament_code": "P.113",
+          "parliament_name": "P.113 Sepang"
+        },
+        {
+          "code": "N.56",
+          "name": "Sungai Pelek",
+          "label": "N.56 Sungai Pelek",
+          "parliament_code": "P.113",
+          "parliament_name": "P.113 Sepang"
+        }
+      ],
+      "dun_count": 56
+    },
+    {
+      "name": "Negeri Sembilan",
+      "code": "NSN",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Chennah",
+          "label": "N.01 Chennah",
+          "parliament_code": "P.126",
+          "parliament_name": "P.126 Jelebu"
+        },
+        {
+          "code": "N.02",
+          "name": "Pertang",
+          "label": "N.02 Pertang",
+          "parliament_code": "P.126",
+          "parliament_name": "P.126 Jelebu"
+        },
+        {
+          "code": "N.03",
+          "name": "Sungai Lui",
+          "label": "N.03 Sungai Lui",
+          "parliament_code": "P.126",
+          "parliament_name": "P.126 Jelebu"
+        },
+        {
+          "code": "N.04",
+          "name": "Klawang",
+          "label": "N.04 Klawang",
+          "parliament_code": "P.126",
+          "parliament_name": "P.126 Jelebu"
+        },
+        {
+          "code": "N.05",
+          "name": "Serting",
+          "label": "N.05 Serting",
+          "parliament_code": "P.127",
+          "parliament_name": "P.127 Jempol"
+        },
+        {
+          "code": "N.06",
+          "name": "Palong",
+          "label": "N.06 Palong",
+          "parliament_code": "P.127",
+          "parliament_name": "P.127 Jempol"
+        },
+        {
+          "code": "N.07",
+          "name": "Jeram Padang",
+          "label": "N.07 Jeram Padang",
+          "parliament_code": "P.127",
+          "parliament_name": "P.127 Jempol"
+        },
+        {
+          "code": "N.08",
+          "name": "Bahau",
+          "label": "N.08 Bahau",
+          "parliament_code": "P.127",
+          "parliament_name": "P.127 Jempol"
+        },
+        {
+          "code": "N.09",
+          "name": "Lenggeng",
+          "label": "N.09 Lenggeng",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.10",
+          "name": "Nilai",
+          "label": "N.10 Nilai",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.11",
+          "name": "Lobak",
+          "label": "N.11 Lobak",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.12",
+          "name": "Temiang",
+          "label": "N.12 Temiang",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.13",
+          "name": "Sikamat",
+          "label": "N.13 Sikamat",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.14",
+          "name": "Ampangan",
+          "label": "N.14 Ampangan",
+          "parliament_code": "P.128",
+          "parliament_name": "P.128 Seremban"
+        },
+        {
+          "code": "N.15",
+          "name": "Juasseh",
+          "label": "N.15 Juasseh",
+          "parliament_code": "P.129",
+          "parliament_name": "P.129 Kuala Pilah"
+        },
+        {
+          "code": "N.16",
+          "name": "Seri Menanti",
+          "label": "N.16 Seri Menanti",
+          "parliament_code": "P.129",
+          "parliament_name": "P.129 Kuala Pilah"
+        },
+        {
+          "code": "N.17",
+          "name": "Senaling",
+          "label": "N.17 Senaling",
+          "parliament_code": "P.129",
+          "parliament_name": "P.129 Kuala Pilah"
+        },
+        {
+          "code": "N.18",
+          "name": "Pilah",
+          "label": "N.18 Pilah",
+          "parliament_code": "P.129",
+          "parliament_name": "P.129 Kuala Pilah"
+        },
+        {
+          "code": "N.19",
+          "name": "Johol",
+          "label": "N.19 Johol",
+          "parliament_code": "P.129",
+          "parliament_name": "P.129 Kuala Pilah"
+        },
+        {
+          "code": "N.20",
+          "name": "Labu",
+          "label": "N.20 Labu",
+          "parliament_code": "P.130",
+          "parliament_name": "P.130 Rasah"
+        },
+        {
+          "code": "N.21",
+          "name": "Bukit Kepayang",
+          "label": "N.21 Bukit Kepayang",
+          "parliament_code": "P.130",
+          "parliament_name": "P.130 Rasah"
+        },
+        {
+          "code": "N.22",
+          "name": "Rahang",
+          "label": "N.22 Rahang",
+          "parliament_code": "P.130",
+          "parliament_name": "P.130 Rasah"
+        },
+        {
+          "code": "N.23",
+          "name": "Mambau",
+          "label": "N.23 Mambau",
+          "parliament_code": "P.130",
+          "parliament_name": "P.130 Rasah"
+        },
+        {
+          "code": "N.24",
+          "name": "Seremban Jaya",
+          "label": "N.24 Seremban Jaya",
+          "parliament_code": "P.130",
+          "parliament_name": "P.130 Rasah"
+        },
+        {
+          "code": "N.25",
+          "name": "Paroi",
+          "label": "N.25 Paroi",
+          "parliament_code": "P.131",
+          "parliament_name": "P.131 Rembau"
+        },
+        {
+          "code": "N.26",
+          "name": "Chembong",
+          "label": "N.26 Chembong",
+          "parliament_code": "P.131",
+          "parliament_name": "P.131 Rembau"
+        },
+        {
+          "code": "N.27",
+          "name": "Rantau",
+          "label": "N.27 Rantau",
+          "parliament_code": "P.131",
+          "parliament_name": "P.131 Rembau"
+        },
+        {
+          "code": "N.28",
+          "name": "Kota",
+          "label": "N.28 Kota",
+          "parliament_code": "P.131",
+          "parliament_name": "P.131 Rembau"
+        },
+        {
+          "code": "N.29",
+          "name": "Chuah",
+          "label": "N.29 Chuah",
+          "parliament_code": "P.132",
+          "parliament_name": "P.132 Port Dickson"
+        },
+        {
+          "code": "N.30",
+          "name": "Lukut",
+          "label": "N.30 Lukut",
+          "parliament_code": "P.132",
+          "parliament_name": "P.132 Port Dickson"
+        },
+        {
+          "code": "N.31",
+          "name": "Bagan Pinang",
+          "label": "N.31 Bagan Pinang",
+          "parliament_code": "P.132",
+          "parliament_name": "P.132 Port Dickson"
+        },
+        {
+          "code": "N.32",
+          "name": "Linggi",
+          "label": "N.32 Linggi",
+          "parliament_code": "P.132",
+          "parliament_name": "P.132 Port Dickson"
+        },
+        {
+          "code": "N.33",
+          "name": "Sri Tanjung",
+          "label": "N.33 Sri Tanjung",
+          "parliament_code": "P.132",
+          "parliament_name": "P.132 Port Dickson"
+        },
+        {
+          "code": "N.34",
+          "name": "Gemas",
+          "label": "N.34 Gemas",
+          "parliament_code": "P.133",
+          "parliament_name": "P.133 Tampin"
+        },
+        {
+          "code": "N.35",
+          "name": "Gemencheh",
+          "label": "N.35 Gemencheh",
+          "parliament_code": "P.133",
+          "parliament_name": "P.133 Tampin"
+        },
+        {
+          "code": "N.36",
+          "name": "Repah",
+          "label": "N.36 Repah",
+          "parliament_code": "P.133",
+          "parliament_name": "P.133 Tampin"
+        }
+      ],
+      "dun_count": 36
+    },
+    {
+      "name": "Melaka",
+      "code": "MLK",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Kuala Linggi",
+          "label": "N.01 Kuala Linggi",
+          "parliament_code": "P.134",
+          "parliament_name": "P.134 Masjid Tanah"
+        },
+        {
+          "code": "N.02",
+          "name": "Tanjung Bidara",
+          "label": "N.02 Tanjung Bidara",
+          "parliament_code": "P.134",
+          "parliament_name": "P.134 Masjid Tanah"
+        },
+        {
+          "code": "N.03",
+          "name": "Ayer Limau",
+          "label": "N.03 Ayer Limau",
+          "parliament_code": "P.134",
+          "parliament_name": "P.134 Masjid Tanah"
+        },
+        {
+          "code": "N.04",
+          "name": "Lendu",
+          "label": "N.04 Lendu",
+          "parliament_code": "P.134",
+          "parliament_name": "P.134 Masjid Tanah"
+        },
+        {
+          "code": "N.05",
+          "name": "Taboh Naning",
+          "label": "N.05 Taboh Naning",
+          "parliament_code": "P.134",
+          "parliament_name": "P.134 Masjid Tanah"
+        },
+        {
+          "code": "N.06",
+          "name": "Rembia",
+          "label": "N.06 Rembia",
+          "parliament_code": "P.135",
+          "parliament_name": "P.135 Alor Gajah"
+        },
+        {
+          "code": "N.07",
+          "name": "Gadek",
+          "label": "N.07 Gadek",
+          "parliament_code": "P.135",
+          "parliament_name": "P.135 Alor Gajah"
+        },
+        {
+          "code": "N.08",
+          "name": "Machap Jaya",
+          "label": "N.08 Machap Jaya",
+          "parliament_code": "P.135",
+          "parliament_name": "P.135 Alor Gajah"
+        },
+        {
+          "code": "N.09",
+          "name": "Durian Tunggal",
+          "label": "N.09 Durian Tunggal",
+          "parliament_code": "P.135",
+          "parliament_name": "P.135 Alor Gajah"
+        },
+        {
+          "code": "N.10",
+          "name": "Asahan",
+          "label": "N.10 Asahan",
+          "parliament_code": "P.135",
+          "parliament_name": "P.135 Alor Gajah"
+        },
+        {
+          "code": "N.11",
+          "name": "Sungai Udang",
+          "label": "N.11 Sungai Udang",
+          "parliament_code": "P.136",
+          "parliament_name": "P.136 Tangga Batu"
+        },
+        {
+          "code": "N.12",
+          "name": "Pantai Kundor",
+          "label": "N.12 Pantai Kundor",
+          "parliament_code": "P.136",
+          "parliament_name": "P.136 Tangga Batu"
+        },
+        {
+          "code": "N.13",
+          "name": "Paya Rumput",
+          "label": "N.13 Paya Rumput",
+          "parliament_code": "P.136",
+          "parliament_name": "P.136 Tangga Batu"
+        },
+        {
+          "code": "N.14",
+          "name": "Kelebang",
+          "label": "N.14 Kelebang",
+          "parliament_code": "P.136",
+          "parliament_name": "P.136 Tangga Batu"
+        },
+        {
+          "code": "N.15",
+          "name": "Pengkalan Batu",
+          "label": "N.15 Pengkalan Batu",
+          "parliament_code": "P.137",
+          "parliament_name": "P.137 Hang Tuah Jaya"
+        },
+        {
+          "code": "N.16",
+          "name": "Ayer Keroh",
+          "label": "N.16 Ayer Keroh",
+          "parliament_code": "P.137",
+          "parliament_name": "P.137 Hang Tuah Jaya"
+        },
+        {
+          "code": "N.17",
+          "name": "Bukit Katil",
+          "label": "N.17 Bukit Katil",
+          "parliament_code": "P.137",
+          "parliament_name": "P.137 Hang Tuah Jaya"
+        },
+        {
+          "code": "N.18",
+          "name": "Ayer Molek",
+          "label": "N.18 Ayer Molek",
+          "parliament_code": "P.137",
+          "parliament_name": "P.137 Hang Tuah Jaya"
+        },
+        {
+          "code": "N.19",
+          "name": "Kesidang",
+          "label": "N.19 Kesidang",
+          "parliament_code": "P.138",
+          "parliament_name": "P.138 Kota Melaka"
+        },
+        {
+          "code": "N.20",
+          "name": "Kota Laksamana",
+          "label": "N.20 Kota Laksamana",
+          "parliament_code": "P.138",
+          "parliament_name": "P.138 Kota Melaka"
+        },
+        {
+          "code": "N.21",
+          "name": "Duyong",
+          "label": "N.21 Duyong",
+          "parliament_code": "P.138",
+          "parliament_name": "P.138 Kota Melaka"
+        },
+        {
+          "code": "N.22",
+          "name": "Bandar Hilir",
+          "label": "N.22 Bandar Hilir",
+          "parliament_code": "P.138",
+          "parliament_name": "P.138 Kota Melaka"
+        },
+        {
+          "code": "N.23",
+          "name": "Telok Mas",
+          "label": "N.23 Telok Mas",
+          "parliament_code": "P.138",
+          "parliament_name": "P.138 Kota Melaka"
+        },
+        {
+          "code": "N.24",
+          "name": "Bemban",
+          "label": "N.24 Bemban",
+          "parliament_code": "P.139",
+          "parliament_name": "P.139 Jasin"
+        },
+        {
+          "code": "N.25",
+          "name": "Rim",
+          "label": "N.25 Rim",
+          "parliament_code": "P.139",
+          "parliament_name": "P.139 Jasin"
+        },
+        {
+          "code": "N.26",
+          "name": "Serkam",
+          "label": "N.26 Serkam",
+          "parliament_code": "P.139",
+          "parliament_name": "P.139 Jasin"
+        },
+        {
+          "code": "N.27",
+          "name": "Merlimau",
+          "label": "N.27 Merlimau",
+          "parliament_code": "P.139",
+          "parliament_name": "P.139 Jasin"
+        },
+        {
+          "code": "N.28",
+          "name": "Sungai Rambai",
+          "label": "N.28 Sungai Rambai",
+          "parliament_code": "P.139",
+          "parliament_name": "P.139 Jasin"
+        }
+      ],
+      "dun_count": 28
+    },
+    {
+      "name": "Johor",
+      "code": "JHR",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Buloh Kasap",
+          "label": "N.01 Buloh Kasap",
+          "parliament_code": "P.140",
+          "parliament_name": "P.140 Segamat"
+        },
+        {
+          "code": "N.02",
+          "name": "Jementah",
+          "label": "N.02 Jementah",
+          "parliament_code": "P.140",
+          "parliament_name": "P.140 Segamat"
+        },
+        {
+          "code": "N.03",
+          "name": "Pemanis",
+          "label": "N.03 Pemanis",
+          "parliament_code": "P.141",
+          "parliament_name": "P.141 Sekijang"
+        },
+        {
+          "code": "N.04",
+          "name": "Kemelah",
+          "label": "N.04 Kemelah",
+          "parliament_code": "P.141",
+          "parliament_name": "P.141 Sekijang"
+        },
+        {
+          "code": "N.05",
+          "name": "Tenang",
+          "label": "N.05 Tenang",
+          "parliament_code": "P.142",
+          "parliament_name": "P.142 Labis"
+        },
+        {
+          "code": "N.06",
+          "name": "Bekok",
+          "label": "N.06 Bekok",
+          "parliament_code": "P.142",
+          "parliament_name": "P.142 Labis"
+        },
+        {
+          "code": "N.07",
+          "name": "Bukit Kepong",
+          "label": "N.07 Bukit Kepong",
+          "parliament_code": "P.143",
+          "parliament_name": "P.143 Pagoh"
+        },
+        {
+          "code": "N.08",
+          "name": "Bukit Pasir",
+          "label": "N.08 Bukit Pasir",
+          "parliament_code": "P.143",
+          "parliament_name": "P.143 Pagoh"
+        },
+        {
+          "code": "N.09",
+          "name": "Gambir",
+          "label": "N.09 Gambir",
+          "parliament_code": "P.144",
+          "parliament_name": "P.144 Ledang"
+        },
+        {
+          "code": "N.10",
+          "name": "Tangkak",
+          "label": "N.10 Tangkak",
+          "parliament_code": "P.144",
+          "parliament_name": "P.144 Ledang"
+        },
+        {
+          "code": "N.11",
+          "name": "Serom",
+          "label": "N.11 Serom",
+          "parliament_code": "P.144",
+          "parliament_name": "P.144 Ledang"
+        },
+        {
+          "code": "N.12",
+          "name": "Bentayan",
+          "label": "N.12 Bentayan",
+          "parliament_code": "P.145",
+          "parliament_name": "P.145 Bakri"
+        },
+        {
+          "code": "N.13",
+          "name": "Simpang Jeram",
+          "label": "N.13 Simpang Jeram",
+          "parliament_code": "P.145",
+          "parliament_name": "P.145 Bakri"
+        },
+        {
+          "code": "N.14",
+          "name": "Bukit Naning",
+          "label": "N.14 Bukit Naning",
+          "parliament_code": "P.145",
+          "parliament_name": "P.145 Bakri"
+        },
+        {
+          "code": "N.15",
+          "name": "Maharani",
+          "label": "N.15 Maharani",
+          "parliament_code": "P.146",
+          "parliament_name": "P.146 Muar"
+        },
+        {
+          "code": "N.16",
+          "name": "Sungai Balang",
+          "label": "N.16 Sungai Balang",
+          "parliament_code": "P.146",
+          "parliament_name": "P.146 Muar"
+        },
+        {
+          "code": "N.17",
+          "name": "Semerah",
+          "label": "N.17 Semerah",
+          "parliament_code": "P.147",
+          "parliament_name": "P.147 Parit Sulong"
+        },
+        {
+          "code": "N.18",
+          "name": "Sri Medan",
+          "label": "N.18 Sri Medan",
+          "parliament_code": "P.147",
+          "parliament_name": "P.147 Parit Sulong"
+        },
+        {
+          "code": "N.19",
+          "name": "Yong Peng",
+          "label": "N.19 Yong Peng",
+          "parliament_code": "P.148",
+          "parliament_name": "P.148 Ayer Hitam"
+        },
+        {
+          "code": "N.20",
+          "name": "Semarang",
+          "label": "N.20 Semarang",
+          "parliament_code": "P.148",
+          "parliament_name": "P.148 Ayer Hitam"
+        },
+        {
+          "code": "N.21",
+          "name": "Parit Yaani",
+          "label": "N.21 Parit Yaani",
+          "parliament_code": "P.149",
+          "parliament_name": "P.149 Sri Gading"
+        },
+        {
+          "code": "N.22",
+          "name": "Parit Raja",
+          "label": "N.22 Parit Raja",
+          "parliament_code": "P.149",
+          "parliament_name": "P.149 Sri Gading"
+        },
+        {
+          "code": "N.23",
+          "name": "Penggaram",
+          "label": "N.23 Penggaram",
+          "parliament_code": "P.150",
+          "parliament_name": "P.150 Batu Pahat"
+        },
+        {
+          "code": "N.24",
+          "name": "Senggarang",
+          "label": "N.24 Senggarang",
+          "parliament_code": "P.150",
+          "parliament_name": "P.150 Batu Pahat"
+        },
+        {
+          "code": "N.25",
+          "name": "Rengit",
+          "label": "N.25 Rengit",
+          "parliament_code": "P.150",
+          "parliament_name": "P.150 Batu Pahat"
+        },
+        {
+          "code": "N.26",
+          "name": "Machap",
+          "label": "N.26 Machap",
+          "parliament_code": "P.151",
+          "parliament_name": "P.151 Simpang Renggam"
+        },
+        {
+          "code": "N.27",
+          "name": "Layang-Layang",
+          "label": "N.27 Layang-Layang",
+          "parliament_code": "P.151",
+          "parliament_name": "P.151 Simpang Renggam"
+        },
+        {
+          "code": "N.28",
+          "name": "Mengkibol",
+          "label": "N.28 Mengkibol",
+          "parliament_code": "P.152",
+          "parliament_name": "P.152 Kluang"
+        },
+        {
+          "code": "N.29",
+          "name": "Mahkota",
+          "label": "N.29 Mahkota",
+          "parliament_code": "P.152",
+          "parliament_name": "P.152 Kluang"
+        },
+        {
+          "code": "N.30",
+          "name": "Paloh",
+          "label": "N.30 Paloh",
+          "parliament_code": "P.032",
+          "parliament_name": "P.153 Sembrong"
+        },
+        {
+          "code": "N.31",
+          "name": "Kahang",
+          "label": "N.31 Kahang",
+          "parliament_code": "P.153",
+          "parliament_name": "P.153 Sembrong"
+        },
+        {
+          "code": "N.32",
+          "name": "Endau",
+          "label": "N.32 Endau",
+          "parliament_code": "P.154",
+          "parliament_name": "P.154 Mersing"
+        },
+        {
+          "code": "N.33",
+          "name": "Tenggaroh",
+          "label": "N.33 Tenggaroh",
+          "parliament_code": "P.154",
+          "parliament_name": "P.154 Mersing"
+        },
+        {
+          "code": "N.34",
+          "name": "Panti",
+          "label": "N.34 Panti",
+          "parliament_code": "P.155",
+          "parliament_name": "P.155 Tenggara"
+        },
+        {
+          "code": "N.35",
+          "name": "Pasir Raja",
+          "label": "N.35 Pasir Raja",
+          "parliament_code": "P.155",
+          "parliament_name": "P.155 Tenggara"
+        },
+        {
+          "code": "N.36",
+          "name": "Sedili",
+          "label": "N.36 Sedili",
+          "parliament_code": "P.156",
+          "parliament_name": "P.156 Kota Tinggi"
+        },
+        {
+          "code": "N.37",
+          "name": "Johor Lama",
+          "label": "N.37 Johor Lama",
+          "parliament_code": "P.156",
+          "parliament_name": "P.156 Kota Tinggi"
+        },
+        {
+          "code": "N.38",
+          "name": "Penawar",
+          "label": "N.38 Penawar",
+          "parliament_code": "P.157",
+          "parliament_name": "P.157 Pengerang"
+        },
+        {
+          "code": "N.39",
+          "name": "Tanjung Surat",
+          "label": "N.39 Tanjung Surat",
+          "parliament_code": "P.157",
+          "parliament_name": "P.157 Pengerang"
+        },
+        {
+          "code": "N.40",
+          "name": "Tiram",
+          "label": "N.40 Tiram",
+          "parliament_code": "P.158",
+          "parliament_name": "P.158 Tebrau"
+        },
+        {
+          "code": "N.41",
+          "name": "Puteri Wangsa",
+          "label": "N.41 Puteri Wangsa",
+          "parliament_code": "P.158",
+          "parliament_name": "P.158 Tebrau"
+        },
+        {
+          "code": "N.42",
+          "name": "Johor Jaya",
+          "label": "N.42 Johor Jaya",
+          "parliament_code": "P.159",
+          "parliament_name": "P.159 Pasir Gudang"
+        },
+        {
+          "code": "N.43",
+          "name": "Permas",
+          "label": "N.43 Permas",
+          "parliament_code": "P.159",
+          "parliament_name": "P.159 Pasir Gudang"
+        },
+        {
+          "code": "N.44",
+          "name": "Larkin",
+          "label": "N.44 Larkin",
+          "parliament_code": "P.160",
+          "parliament_name": "P.160 Johor Bahru"
+        },
+        {
+          "code": "N.45",
+          "name": "Stulang",
+          "label": "N.45 Stulang",
+          "parliament_code": "P.160",
+          "parliament_name": "P.160 Johor Bahru"
+        },
+        {
+          "code": "N.46",
+          "name": "Perling",
+          "label": "N.46 Perling",
+          "parliament_code": "P.161",
+          "parliament_name": "P.161 Pulai"
+        },
+        {
+          "code": "N.47",
+          "name": "Kempas",
+          "label": "N.47 Kempas",
+          "parliament_code": "P.161",
+          "parliament_name": "P.161 Pulai"
+        },
+        {
+          "code": "N.48",
+          "name": "Skudai",
+          "label": "N.48 Skudai",
+          "parliament_code": "P.162",
+          "parliament_name": "P.162 Iskandar Puteri"
+        },
+        {
+          "code": "N.49",
+          "name": "Kota Iskandar",
+          "label": "N.49 Kota Iskandar",
+          "parliament_code": "P.162",
+          "parliament_name": "P.162 Iskandar Puteri"
+        },
+        {
+          "code": "N.50",
+          "name": "Bukit Permai",
+          "label": "N.50 Bukit Permai",
+          "parliament_code": "P.163",
+          "parliament_name": "P.163 Kulai"
+        },
+        {
+          "code": "N.51",
+          "name": "Bukit Batu",
+          "label": "N.51 Bukit Batu",
+          "parliament_code": "P.163",
+          "parliament_name": "P.163 Kulai"
+        },
+        {
+          "code": "N.52",
+          "name": "Senai",
+          "label": "N.52 Senai",
+          "parliament_code": "P.163",
+          "parliament_name": "P.163 Kulai"
+        },
+        {
+          "code": "N.53",
+          "name": "Benut",
+          "label": "N.53 Benut",
+          "parliament_code": "P.164",
+          "parliament_name": "P.164 Pontian"
+        },
+        {
+          "code": "N.54",
+          "name": "Pulai Sebatang",
+          "label": "N.54 Pulai Sebatang",
+          "parliament_code": "P.164",
+          "parliament_name": "P.164 Pontian"
+        },
+        {
+          "code": "N.55",
+          "name": "Pekan Nanas",
+          "label": "N.55 Pekan Nanas",
+          "parliament_code": "P.165",
+          "parliament_name": "P.165 Tanjung Piai"
+        },
+        {
+          "code": "N.56",
+          "name": "Kukup",
+          "label": "N.56 Kukup",
+          "parliament_code": "P.165",
+          "parliament_name": "P.165 Tanjung Piai"
+        }
+      ],
+      "dun_count": 56
+    },
+    {
+      "name": "Sabah",
+      "code": "SBH",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Banggi",
+          "label": "N.01 Banggi",
+          "parliament_code": "P.167",
+          "parliament_name": "P.167 Kudat"
+        },
+        {
+          "code": "N.02",
+          "name": "Bengkoka",
+          "label": "N.02 Bengkoka",
+          "parliament_code": "P.167",
+          "parliament_name": "P.167 Kudat"
+        },
+        {
+          "code": "N.03",
+          "name": "Pitas",
+          "label": "N.03 Pitas",
+          "parliament_code": "P.167",
+          "parliament_name": "P.167 Kudat"
+        },
+        {
+          "code": "N.04",
+          "name": "Tanjong Kapor",
+          "label": "N.04 Tanjong Kapor",
+          "parliament_code": "P.167",
+          "parliament_name": "P.167 Kudat"
+        },
+        {
+          "code": "N.05",
+          "name": "Matunggong",
+          "label": "N.05 Matunggong",
+          "parliament_code": "P.168",
+          "parliament_name": "P.168 Kota Marudu"
+        },
+        {
+          "code": "N.06",
+          "name": "Bandau",
+          "label": "N.06 Bandau",
+          "parliament_code": "P.168",
+          "parliament_name": "P.168 Kota Marudu"
+        },
+        {
+          "code": "N.07",
+          "name": "Tandek",
+          "label": "N.07 Tandek",
+          "parliament_code": "P.168",
+          "parliament_name": "P.168 Kota Marudu"
+        },
+        {
+          "code": "N.08",
+          "name": "Pintasan",
+          "label": "N.08 Pintasan",
+          "parliament_code": "P.169",
+          "parliament_name": "P.169 Kota Belud"
+        },
+        {
+          "code": "N.09",
+          "name": "Tempasuk",
+          "label": "N.09 Tempasuk",
+          "parliament_code": "P.169",
+          "parliament_name": "P.169 Kota Belud"
+        },
+        {
+          "code": "N.10",
+          "name": "Usukan",
+          "label": "N.10 Usukan",
+          "parliament_code": "P.169",
+          "parliament_name": "P.169 Kota Belud"
+        },
+        {
+          "code": "N.11",
+          "name": "Kadamaian",
+          "label": "N.11 Kadamaian",
+          "parliament_code": "P.169",
+          "parliament_name": "P.169 Kota Belud"
+        },
+        {
+          "code": "N.12",
+          "name": "Sulaman",
+          "label": "N.12 Sulaman",
+          "parliament_code": "P.170",
+          "parliament_name": "P.170 Tuaran"
+        },
+        {
+          "code": "N.13",
+          "name": "Pantai Dalit",
+          "label": "N.13 Pantai Dalit",
+          "parliament_code": "P.170",
+          "parliament_name": "P.170 Tuaran"
+        },
+        {
+          "code": "N.14",
+          "name": "Tamparuli",
+          "label": "N.14 Tamparuli",
+          "parliament_code": "P.170",
+          "parliament_name": "P.170 Tuaran"
+        },
+        {
+          "code": "N.15",
+          "name": "Kiulu",
+          "label": "N.15 Kiulu",
+          "parliament_code": "P.170",
+          "parliament_name": "P.170 Tuaran"
+        },
+        {
+          "code": "N.16",
+          "name": "Karambunai",
+          "label": "N.16 Karambunai",
+          "parliament_code": "P.171",
+          "parliament_name": "P.171 Sepanggar"
+        },
+        {
+          "code": "N.17",
+          "name": "Darau",
+          "label": "N.17 Darau",
+          "parliament_code": "P.171",
+          "parliament_name": "P.171 Sepanggar"
+        },
+        {
+          "code": "N.18",
+          "name": "Inanam",
+          "label": "N.18 Inanam",
+          "parliament_code": "P.171",
+          "parliament_name": "P.171 Sepanggar"
+        },
+        {
+          "code": "N.19",
+          "name": "Likas",
+          "label": "N.19 Likas",
+          "parliament_code": "P.172",
+          "parliament_name": "P.172 Kota Kinabalu"
+        },
+        {
+          "code": "N.20",
+          "name": "Api-Api",
+          "label": "N.20 Api-Api",
+          "parliament_code": "P.172",
+          "parliament_name": "P.172 Kota Kinabalu"
+        },
+        {
+          "code": "N.21",
+          "name": "Luyang",
+          "label": "N.21 Luyang",
+          "parliament_code": "P.172",
+          "parliament_name": "P.172 Kota Kinabalu"
+        },
+        {
+          "code": "N.22",
+          "name": "Tanjong Aru",
+          "label": "N.22 Tanjong Aru",
+          "parliament_code": "P.173",
+          "parliament_name": "P.173 Putatan"
+        },
+        {
+          "code": "N.23",
+          "name": "Petagas",
+          "label": "N.23 Petagas",
+          "parliament_code": "P.173",
+          "parliament_name": "P.173 Putatan"
+        },
+        {
+          "code": "N.24",
+          "name": "Tanjung Keramat",
+          "label": "N.24 Tanjung Keramat",
+          "parliament_code": "P.173",
+          "parliament_name": "P.173 Putatan"
+        },
+        {
+          "code": "N.25",
+          "name": "Kapayan",
+          "label": "N.25 Kapayan",
+          "parliament_code": "P.174",
+          "parliament_name": "P.174 Penampang"
+        },
+        {
+          "code": "N.26",
+          "name": "Moyog",
+          "label": "N.26 Moyog",
+          "parliament_code": "P.174",
+          "parliament_name": "P.174 Penampang"
+        },
+        {
+          "code": "N.27",
+          "name": "Limbahau",
+          "label": "N.27 Limbahau",
+          "parliament_code": "P.175",
+          "parliament_name": "P.175 Papar"
+        },
+        {
+          "code": "N.28",
+          "name": "Kawang",
+          "label": "N.28 Kawang",
+          "parliament_code": "P.175",
+          "parliament_name": "P.175 Papar"
+        },
+        {
+          "code": "N.29",
+          "name": "Pantai Manis",
+          "label": "N.29 Pantai Manis",
+          "parliament_code": "P.175",
+          "parliament_name": "P.175 Papar"
+        },
+        {
+          "code": "N.30",
+          "name": "Bongawan",
+          "label": "N.30 Bongawan",
+          "parliament_code": "P.176",
+          "parliament_name": "P.176 Kimanis"
+        },
+        {
+          "code": "N.31",
+          "name": "Membakut",
+          "label": "N.31 Membakut",
+          "parliament_code": "P.176",
+          "parliament_name": "P.176 Kimanis"
+        },
+        {
+          "code": "N.32",
+          "name": "Klias",
+          "label": "N.32 Klias",
+          "parliament_code": "P.177",
+          "parliament_name": "P.177 Beaufort"
+        },
+        {
+          "code": "N.33",
+          "name": "Kuala Penyu",
+          "label": "N.33 Kuala Penyu",
+          "parliament_code": "P.177",
+          "parliament_name": "P.177 Beaufort"
+        },
+        {
+          "code": "N.34",
+          "name": "Lumadan",
+          "label": "N.34 Lumadan",
+          "parliament_code": "P.178",
+          "parliament_name": "P.178 Sipitang"
+        },
+        {
+          "code": "N.35",
+          "name": "Sindumin",
+          "label": "N.35 Sindumin",
+          "parliament_code": "P.178",
+          "parliament_name": "P.178 Sipitang"
+        },
+        {
+          "code": "N.36",
+          "name": "Kundasang",
+          "label": "N.36 Kundasang",
+          "parliament_code": "P.179",
+          "parliament_name": "P.179 Ranau"
+        },
+        {
+          "code": "N.37",
+          "name": "Karanaan",
+          "label": "N.37 Karanaan",
+          "parliament_code": "P.179",
+          "parliament_name": "P.179 Ranau"
+        },
+        {
+          "code": "N.38",
+          "name": "Paginatan",
+          "label": "N.38 Paginatan",
+          "parliament_code": "P.179",
+          "parliament_name": "P.179 Ranau"
+        },
+        {
+          "code": "N.39",
+          "name": "Tambunan",
+          "label": "N.39 Tambunan",
+          "parliament_code": "P.180",
+          "parliament_name": "P.180 Keningau"
+        },
+        {
+          "code": "N.40",
+          "name": "Bingkor",
+          "label": "N.40 Bingkor",
+          "parliament_code": "P.180",
+          "parliament_name": "P.180 Keningau"
+        },
+        {
+          "code": "N.41",
+          "name": "Liawan",
+          "label": "N.41 Liawan",
+          "parliament_code": "P.180",
+          "parliament_name": "P.180 Keningau"
+        },
+        {
+          "code": "N.42",
+          "name": "Melalap",
+          "label": "N.42 Melalap",
+          "parliament_code": "P.181",
+          "parliament_name": "P.181 Tenom"
+        },
+        {
+          "code": "N.43",
+          "name": "Kemabong",
+          "label": "N.43 Kemabong",
+          "parliament_code": "P.181",
+          "parliament_name": "P.181 Tenom"
+        },
+        {
+          "code": "N.44",
+          "name": "Tulid",
+          "label": "N.44 Tulid",
+          "parliament_code": "P.182",
+          "parliament_name": "P.182 Pensiangan"
+        },
+        {
+          "code": "N.45",
+          "name": "Sook",
+          "label": "N.45 Sook",
+          "parliament_code": "P.182",
+          "parliament_name": "P.182 Pensiangan"
+        },
+        {
+          "code": "N.46",
+          "name": "Nabawan",
+          "label": "N.46 Nabawan",
+          "parliament_code": "P.182",
+          "parliament_name": "P.182 Pensiangan"
+        },
+        {
+          "code": "N.47",
+          "name": "Telupid",
+          "label": "N.47 Telupid",
+          "parliament_code": "P.183",
+          "parliament_name": "P.183 Beluran"
+        },
+        {
+          "code": "N.48",
+          "name": "Sugut",
+          "label": "N.48 Sugut",
+          "parliament_code": "P.183",
+          "parliament_name": "P.183 Beluran"
+        },
+        {
+          "code": "N.49",
+          "name": "Labuk",
+          "label": "N.49 Labuk",
+          "parliament_code": "P.183",
+          "parliament_name": "P.183 Beluran"
+        },
+        {
+          "code": "N.50",
+          "name": "Gum-Gum",
+          "label": "N.50 Gum-Gum",
+          "parliament_code": "P.184",
+          "parliament_name": "P.184 Libaran"
+        },
+        {
+          "code": "N.51",
+          "name": "Sungai Manila",
+          "label": "N.51 Sungai Manila",
+          "parliament_code": "P.184",
+          "parliament_name": "P.184 Libaran"
+        },
+        {
+          "code": "N.52",
+          "name": "Sungai Sibuga",
+          "label": "N.52 Sungai Sibuga",
+          "parliament_code": "P.184",
+          "parliament_name": "P.184 Libaran"
+        },
+        {
+          "code": "N.53",
+          "name": "Sekong",
+          "label": "N.53 Sekong",
+          "parliament_code": "P.185",
+          "parliament_name": "P.185 Batu Sapi"
+        },
+        {
+          "code": "N.54",
+          "name": "Karamunting",
+          "label": "N.54 Karamunting",
+          "parliament_code": "P.185",
+          "parliament_name": "P.185 Batu Sapi"
+        },
+        {
+          "code": "N.55",
+          "name": "Elopura",
+          "label": "N.55 Elopura",
+          "parliament_code": "P.186",
+          "parliament_name": "P.186 Sandakan"
+        },
+        {
+          "code": "N.56",
+          "name": "Tanjong Papat",
+          "label": "N.56 Tanjong Papat",
+          "parliament_code": "P.186",
+          "parliament_name": "P.186 Sandakan"
+        },
+        {
+          "code": "N.57",
+          "name": "Kuamut",
+          "label": "N.57 Kuamut",
+          "parliament_code": "P.187",
+          "parliament_name": "P.187 Kinabatangan"
+        },
+        {
+          "code": "N.58",
+          "name": "Lamag",
+          "label": "N.58 Lamag",
+          "parliament_code": "P.187",
+          "parliament_name": "P.187 Kinabatangan"
+        },
+        {
+          "code": "N.59",
+          "name": "Sukau",
+          "label": "N.59 Sukau",
+          "parliament_code": "P.187",
+          "parliament_name": "P.187 Kinabatangan"
+        },
+        {
+          "code": "N.60",
+          "name": "Tungku",
+          "label": "N.60 Tungku",
+          "parliament_code": "P.188",
+          "parliament_name": "P.188 Lahad Datu"
+        },
+        {
+          "code": "N.61",
+          "name": "Segama",
+          "label": "N.61 Segama",
+          "parliament_code": "P.188",
+          "parliament_name": "P.188 Lahad Datu"
+        },
+        {
+          "code": "N.62",
+          "name": "Silam",
+          "label": "N.62 Silam",
+          "parliament_code": "P.188",
+          "parliament_name": "P.188 Lahad Datu"
+        },
+        {
+          "code": "N.63",
+          "name": "Kunak",
+          "label": "N.63 Kunak",
+          "parliament_code": "P.188",
+          "parliament_name": "P.188 Lahad Datu"
+        },
+        {
+          "code": "N.64",
+          "name": "Sulabayan",
+          "label": "N.64 Sulabayan",
+          "parliament_code": "P.189",
+          "parliament_name": "P.189 Semporna"
+        },
+        {
+          "code": "N.65",
+          "name": "Senallang",
+          "label": "N.65 Senallang",
+          "parliament_code": "P.189",
+          "parliament_name": "P.189 Semporna"
+        },
+        {
+          "code": "N.66",
+          "name": "Bugaya",
+          "label": "N.66 Bugaya",
+          "parliament_code": "P.189",
+          "parliament_name": "P.189 Semporna"
+        },
+        {
+          "code": "N.67",
+          "name": "Balung",
+          "label": "N.67 Balung",
+          "parliament_code": "P.190",
+          "parliament_name": "P.190 Tawau"
+        },
+        {
+          "code": "N.68",
+          "name": "Apas",
+          "label": "N.68 Apas",
+          "parliament_code": "P.190",
+          "parliament_name": "P.190 Tawau"
+        },
+        {
+          "code": "N.69",
+          "name": "Sri Tanjong",
+          "label": "N.69 Sri Tanjong",
+          "parliament_code": "P.190",
+          "parliament_name": "P.190 Tawau"
+        },
+        {
+          "code": "N.70",
+          "name": "Kukusan",
+          "label": "N.70 Kukusan",
+          "parliament_code": "P.191",
+          "parliament_name": "P.191 Kalabakan"
+        },
+        {
+          "code": "N.71",
+          "name": "Tanjung Batu",
+          "label": "N.71 Tanjung Batu",
+          "parliament_code": "P.191",
+          "parliament_name": "P.191 Kalabakan"
+        },
+        {
+          "code": "N.72",
+          "name": "Merotai",
+          "label": "N.72 Merotai",
+          "parliament_code": "P.191",
+          "parliament_name": "P.191 Kalabakan"
+        },
+        {
+          "code": "N.73",
+          "name": "Sebatik",
+          "label": "N.73 Sebatik",
+          "parliament_code": "P.191",
+          "parliament_name": "P.191 Kalabakan"
+        }
+      ],
+      "dun_count": 73
+    },
+    {
+      "name": "Sarawak",
+      "code": "SWK",
+      "dun_applicable": true,
+      "constituencies": [
+        {
+          "code": "N.01",
+          "name": "Opar",
+          "label": "N.01 Opar",
+          "parliament_code": "P.192",
+          "parliament_name": "P.192 Mas Gading"
+        },
+        {
+          "code": "N.02",
+          "name": "Tasik Biru",
+          "label": "N.02 Tasik Biru",
+          "parliament_code": "P.192",
+          "parliament_name": "P.192 Mas Gading"
+        },
+        {
+          "code": "N.03",
+          "name": "Tanjong Datu",
+          "label": "N.03 Tanjong Datu",
+          "parliament_code": "P.193",
+          "parliament_name": "P.193 Santubong"
+        },
+        {
+          "code": "N.04",
+          "name": "Pantai Damai",
+          "label": "N.04 Pantai Damai",
+          "parliament_code": "P.193",
+          "parliament_name": "P.193 Santubong"
+        },
+        {
+          "code": "N.05",
+          "name": "Demak Laut",
+          "label": "N.05 Demak Laut",
+          "parliament_code": "P.193",
+          "parliament_name": "P.193 Santubong"
+        },
+        {
+          "code": "N.06",
+          "name": "Tupong",
+          "label": "N.06 Tupong",
+          "parliament_code": "P.194",
+          "parliament_name": "P.194 Petra Jaya"
+        },
+        {
+          "code": "N.07",
+          "name": "Samariang",
+          "label": "N.07 Samariang",
+          "parliament_code": "P.194",
+          "parliament_name": "P.194 Petra Jaya"
+        },
+        {
+          "code": "N.08",
+          "name": "Satok",
+          "label": "N.08 Satok",
+          "parliament_code": "P.194",
+          "parliament_name": "P.194 Petra Jaya"
+        },
+        {
+          "code": "N.09",
+          "name": "Padungan",
+          "label": "N.09 Padungan",
+          "parliament_code": "P.195",
+          "parliament_name": "P.195 Bandar Kuching"
+        },
+        {
+          "code": "N.10",
+          "name": "Pending",
+          "label": "N.10 Pending",
+          "parliament_code": "P.195",
+          "parliament_name": "P.195 Bandar Kuching"
+        },
+        {
+          "code": "N.11",
+          "name": "Batu Lintang",
+          "label": "N.11 Batu Lintang",
+          "parliament_code": "P.195",
+          "parliament_name": "P.195 Bandar Kuching"
+        },
+        {
+          "code": "N.12",
+          "name": "Kota Sentosa",
+          "label": "N.12 Kota Sentosa",
+          "parliament_code": "P.196",
+          "parliament_name": "P.196 Stampin"
+        },
+        {
+          "code": "N.13",
+          "name": "Batu Kitang",
+          "label": "N.13 Batu Kitang",
+          "parliament_code": "P.196",
+          "parliament_name": "P.196 Stampin"
+        },
+        {
+          "code": "N.14",
+          "name": "Batu Kawah",
+          "label": "N.14 Batu Kawah",
+          "parliament_code": "P.196",
+          "parliament_name": "P.196 Stampin"
+        },
+        {
+          "code": "N.15",
+          "name": "Asajaya",
+          "label": "N.15 Asajaya",
+          "parliament_code": "P.197",
+          "parliament_name": "P.197 Kota Samarahan"
+        },
+        {
+          "code": "N.16",
+          "name": "Muara Tuang",
+          "label": "N.16 Muara Tuang",
+          "parliament_code": "P.197",
+          "parliament_name": "P.197 Kota Samarahan"
+        },
+        {
+          "code": "N.17",
+          "name": "Stakan",
+          "label": "N.17 Stakan",
+          "parliament_code": "P.197",
+          "parliament_name": "P.197 Kota Samarahan"
+        },
+        {
+          "code": "N.18",
+          "name": "Serembu",
+          "label": "N.18 Serembu",
+          "parliament_code": "P.198",
+          "parliament_name": "P.198 Puncak Borneo"
+        },
+        {
+          "code": "N.19",
+          "name": "Mambong",
+          "label": "N.19 Mambong",
+          "parliament_code": "P.198",
+          "parliament_name": "P.198 Puncak Borneo"
+        },
+        {
+          "code": "N.20",
+          "name": "Tarat",
+          "label": "N.20 Tarat",
+          "parliament_code": "P.198",
+          "parliament_name": "P.198 Puncak Borneo"
+        },
+        {
+          "code": "N.21",
+          "name": "Tebedu",
+          "label": "N.21 Tebedu",
+          "parliament_code": "P.199",
+          "parliament_name": "P.199 Serian"
+        },
+        {
+          "code": "N.22",
+          "name": "Kedup",
+          "label": "N.22 Kedup",
+          "parliament_code": "P.199",
+          "parliament_name": "P.199 Serian"
+        },
+        {
+          "code": "N.23",
+          "name": "Bukit Semuja",
+          "label": "N.23 Bukit Semuja",
+          "parliament_code": "P.199",
+          "parliament_name": "P.199 Serian"
+        },
+        {
+          "code": "N.24",
+          "name": "Sadong Jaya",
+          "label": "N.24 Sadong Jaya",
+          "parliament_code": "P.200",
+          "parliament_name": "P.200 Batang Sadong"
+        },
+        {
+          "code": "N.25",
+          "name": "Simunjan",
+          "label": "N.25 Simunjan",
+          "parliament_code": "P.200",
+          "parliament_name": "P.200 Batang Sadong"
+        },
+        {
+          "code": "N.26",
+          "name": "Gedong",
+          "label": "N.26 Gedong",
+          "parliament_code": "P.200",
+          "parliament_name": "P.200 Batang Sadong"
+        },
+        {
+          "code": "N.27",
+          "name": "Sebuyau",
+          "label": "N.27 Sebuyau",
+          "parliament_code": "P.201",
+          "parliament_name": "P.201 Batang Lupar"
+        },
+        {
+          "code": "N.28",
+          "name": "Lingga",
+          "label": "N.28 Lingga",
+          "parliament_code": "P.201",
+          "parliament_name": "P.201 Batang Lupar"
+        },
+        {
+          "code": "N.29",
+          "name": "Beting Maro",
+          "label": "N.29 Beting Maro",
+          "parliament_code": "P.201",
+          "parliament_name": "P.201 Batang Lupar"
+        },
+        {
+          "code": "N.30",
+          "name": "Balai Ringin",
+          "label": "N.30 Balai Ringin",
+          "parliament_code": "P.202",
+          "parliament_name": "P.202 Sri Aman"
+        },
+        {
+          "code": "N.31",
+          "name": "Bukit Begunan",
+          "label": "N.31 Bukit Begunan",
+          "parliament_code": "P.202",
+          "parliament_name": "P.202 Sri Aman"
+        },
+        {
+          "code": "N.32",
+          "name": "Simanggang",
+          "label": "N.32 Simanggang",
+          "parliament_code": "P.202",
+          "parliament_name": "P.202 Sri Aman"
+        },
+        {
+          "code": "N.33",
+          "name": "Engkilili",
+          "label": "N.33 Engkilili",
+          "parliament_code": "P.203",
+          "parliament_name": "P.203 Lubok Antu"
+        },
+        {
+          "code": "N.34",
+          "name": "Batang Ai",
+          "label": "N.34 Batang Ai",
+          "parliament_code": "P.203",
+          "parliament_name": "P.203 Lubok Antu"
+        },
+        {
+          "code": "N.35",
+          "name": "Saribas",
+          "label": "N.35 Saribas",
+          "parliament_code": "P.204",
+          "parliament_name": "P.204 Betong"
+        },
+        {
+          "code": "N.36",
+          "name": "Layar",
+          "label": "N.36 Layar",
+          "parliament_code": "P.204",
+          "parliament_name": "P.204 Betong"
+        },
+        {
+          "code": "N.37",
+          "name": "Bukit Saban",
+          "label": "N.37 Bukit Saban",
+          "parliament_code": "P.204",
+          "parliament_name": "P.204 Betong"
+        },
+        {
+          "code": "N.38",
+          "name": "Kalaka",
+          "label": "N.38 Kalaka",
+          "parliament_code": "P.205",
+          "parliament_name": "P.205 Saratok"
+        },
+        {
+          "code": "N.39",
+          "name": "Krian",
+          "label": "N.39 Krian",
+          "parliament_code": "P.205",
+          "parliament_name": "P.205 Saratok"
+        },
+        {
+          "code": "N.40",
+          "name": "Kabong",
+          "label": "N.40 Kabong",
+          "parliament_code": "P.205",
+          "parliament_name": "P.205 Saratok"
+        },
+        {
+          "code": "N.41",
+          "name": "Kuala Rajang",
+          "label": "N.41 Kuala Rajang",
+          "parliament_code": "P.206",
+          "parliament_name": "P.206 Tanjong Manis"
+        },
+        {
+          "code": "N.42",
+          "name": "Semop",
+          "label": "N.42 Semop",
+          "parliament_code": "P.206",
+          "parliament_name": "P.206 Tanjong Manis"
+        },
+        {
+          "code": "N.43",
+          "name": "Daro",
+          "label": "N.43 Daro",
+          "parliament_code": "P.207",
+          "parliament_name": "P.207 Igan"
+        },
+        {
+          "code": "N.44",
+          "name": "Jemoreng",
+          "label": "N.44 Jemoreng",
+          "parliament_code": "P.207",
+          "parliament_name": "P.207 Igan"
+        },
+        {
+          "code": "N.45",
+          "name": "Repok",
+          "label": "N.45 Repok",
+          "parliament_code": "P.208",
+          "parliament_name": "P.208 Sarikei"
+        },
+        {
+          "code": "N.46",
+          "name": "Meradong",
+          "label": "N.46 Meradong",
+          "parliament_code": "P.208",
+          "parliament_name": "P.208 Sarikei"
+        },
+        {
+          "code": "N.47",
+          "name": "Pakan",
+          "label": "N.47 Pakan",
+          "parliament_code": "P.209",
+          "parliament_name": "P.209 Julau"
+        },
+        {
+          "code": "N.48",
+          "name": "Meluan",
+          "label": "N.48 Meluan",
+          "parliament_code": "P.209",
+          "parliament_name": "P.209 Julau"
+        },
+        {
+          "code": "N.49",
+          "name": "Ngemah",
+          "label": "N.49 Ngemah",
+          "parliament_code": "P.210",
+          "parliament_name": "P.210 Kanowit"
+        },
+        {
+          "code": "N.50",
+          "name": "Machan",
+          "label": "N.50 Machan",
+          "parliament_code": "P.210",
+          "parliament_name": "P.210 Kanowit"
+        },
+        {
+          "code": "N.51",
+          "name": "Bukit Assek",
+          "label": "N.51 Bukit Assek",
+          "parliament_code": "P.211",
+          "parliament_name": "P.211 Lanang"
+        },
+        {
+          "code": "N.52",
+          "name": "Dudong",
+          "label": "N.52 Dudong",
+          "parliament_code": "P.211",
+          "parliament_name": "P.211 Lanang"
+        },
+        {
+          "code": "N.53",
+          "name": "Bawang Assan",
+          "label": "N.53 Bawang Assan",
+          "parliament_code": "P.212",
+          "parliament_name": "P.212 Sibu"
+        },
+        {
+          "code": "N.54",
+          "name": "Pelawan",
+          "label": "N.54 Pelawan",
+          "parliament_code": "P.212",
+          "parliament_name": "P.212 Sibu"
+        },
+        {
+          "code": "N.55",
+          "name": "Nangka",
+          "label": "N.55 Nangka",
+          "parliament_code": "P.212",
+          "parliament_name": "P.212 Sibu"
+        },
+        {
+          "code": "N.56",
+          "name": "Dalat",
+          "label": "N.56 Dalat",
+          "parliament_code": "P.213",
+          "parliament_name": "P.213 Mukah"
+        },
+        {
+          "code": "N.57",
+          "name": "Tellian",
+          "label": "N.57 Tellian",
+          "parliament_code": "P.213",
+          "parliament_name": "P.213 Mukah"
+        },
+        {
+          "code": "N.58",
+          "name": "Balingian",
+          "label": "N.58 Balingian",
+          "parliament_code": "P.213",
+          "parliament_name": "P.213 Mukah"
+        },
+        {
+          "code": "N.59",
+          "name": "Tamin",
+          "label": "N.59 Tamin",
+          "parliament_code": "P.214",
+          "parliament_name": "P.214 Selangau"
+        },
+        {
+          "code": "N.60",
+          "name": "Kakus",
+          "label": "N.60 Kakus",
+          "parliament_code": "P.214",
+          "parliament_name": "P.214 Selangau"
+        },
+        {
+          "code": "N.61",
+          "name": "Pelagus",
+          "label": "N.61 Pelagus",
+          "parliament_code": "P.215",
+          "parliament_name": "P.215 Kapit"
+        },
+        {
+          "code": "N.62",
+          "name": "Katibas",
+          "label": "N.62 Katibas",
+          "parliament_code": "P.215",
+          "parliament_name": "P.215 Kapit"
+        },
+        {
+          "code": "N.63",
+          "name": "Bukit Goram",
+          "label": "N.63 Bukit Goram",
+          "parliament_code": "P.215",
+          "parliament_name": "P.215 Kapit"
+        },
+        {
+          "code": "N.64",
+          "name": "Baleh",
+          "label": "N.64 Baleh",
+          "parliament_code": "P.216",
+          "parliament_name": "P.216 Hulu Rajang"
+        },
+        {
+          "code": "N.65",
+          "name": "Belaga",
+          "label": "N.65 Belaga",
+          "parliament_code": "P.216",
+          "parliament_name": "P.216 Hulu Rajang"
+        },
+        {
+          "code": "N.66",
+          "name": "Murum",
+          "label": "N.66 Murum",
+          "parliament_code": "P.216",
+          "parliament_name": "P.216 Hulu Rajang"
+        },
+        {
+          "code": "N.67",
+          "name": "Jepak",
+          "label": "N.67 Jepak",
+          "parliament_code": "P.217",
+          "parliament_name": "P.217 Bintulu"
+        },
+        {
+          "code": "N.68",
+          "name": "Tanjong Batu",
+          "label": "N.68 Tanjong Batu",
+          "parliament_code": "P.217",
+          "parliament_name": "P.217 Bintulu"
+        },
+        {
+          "code": "N.69",
+          "name": "Kemena",
+          "label": "N.69 Kemena",
+          "parliament_code": "P.217",
+          "parliament_name": "P.217 Bintulu"
+        },
+        {
+          "code": "N.70",
+          "name": "Samalaju",
+          "label": "N.70 Samalaju",
+          "parliament_code": "P.217",
+          "parliament_name": "P.217 Bintulu"
+        },
+        {
+          "code": "N.71",
+          "name": "Bekenu",
+          "label": "N.71 Bekenu",
+          "parliament_code": "P.218",
+          "parliament_name": "P.218 Sibuti"
+        },
+        {
+          "code": "N.72",
+          "name": "Lambir",
+          "label": "N.72 Lambir",
+          "parliament_code": "P.218",
+          "parliament_name": "P.218 Sibuti"
+        },
+        {
+          "code": "N.73",
+          "name": "Piasau",
+          "label": "N.73 Piasau",
+          "parliament_code": "P.219",
+          "parliament_name": "P.219 Miri"
+        },
+        {
+          "code": "N.74",
+          "name": "Pujut",
+          "label": "N.74 Pujut",
+          "parliament_code": "P.219",
+          "parliament_name": "P.219 Miri"
+        },
+        {
+          "code": "N.75",
+          "name": "Senadin",
+          "label": "N.75 Senadin",
+          "parliament_code": "P.219",
+          "parliament_name": "P.219 Miri"
+        },
+        {
+          "code": "N.76",
+          "name": "Marudi",
+          "label": "N.76 Marudi",
+          "parliament_code": "P.220",
+          "parliament_name": "P.220 Baram"
+        },
+        {
+          "code": "N.77",
+          "name": "Telang Usan",
+          "label": "N.77 Telang Usan",
+          "parliament_code": "P.220",
+          "parliament_name": "P.220 Baram"
+        },
+        {
+          "code": "N.78",
+          "name": "Mulu",
+          "label": "N.78 Mulu",
+          "parliament_code": "P.220",
+          "parliament_name": "P.220 Baram"
+        },
+        {
+          "code": "N.79",
+          "name": "Bukit Kota",
+          "label": "N.79 Bukit Kota",
+          "parliament_code": "P.221",
+          "parliament_name": "P.221 Limbang"
+        },
+        {
+          "code": "N.80",
+          "name": "Batu Danau",
+          "label": "N.80 Batu Danau",
+          "parliament_code": "P.221",
+          "parliament_name": "P.221 Limbang"
+        },
+        {
+          "code": "N.81",
+          "name": "Ba`Kelalan",
+          "label": "N.81 Ba`Kelalan",
+          "parliament_code": "P.222",
+          "parliament_name": "P.222 Lawas"
+        },
+        {
+          "code": "N.82",
+          "name": "Bukit Sari",
+          "label": "N.82 Bukit Sari",
+          "parliament_code": "P.222",
+          "parliament_name": "P.222 Lawas"
+        }
+      ],
+      "dun_count": 82
+    },
+    {
+      "name": "W.P. Kuala Lumpur",
+      "code": "KUL",
+      "dun_applicable": false,
+      "constituencies": [],
+      "dun_count": 0
+    },
+    {
+      "name": "W.P. Putrajaya",
+      "code": "PJY",
+      "dun_applicable": false,
+      "constituencies": [],
+      "dun_count": 0
+    },
+    {
+      "name": "W.P. Labuan",
+      "code": "LBN",
+      "dun_applicable": false,
+      "constituencies": [],
+      "dun_count": 0
+    }
+  ]
+}

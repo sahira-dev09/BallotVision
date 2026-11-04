@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Fictional demo portrait CAN-D03">
+  <rect width="128" height="128" rx="64" fill="#78350F"/>
+  <ellipse cx="64" cy="46" rx="24" ry="22" fill="#FDE68A"/>
+  <path d="M30 118 C34 88 48 76 64 76 C80 76 94 88 98 118 Z" fill="#B45309"/>
+  <rect x="40" y="8" width="48" height="14" rx="7" fill="#FBBF24"/>
+  <text x="64" y="19" text-anchor="middle" font-size="9" font-family="Segoe UI, sans-serif" fill="#451A03" font-weight="700">DEMO</text>
+  <text x="64" y="52" text-anchor="middle" font-size="16" font-family="Segoe UI, sans-serif" fill="#451A03" font-weight="700">NB</text>
+</svg>

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Build and packaging
+build/
+dist/
+*.spec
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# App data created later (keep folder, ignore generated files)
+data/*.db
+data/*.sqlite
+data/*.log
+data/settings.json
+data/_ui_preview/

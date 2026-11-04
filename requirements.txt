@@ -1,0 +1,10 @@
+# BallotVision dependencies
+# Install these inside a virtual environment:
+#   python -m venv .venv
+#   .venv\Scripts\activate
+#   pip install -r requirements.txt
+#
+# Only the desktop UI toolkit is needed at this stage.
+# Camera, image, and AI packages will be added later when we build those features.
+
+PySide6>=6.7.0,<6.10.0
