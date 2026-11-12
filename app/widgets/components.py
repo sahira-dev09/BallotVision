@@ -12,6 +12,8 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QStyle,
     QStyleOptionComboBox,
+    QTableWidget,
+    QTableWidgetItem,
     QVBoxLayout,
     QWidget,
 )
@@ -28,7 +30,8 @@ class SearchableCombo(QComboBox):
         self.setEditable(True)
         self.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.setMinimumHeight(36)
+        self.setMinimumHeight(40)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         completer = self.completer()
         completer.setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
@@ -154,7 +157,10 @@ class StatCard(Card):
 class StatusBadge(QLabel):
     def __init__(self, text: str, kind: str = "info", parent=None) -> None:
         super().__init__(text, parent)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        self.setMinimumHeight(28)
         self.set_kind(kind, text)
 
     def set_kind(self, kind: str, text: str | None = None) -> None:
@@ -213,3 +219,29 @@ class EmptyState(QFrame):
         self.action.setObjectName("primaryButton")
         self.action.setVisible(bool(action_label))
         layout.addWidget(self.action, 0, Qt.AlignmentFlag.AlignCenter)
+
+
+def style_data_table(table: QTableWidget) -> None:
+    """Shared table metrics so headers and cells share one alignment."""
+    header = table.horizontalHeader()
+    header.setDefaultAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+    header.setHighlightSections(False)
+    header.setStretchLastSection(False)
+    header.setMinimumSectionSize(88)
+    table.verticalHeader().setVisible(False)
+    table.verticalHeader().setMinimumSectionSize(40)
+    table.verticalHeader().setDefaultSectionSize(44)
+    table.setShowGrid(False)
+    table.setWordWrap(True)
+    table.setAlternatingRowColors(True)
+    table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+    table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
+    table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+    table.setHorizontalScrollMode(QTableWidget.ScrollMode.ScrollPerPixel)
+    table.setVerticalScrollMode(QTableWidget.ScrollMode.ScrollPerPixel)
+
+
+def aligned_item(text: str) -> QTableWidgetItem:
+    item = QTableWidgetItem(text)
+    item.setTextAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+    return item

@@ -12,7 +12,6 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QTableWidget,
-    QTableWidgetItem,
     QTextEdit,
     QVBoxLayout,
     QWidget,
@@ -20,7 +19,7 @@ from PySide6.QtWidgets import (
 
 from app.core.utils import format_number, format_timestamp
 from app.services.export_service import export_audit_csv
-from app.widgets.components import Card, NoticeBar, SectionTitle, StatCard
+from app.widgets.components import Card, NoticeBar, SectionTitle, StatCard, aligned_item, style_data_table
 
 
 class AuditPage(QScrollArea):
@@ -100,12 +99,14 @@ class AuditPage(QScrollArea):
         self.table.setHorizontalHeaderLabels(
             ["Timestamp", "Activity ID", "User", "Action", "Related Ballot / Batch", "Status"]
         )
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-        self.table.verticalHeader().setVisible(False)
-        self.table.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
-        self.table.setSelectionMode(QTableWidget.SelectionMode.SingleSelection)
-        self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
-        self.table.setAlternatingRowColors(True)
+        style_data_table(self.table)
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
         self.table.itemSelectionChanged.connect(self._show_detail)
         table_card.layout.addWidget(self.table, 1)
         split.addWidget(table_card, 3)
@@ -163,7 +164,8 @@ class AuditPage(QScrollArea):
                 event["status"],
             ]
             for column, value in enumerate(values):
-                self.table.setItem(index, column, QTableWidgetItem(value))
+                self.table.setItem(index, column, aligned_item(value))
+        self.table.resizeRowsToContents()
         if rows:
             self.table.selectRow(0)
             self._show_detail()

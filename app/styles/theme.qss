@@ -110,16 +110,16 @@ QLabel {
 }
 
 #demoChip {
-    background: rgba(251, 191, 36, 0.14);
+    background: rgba(251, 191, 36, 0.16);
     color: #FBBF24;
-    border: 1px solid rgba(251, 191, 36, 0.45);
-    border-radius: 999px;
-    padding: 0 14px;
+    border: 1px solid rgba(251, 191, 36, 0.38);
+    border-radius: 18px;
+    padding: 0 16px;
     min-height: 36px;
     max-height: 36px;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.8px;
 }
 
 #infoButton {
@@ -174,7 +174,29 @@ QLabel {
 #locationBar, #compactStatus, #nextActions {
     background: #151F32;
     border: 1px solid #29364B;
-    border-radius: 12px;
+    border-radius: 16px;
+}
+
+#locationMeta {
+    background: #1B2940;
+    border: 1px solid #29364B;
+    border-radius: 14px;
+}
+
+#metaRule {
+    background: #29364B;
+    border: none;
+    max-width: 1px;
+}
+
+#seatCount {
+    color: #94A3B8;
+    background: #1B2940;
+    border: 1px solid #29364B;
+    border-radius: 11px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 #nextActions {
@@ -189,19 +211,38 @@ QLabel {
     letter-spacing: 0.5px;
 }
 
-#locationValue {
+#locationValue, #detectedNegeri, #detectedDun {
     color: #F1F5F9;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#detectedCandidate {
+    color: #22D3EE;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#detectionReason {
+    color: #FBBF24;
     font-size: 13px;
     font-weight: 600;
 }
 
+#detectionDiagnosis {
+    color: #94A3B8;
+    font-size: 12px;
+}
+
 #locationBar QComboBox#locationCombo,
 QComboBox#locationCombo {
-    min-height: 36px;
-    padding: 4px 36px 4px 12px;
-    background: #151F32;
+    min-height: 40px;
+    padding: 6px 36px 6px 14px;
+    background: #1B2940;
     border: 1px solid #29364B;
     border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 #locationBar QComboBox#locationCombo:hover,
@@ -223,9 +264,7 @@ QComboBox#locationCombo::drop-down {
     subcontrol-position: center right;
     width: 32px;
     border: none;
-    border-left: 1px solid #29364B;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    background: transparent;
 }
 
 #locationBar QComboBox#locationCombo::down-arrow,
@@ -353,7 +392,7 @@ QComboBox#locationCombo QLineEdit {
 #card, #statCard {
     background: #151F32;
     border: 1px solid #29364B;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 #statValue {
@@ -374,7 +413,7 @@ QComboBox#locationCombo QLineEdit {
     font-size: 12px;
 }
 
-#hintLabel {
+#hintLabel, #batchSummary {
     color: #64748B;
     font-size: 11px;
 }
@@ -382,7 +421,7 @@ QComboBox#locationCombo QLineEdit {
 #emptyState {
     background: #151F32;
     border: 1px dashed #29364B;
-    border-radius: 14px;
+    border-radius: 16px;
 }
 
 QFrame[notice="warning"] {
@@ -408,63 +447,58 @@ QFrame[notice="error"] {
     font-size: 12px;
 }
 
+QLabel[badge="success"],
+QLabel[badge="warning"],
+QLabel[badge="error"],
+QLabel[badge="info"],
+QLabel[badge="neutral"] {
+    border-radius: 14px;
+    padding: 4px 12px;
+    min-height: 28px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
 QLabel[badge="success"] {
     background: rgba(52, 211, 153, 0.12);
     color: #34D399;
     border: 1px solid rgba(52, 211, 153, 0.35);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 600;
 }
 
 QLabel[badge="warning"] {
     background: rgba(251, 191, 36, 0.12);
     color: #FBBF24;
-    border: 1px solid rgba(251, 191, 36, 0.35);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 600;
+    border: 1px solid rgba(251, 191, 36, 0.32);
 }
 
 QLabel[badge="error"] {
     background: rgba(251, 113, 133, 0.12);
     color: #FB7185;
     border: 1px solid rgba(251, 113, 133, 0.35);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 600;
 }
 
 QLabel[badge="info"] {
     background: rgba(34, 211, 238, 0.12);
     color: #22D3EE;
     border: 1px solid rgba(34, 211, 238, 0.35);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 600;
 }
 
 QLabel[badge="neutral"] {
     background: #1B2940;
     color: #94A3B8;
     border: 1px solid #29364B;
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 600;
 }
 
 QPushButton {
     background: #1B2940;
     color: #F1F5F9;
     border: 1px solid #29364B;
-    border-radius: 10px;
-    padding: 8px 14px;
+    border-radius: 12px;
+    padding: 8px 16px;
+    min-height: 36px;
     font-size: 13px;
+    font-weight: 600;
 }
 
 QPushButton:hover {
@@ -518,14 +552,22 @@ QLineEdit, QPlainTextEdit, QComboBox, QSpinBox {
     background: #1B2940;
     color: #F1F5F9;
     border: 1px solid #29364B;
-    border-radius: 10px;
-    padding: 8px 10px;
+    border-radius: 12px;
+    padding: 8px 12px;
+    min-height: 36px;
     selection-background-color: #22D3EE;
     selection-color: #0B1120;
 }
 
 QLineEdit:focus, QPlainTextEdit:focus, QComboBox:focus {
     border-color: #22D3EE;
+}
+
+QComboBox QLineEdit {
+    min-height: 0px;
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 QComboBox::drop-down {
@@ -542,11 +584,24 @@ QComboBox::down-arrow {
 }
 
 QComboBox QAbstractItemView {
-    background: #1B2940;
+    background: #151F32;
     color: #F1F5F9;
     border: 1px solid #29364B;
-    selection-background-color: #22D3EE;
-    selection-color: #0B1120;
+    border-radius: 12px;
+    padding: 6px;
+    outline: none;
+    selection-background-color: rgba(34, 211, 238, 0.18);
+    selection-color: #F1F5F9;
+}
+
+QComboBox QAbstractItemView::item {
+    min-height: 32px;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+QComboBox QAbstractItemView::item:hover {
+    background: #1B2940;
 }
 
 QProgressBar {
@@ -580,13 +635,14 @@ QSlider::handle:horizontal {
 
 QTableWidget {
     background: #151F32;
-    alternate-background-color: #1B2940;
+    alternate-background-color: #182338;
     color: #F1F5F9;
-    gridline-color: #29364B;
+    gridline-color: transparent;
     border: 1px solid #29364B;
-    border-radius: 12px;
-    selection-background-color: rgba(34, 211, 238, 0.18);
+    border-radius: 14px;
+    selection-background-color: rgba(34, 211, 238, 0.16);
     selection-color: #F1F5F9;
+    outline: none;
 }
 
 QHeaderView::section {
@@ -594,13 +650,16 @@ QHeaderView::section {
     color: #94A3B8;
     border: none;
     border-bottom: 1px solid #29364B;
-    border-right: 1px solid #29364B;
-    padding: 6px;
-    font-weight: 600;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-align: left;
 }
 
 QTableWidget::item {
-    padding: 6px;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(41, 54, 75, 0.7);
 }
 
 QListWidget {
@@ -685,20 +744,35 @@ QMenu {
     background: #151F32;
     color: #F1F5F9;
     border: 1px solid #29364B;
+    border-radius: 12px;
     padding: 6px;
 }
 
 QMenu::item {
     padding: 8px 14px;
-    border-radius: 6px;
+    border-radius: 8px;
+}
+
+QDialog#confirmDialog,
+QDialog#appDialog {
+    background: #151F32;
+}
+
+QMessageBox {
+    background: #151F32;
+}
+
+QMessageBox QLabel {
+    color: #F1F5F9;
+    font-size: 13px;
+}
+
+QMessageBox QPushButton {
+    min-width: 88px;
 }
 
 QMenu::item:selected {
     background: rgba(34, 211, 238, 0.16);
-}
-
-QMessageBox {
-    background: #0F172A;
 }
 
 #dropZone {
@@ -715,7 +789,9 @@ QMessageBox {
 #previewFrame, #cameraPreview {
     background: #1B2940;
     border: 1px solid #29364B;
-    border-radius: 12px;
+    border-radius: 16px;
+    color: #94A3B8;
+    padding: 12px;
 }
 
 #cameraPreview {
@@ -726,5 +802,5 @@ QMessageBox {
 #detailPanel {
     background: #151F32;
     border: 1px solid #29364B;
-    border-radius: 14px;
+    border-radius: 16px;
 }
